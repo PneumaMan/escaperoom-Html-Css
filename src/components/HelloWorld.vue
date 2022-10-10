@@ -1,8 +1,11 @@
 <template>
   <div class="hello container">
+    <div class="row float-end my-3">
+      <strong class=""><h4 class="text-danger">Resultado: 0000</h4></strong>
+    </div>
     <div class="row">
       <div class="question mt-5 mb-3">
-        <h1>¿Comenzamos?</h1>
+        <h1>Pegunta #1</h1>
       </div>
     </div>
     <div class="row">
