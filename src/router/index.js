@@ -25,6 +25,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Auth/Registro.vue')
   },
   {
+    path: '/inicio-qr',
+    name: 'inicioqr',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Auth/inicioparticipante.vue')
+  },
+  {
     path: '/perfil',
     name: 'Perfil',
     // route level code-splitting
@@ -55,6 +63,30 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Administrativo/Retos.vue')
+  },
+  {
+    path: '/modulo-escape',
+    name: 'moduloEscape',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Administrativo/moduloEscapes.vue')
+  },
+  {
+    path: '/escapes',
+    name: 'ecapes',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Scapes-room.vue')
+  },
+  {
+    path: '/salida',
+    name: 'salida',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Salida.vue')
   },
   {
     path:'/dashboard',

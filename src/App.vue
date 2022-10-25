@@ -7,7 +7,6 @@
             <img src="../src/assets/SHzOfH4BS.png" alt="" style="width: 35px;"> usuario AAA
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
             <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
             <li><a class="dropdown-item" href="/admin">Administración</a></li>
             <li><a class="dropdown-item" href="/">Cerrar sesión</a></li>

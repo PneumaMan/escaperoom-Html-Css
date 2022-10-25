@@ -1,6 +1,13 @@
 <template>
     <div class="container p-4">
         <div class="row">
+            <h1>Modulo de administración</h1>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info col-md-5 mx-4 my-4">Crear Participante</button>
+            <button type="button" class="btn btn-dark col-md-5 mx-4 my-4">Crear usuario</button>
+        </div>
+        <div class="row">
             <div class="card p-4">
                 <h5># Documento del participante</h5>
                 <form class="d-flex" role="search">
@@ -10,6 +17,7 @@
                 </form>
             </div>
         </div>
+        
         <div class="row">
             <div class="table-responsive">
             <table class="table">

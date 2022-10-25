@@ -2,12 +2,11 @@
     <div class="container p-4">
         <div class="row">
             <div class="card" style="width: 18rem; margin: auto;">
-                <img src="../../assets/Topsecret-amico.png" class="card-img-top" alt="...">
+                <img src="../assets/escape-room.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Reto 1</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/home" class="btn btn-primary mx-1">Empezar</a>
+                    <h5 class="card-title">Escape room 1</h5>
+                    <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, temporibus odio omnis soluta inventore cum deleniti accusamus quibusdam, minus quia sunt odit nam placeat eius? Autem fugiat obcaecati rem a!</p>
+                    <a href="/dashboard" class="btn btn-primary mx-1">Empezar</a>
                 </div>
             </div>
         </div>

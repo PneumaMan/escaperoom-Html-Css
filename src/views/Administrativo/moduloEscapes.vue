@@ -1,11 +1,9 @@
-
-
 <template>
     <div class="container">
         <div class="row">
             <!-- Button trigger modal -->
             <button type="button" class="my-5 btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Crear Reto
+                Crear Escape
             </button>
 
             <!-- Modal -->
@@ -14,28 +12,21 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear retos </h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear escape room </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form">
                                 <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Enunciado de la
-                                        pregunta</label>
+                                    <label for="exampleFormControlTextarea1" class="form-label">Nombre del escape
+                                    </label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="">Respuesta 1</label>
                                     <input type="text" class="form-control">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="">Respuesta 2</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="">Respuesta 3</label>
-                                    <input type="text" class="form-control">
-                                </div>
+
                                 <div class="mb-3">
                                     <button class="btn btn-primary">Guardar</button>
                                 </div>
@@ -57,7 +48,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
-                            <th scope="col">Respuestas</th>
+                            <th scope="col">Retos</th>
 
                             <th scope="col">Acciones</th>
                         </tr>
@@ -67,9 +58,8 @@
                             <th scope="row">1</th>
                             <td>Mark</td>
                             <td>
-                                <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalRespuestas">Respuestas</button>
-
+                                <router-link to="/retos"><button class="btn btn-outline-primary mx-1">Retos</button>
+                                </router-link>
                             </td>
 
                             <td>
@@ -81,8 +71,8 @@
                             <th scope="row">2</th>
                             <td>Jacob</td>
                             <td>
-                                <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalRespuestas">Respuestas</button>
+                                <router-link to="/retos"><button class="btn btn-outline-primary mx-1">Retos</button>
+                                </router-link>
                             </td>
 
                             <td>
@@ -92,30 +82,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalRespuestas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Respuestas</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">An item</li>
-                            <li class="list-group-item">A second item</li>
-                            <li class="list-group-item">A third item</li>
-                            <li class="list-group-item">A fourth item</li>
-                            <li class="list-group-item">And a fifth one</li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        
-                    </div>
-                </div>
             </div>
         </div>
     </div>

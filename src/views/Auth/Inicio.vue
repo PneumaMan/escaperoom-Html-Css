@@ -7,7 +7,7 @@
                 <div class="card-body py-5 px-md-5">
                     <div class="row d-flex justify-content-center">
                         <div class="">
-                            <h2 class="fw-bold mb-3">Inicio sesión </h2>
+                            <h2 class="fw-bold mb-3">Inicio sesión para administradores</h2>
                             <form>
                                 
                                 <!-- Email input -->
@@ -28,7 +28,7 @@
                                 </div>
 
                                 <!-- Submit button -->
-                                <router-link to="/dashboard">
+                                <router-link to="/escapes">
                                     <button type="submit" class="btn btn-primary btn-block mb-4">
                                         Entrar
                                     </button>
