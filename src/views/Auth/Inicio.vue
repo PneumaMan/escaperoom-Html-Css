@@ -50,8 +50,10 @@ export default {
     data() {
         return {
             usuario:{
-                email:'pneumaconsulting@gmail.com',
-                password:'Admin.1234*'
+               /*  email:'pneumaconsulting@gmail.com',
+                password:'Admin.1234*' */
+                email:'',
+                password:''
             }
         }
     },
