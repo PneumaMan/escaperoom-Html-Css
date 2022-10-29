@@ -12,13 +12,13 @@
                                 
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="form3Example3" class="form-control" />
+                                    <input type="email" id="form3Example3" class="form-control" v-model="usuario.email"/>
                                     <label class="form-label h5" for="form3Example3">Correo electronico</label>
                                 </div>
 
                                 <!-- Password input -->
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="form3Example4" class="form-control" />
+                                    <input type="password" id="form3Example4" class="form-control" v-model="usuario.password"/>
                                     <label class="form-label h5" for="form3Example4">Contraseña</label>
                                 </div>
 
@@ -28,11 +28,11 @@
                                 </div>
 
                                 <!-- Submit button -->
-                                <router-link to="/escapes">
-                                    <button type="submit" class="btn btn-primary btn-block mb-4">
+                                
+                                    <button type="submit" class="btn btn-primary btn-block mb-4" @click.prevent="login()">
                                         Entrar
                                     </button>
-                                </router-link>
+                                
 
                                 
                             </form>
@@ -44,6 +44,48 @@
         <!-- Section: Design Block -->
     </div>
 </template>
+<script>
+import {  mapMutations,mapActions, mapState } from "vuex";
+export default {
+    data() {
+        return {
+            usuario:{
+                email:'pneumaconsulting@gmail.com',
+                password:'Admin.1234*'
+            }
+        }
+    },
+    methods: {
+    ...mapMutations(['obtenerUsuario']), 
+    ...mapActions(['guardarUsuario','leerToken']),
+    ...mapState(['rol']),
+    login(){
+        console.log(this.usuario)
+        this.axios.post('/login', this.usuario)
+        .then(res => {
+            console.log(res.data.data.jwToken);
+
+            const token =res.data.data.jwToken;
+            this.guardarUsuario(token);
+            console.log('holissssss care boliss')
+            this.$router.push({path:'/admin'})
+            
+        })
+        .catch(err => {
+          console.log(err);
+          console.log('Llorelo')
+          this.$swal({
+            position: 'toast-top-end',
+            icon: 'error',
+            title: 'Ocurrio un error',
+            text: err.response.data.message,
+          });
+        })
+    }
+    
+  },
+}
+</script>
 <style>
 .bi-person-bounding-box{
     font-size: 80px;

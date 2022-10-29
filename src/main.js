@@ -5,4 +5,21 @@ import store from './store'
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-createApp(App).use(store).use(router).mount('#app')
+import axios from 'axios'
+import VueAxios from 'vue-axios';
+
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+const app = createApp(App);
+app.use(router);
+app.use(VueSweetalert2);
+
+app.use(VueAxios, axios)
+const url = 'https://escape-room-app.azurewebsites.net/api' 
+axios.defaults.baseURL = url
+
+app.use(store)
+
+app.mount("#app");
+

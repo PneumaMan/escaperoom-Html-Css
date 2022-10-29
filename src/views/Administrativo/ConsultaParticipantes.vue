@@ -3,53 +3,73 @@
         <div class="row">
             <h1>Modulo de administración</h1>
         </div>
-        <div class="row">
-            <button type="button" class="btn btn-info col-md-5 mx-4 my-4">Crear Participante</button>
-            <button type="button" class="btn btn-dark col-md-5 mx-4 my-4">Crear usuario</button>
-        </div>
-        <div class="row">
-            <div class="card p-4">
-                <h5># Documento del participante</h5>
-                <form class="d-flex" role="search">
-                    
-                    <input class="form-control me-2" type="search" placeholder="Buscar participante" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Buscar</button>
-                </form>
+
+        <div class="row my-4" v-show="Admin">
+            <div class="card col-11 col-md-3 mx-1 mx-auto" style="width: 18rem; margin: auto;">
+                <div class="card-body">
+                    <img src="../../assets/participantes.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Participantes</h5>
+                        <button @click.prevent="ConsultaP()" class="btn btn-primary mx-1">Consultar</button>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="card col-11 col-md-3 mx-1 mx-auto" style="width: 18rem; margin: auto;">
+                <div class="card-body">
+                    <img src="../../assets/usuarios.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Usuarios</h5>
+
+                        <a href="/modulo-escape" class="btn btn-primary mx-1">Empezar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-11 col-md-3 mx-1 mx-auto" style="width: 18rem; margin: auto;">
+                <div class="card-body">
+                    <img src="../../assets/roles.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Roles</h5>
+
+                        <a href="/modulo-escape" class="btn btn-primary mx-1">Empezar</a>
+                    </div>
+                </div>
             </div>
         </div>
-        
         <div class="row">
-            <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">First</th>
-                        <th scope="col">Last</th>
-                        <th scope="col">Handle</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td colspan="2">Larry the Bird</td>
-                        <td>@twitter</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+            <Particioantes v-show="participante">
+            <button>⬅️</button>
+            </Particioantes>
         </div>
     </div>
 </template>
+<script>
+// @ is an alias to /src
+import Particioantes from '@/components/Cruds/Participantes.vue'
+import Usuarios from '@/components/Cruds/Usuarios.vue'
+import Roles from '@/components/Cruds/Roles.vue'
+
+export default {
+  name: 'HomeView',
+  components: {
+    Particioantes,
+    Usuarios,
+    Roles
+  },
+  data() {
+    return {
+        participante : false,
+        rol : false,
+        usuarios : false,
+        Admin : true,
+    }
+  },
+  methods: {
+    ConsultaP(){
+        this.participante = true
+        this.Admin = false
+    }
+  },
+}
+</script>
