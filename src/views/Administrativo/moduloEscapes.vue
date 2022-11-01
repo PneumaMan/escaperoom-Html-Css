@@ -49,14 +49,14 @@
                                 <div class="row">
                                     <div class="mb-3 col-md-5 mx-auto">
                                         <label for="exampleFormControlTextarea1" class="form-label">Fecha inicio del
-                                            fuego
+                                            juego
                                         </label>
                                         <input type="datetime-local" class="form-control"
                                             v-model="room.fechaInicioJuego">
                                     </div>
                                     <div class="mb-3 col-md-5 mx-auto">
                                         <label for="exampleFormControlTextarea1" class="form-label">Fecha final del
-                                            fuego
+                                            juego
                                         </label>
                                         <input type="datetime-local" class="form-control" v-model="room.fechaFinJuego">
                                     </div>
@@ -146,14 +146,14 @@
                             <div class="row">
                                 <div class="mb-3 col-md-5 mx-auto">
                                     <label for="exampleFormControlTextarea1" class="form-label">Fecha inicio del
-                                        fuego
+                                        juego
                                     </label>
                                     <input type="datetime-local" class="form-control"
                                         v-model="roomEditar.fechaInicioJuego">
                                 </div>
                                 <div class="mb-3 col-md-5 mx-auto">
                                     <label for="exampleFormControlTextarea1" class="form-label">Fecha final del
-                                        fuego
+                                        juego
                                     </label>
                                     <input type="datetime-local" class="form-control"
                                         v-model="roomEditar.fechaFinJuego">
@@ -192,9 +192,28 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form">
-                                    <div class="mb-3">
-                                        <label for="">Nombre del reto</label>
-                                        <input type="text" class="form-control" v-model="reto.nombreReto">
+                                    <div class="row">
+                                        <div class="mb-3 col-8 col-md-6">
+                                            <label for="" class="form-label">Nombre del reto</label>
+                                            <input type="text" class="form-control" v-model="reto.nombreReto">
+                                        </div>
+                                        <div class="mb-3 col-8 col-md-6">
+                                            <label for="" class="form-label">Tiempo Bonificación
+                                            </label>
+                                            <input type="time" class="form-control" v-model="reto.bonificacionReto">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-8 col-md-6">
+                                            <label for="" class="form-label">Color del QR
+                                            </label>
+                                            <input type="color" class="form-control" v-model="reto.color">
+                                        </div>
+                                        <div class="mb-3 col-8 col-md-6">
+                                            <label for="" class="form-label">Color de fondo QR
+                                            </label>
+                                            <input type="color" class="form-control" v-model="reto.bgColor">
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="exampleFormControlTextarea1" class="form-label">Enunciado de la
@@ -202,17 +221,40 @@
                                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
                                             v-model="reto.preguntaReto"></textarea>
                                     </div>
-                                    <div class="mb-3 mx-auto">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Tiempo Bonificacion
-                                        </label>
-                                        <input type="time" class="form-control" v-model="reto.bonificacionReto">
+                                    <div class="mb-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Numero del reto</label>
+                                        <input type="number" class="form-control" v-model="reto.numeroReto">
+                                        
+                                    </div>
+
+                                    <hr />
+                                    <h5 class="mx-auto">Respuestas</h5>
+                                    <hr />
+                                    <div class="row" v-for="(input, k) in reto.respuestas" :key="k">
+                                        <div class="form-group col-8 col-md-8 my-3">
+                                            <label for="exampleFormControlTextarea1"
+                                                class="form-label mx-auto">Enunciado de la respuesta # {{ k + 1 }}
+                                            </label>
+                                            <input type="text" class="form-control " v-model="input.respuestaReto">
+                                        </div>
+                                        <span class=" col-8 col-md-4 mt-5">
+                                            <i class="bi bi-dash-circle-fill mx-1 my-3 text-danger" @click="remove(k)"
+                                                v-show="k || (!k && reto.respuestas.length > 1)"></i>
+                                            <i class="bi bi-plus-circle-fill text-success" @click="add(k)"
+                                                v-show="k == reto.respuestas.length - 1"></i>
+                                        </span>
+                                        <div class="form-check col-8 col-md-6 ml-2">
+                                            <input class="form-check-input" type="checkbox" value="" id=""
+                                                v-model="reto.respuestas.correcta" />
+                                            <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn btn-primary" @click.prevent="agregarReto()">Guardar</button>
+                                <button class="btn btn-primary" @click.prevent="agregarReto()"
+                                    data-bs-dismiss="modal">Guardar</button>
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
                             </div>
                         </div>
                     </div>
@@ -229,7 +271,7 @@
                                     <th scope="col">Pregunta</th>
                                     <th scope="col">Tipo Pregunta</th>
                                     <th scope="col">Bonificación</th>
-
+                                    <th scope="col">Respuestas</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -250,6 +292,29 @@
                                         <button class="btn btn-outline-warning mx-1">Editar</button>
                                         <button class="btn btn-outline-danger">Eliminar</button>
                                     </td>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalRespuestas" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Respuestas</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item" v-for="(i, p) in item.respuestas" :key="p">{{i.respuestaReto}}</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </tr>
 
                             </tbody>
@@ -257,31 +322,7 @@
                     </div>
                 </div>
             </div>
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModalRespuestas" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Respuestas</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">An item</li>
-                                <li class="list-group-item">A second item</li>
-                                <li class="list-group-item">A third item</li>
-                                <li class="list-group-item">A fourth item</li>
-                                <li class="list-group-item">And a fifth one</li>
-                            </ul>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>
@@ -306,7 +347,7 @@ export default {
                 TiempoLimiteEscape: ""
             },
             roomEditar: {
-                id:0,
+                id: 0,
                 nombreEscapeRoom: "",
                 estado: true,
                 fechaInicioJuego: "",
@@ -323,8 +364,19 @@ export default {
                 numeroReto: 1,
                 tipoReto: 1,
                 bonificacionReto: "",
-                escapeRoomId: 0
-            }
+                escapeRoomId: 0,
+                color: "",
+                bgColor: "",
+                respuestas: [
+                    {
+                        respuestaReto: '',
+                        correcta: false,
+                        retoId: 0
+                    }
+                ]
+            },
+            id_Reto: 0
+
         }
     },
     mounted() {
@@ -339,6 +391,13 @@ export default {
                     // Agrega al inicio de nuestro array notas
                     this.escapes.unshift(res.data);
                     console.log(res.data)
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Escape room registrado con éxito',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 })
                 .catch(e => {
                     console.log(e);
@@ -357,7 +416,7 @@ export default {
         listarEscapes() {
             this.axios.get('/EscapeRoom', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.escapes = response.data.data;
                 })
                 .catch((e) => {
@@ -366,20 +425,9 @@ export default {
         },
         activarIdReto(item) {
             this.showRetos = true
-            console.log(item)
-            this.reto.escapeRoomId = item
-        },
-        agregarReto() {
-            console.log(this.reto)
-            this.axios.post('/Retos', this.reto, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
-                .then(res => {
-                    // Agrega al inicio de nuestro array notas
-                    this.Retos.unshift(res.data);
-                })
-                .catch(e => {
-                    console.log(e);
-                })
-
+            //console.log(item)
+            this.id_Reto = item
+            this.reto.escapeRoomId = this.id_Reto
         },
         ActivarEditarEscape(item) {
             this.roomEditar.id = item.id
@@ -393,16 +441,68 @@ export default {
         },
         EditarEscape() {
             console.log(this.roomEditar)
-            this.axios.put(`/EscapeRoom/${this.roomEditar.id}`, this.roomEditar,{ 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.put(`/EscapeRoom/${this.roomEditar.id}`, this.roomEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     console.log(res.data)
                     this.listarEscapes()
+
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Editado con éxito',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
                 })
                 .catch(e => {
                     console.log(e);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: 'Ocurrio un error',
+                        text: e,
+                    });
                 })
-        }
+        },
+        add(index) {
+            this.reto.respuestas.push({
+                respuestaReto: '',
+                correcta: false
+            });
+        },
+        remove(index) {
+            this.reto.respuestas.splice(index, 1);
+        },
+        agregarReto() {
+            console.log(this.reto)
+            this.axios.post('/Retos', this.reto, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then(res => {
+                    // Agrega al inicio de nuestro array notas
+                    this.Retos.unshift(res.data);
+                    this.$swal({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Reto registrado con éxito',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: 'Ocurrio un error',
+                        text: e.response.data.Errors.ErrorMessage
+,
+                    });
+                })
+
+        },
     },
 
 }
 </script>
+<style>
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+</style>

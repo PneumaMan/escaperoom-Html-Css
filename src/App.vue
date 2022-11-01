@@ -7,6 +7,7 @@
             <img src="../src/assets/SHzOfH4BS.png" alt="" style="width: 35px;"> {{email}}
           </a>
           <ul class="dropdown-menu">
+            <li><router-link to="/dashboard"><button class="btn-cerrar-sesion text-center pl-3">Dasboard</button></router-link></li>
             <li><button class="btn-cerrar-sesion text-center pl-3"
                @click="cerrarSesion()"> Cerrar sesión</button></li>
           </ul>

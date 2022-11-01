@@ -50,10 +50,10 @@ export default {
     data() {
         return {
             usuario:{
-               /*  email:'pneumaconsulting@gmail.com',
-                password:'Admin.1234*' */
-                email:'',
-                password:''
+                /* email:'pneumaconsulting@gmail.com',
+                password: 'Admin.1234*' */
+               email:'',
+                password:'' 
             }
         }
     },
@@ -69,7 +69,7 @@ export default {
 
             const token =res.data.data.jwToken;
             this.guardarUsuario(token);
-            console.log('holissssss care boliss')
+            //console.log('holissssss care boliss')
             this.$router.push({path:'/admin'})
             
         })
@@ -80,7 +80,7 @@ export default {
             position: 'toast-top-end',
             icon: 'error',
             title: 'Ocurrio un error',
-            text: err.response.data.message,
+            text: err,
           });
         })
     }
