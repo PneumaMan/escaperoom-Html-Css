@@ -9,25 +9,23 @@
                     <table class="table table-bordered border-primary">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col"># doc</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Escape room asociado</th>
-                                <th scope="col">Accion </th>
+                                <th scope="col">#</th>
+                                <th scope="col">Abreviatura</th>
+                                <th scope="col">Descripción</th>
+                                <!-- <th scope="col">Accion </th> -->
                             </tr>
                         </thead>
                         <tbody class="text-secondary">
                             <tr v-for="(item, index) in TipoRetos" :key="index">
-                                <th scope="row">{{ item.identificacion }}</th>
-                                <td>{{ item.nombres }}{{ item.apellidos }}</td>
-                                <td>{{ item.telefono }}</td>
-                                <td>{{ item.escapeRoom.nombreEscapeRoom }}</td>
-                                <td>
+                                <th scope="row">{{ item.id }}</th>
+                                <td>{{ item.abreviatura }}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-outline-warning " data-bs-toggle="modal"
                                         data-bs-target="#EditarModal">
                                         Editar
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -41,25 +39,23 @@
                     <table class="table table-bordered border-primary">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col"># doc</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Escape room asociado</th>
-                                <th scope="col">Accion </th>
+                                <th scope="col">#</th>
+                                <th scope="col">Abreviatura</th>
+                                <th scope="col">Descripción</th>
+                                <!-- <th scope="col">Accion </th> -->
                             </tr>
                         </thead>
                         <tbody class="text-secondary">
                             <tr v-for="(item, index) in TipoPreguntas" :key="index">
-                                <th scope="row">{{ item.identificacion }}</th>
-                                <td>{{ item.nombres }}{{ item.apellidos }}</td>
-                                <td>{{ item.telefono }}</td>
-                                <td>{{ item.escapeRoom.nombreEscapeRoom }}</td>
-                                <td>
+                                <th scope="row">{{ item.id }}</th>
+                                <td>{{ item.abreviatura }}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-outline-warning " data-bs-toggle="modal"
                                         data-bs-target="#EditarModal">
                                         Editar
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -73,25 +69,23 @@
                     <table class="table table-bordered border-primary">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col"># doc</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Escape room asociado</th>
-                                <th scope="col">Accion </th>
+                                <th scope="col">#</th>
+                                <th scope="col">Abreviatura</th>
+                                <th scope="col">Descripción</th>
+                                <!-- <th scope="col">Accion </th> -->
                             </tr>
                         </thead>
                         <tbody class="text-secondary">
                             <tr v-for="(item, index) in EstadosParticipantes" :key="index">
-                                <th scope="row">{{ item.identificacion }}</th>
-                                <td>{{ item.nombres }}{{ item.apellidos }}</td>
-                                <td>{{ item.telefono }}</td>
-                                <td>{{ item.escapeRoom.nombreEscapeRoom }}</td>
-                                <td>
+                                <th scope="row">{{ item.id }}</th>
+                                <td>{{ item.abreviatura }}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-outline-warning " data-bs-toggle="modal"
                                         data-bs-target="#EditarModal">
                                         Editar
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
@@ -116,7 +110,7 @@ export default {
     },
     methods: {
         listarRetos() {
-            this.axios.get('/tipos-retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.get('/Parameters/tipos-retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
                     console.log(response.data)
                     this.TipoRetos = response.data.data;
@@ -126,7 +120,7 @@ export default {
                 })
         },
         listarPreguntas() {
-            this.axios.get('/tipos-preguntas', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.get('/Parameters/tipos-preguntas', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
                     console.log(response.data)
                     this.TipoPreguntas = response.data.data;
@@ -136,7 +130,7 @@ export default {
                 })
         },
         listarEstadoParticioantes() {
-            this.axios.get('/estado-participantes', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.get('/Parameters/estados-participantes', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
                     console.log(response.data)
                     this.EstadosParticipantes = response.data.data;

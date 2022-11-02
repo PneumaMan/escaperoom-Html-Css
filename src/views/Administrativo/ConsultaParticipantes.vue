@@ -1,7 +1,7 @@
 <template>
     <div class="container p-4">
         <div class="row">
-            <h1>Modulo de administración</h1>
+            <h1>Módulo  de administración</h1>
         </div>
 
         <div class="row my-4" v-show="Admin">
@@ -19,9 +19,8 @@
                 <div class="card-body">
                     <img src="../../assets/usuarios.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Usuarios</h5>
-
-                        <a href="/modulo-escape" class="btn btn-primary mx-1">Empezar</a>
+                        <h5 class="card-title">Parámetros</h5>
+                        <button @click.prevent="ConsultarParam()" class="btn btn-primary mx-1">Consultar</button>
                     </div>
                 </div>
             </div>
@@ -30,38 +29,40 @@
                     <img src="../../assets/roles.png" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">Roles</h5>
-
-                        <a href="/modulo-escape" class="btn btn-primary mx-1">Empezar</a>
+                        <button @click.prevent="ConsultarRol()" class="btn btn-primary mx-1">Consultar</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-
-            <Particioantes v-show="participante">
-            <button>⬅️</button>
-            </Particioantes>
+            <Participantes v-show="participante"/>
         </div>
+        <div class="row">
+            <Roles v-show="rol" />
+        </div>
+        <div class="row">
+            <Parametros v-show="parametros" />
+        </div> 
     </div>
 </template>
 <script>
 // @ is an alias to /src
-import Particioantes from '@/components/Cruds/Participantes.vue'
-import Usuarios from '@/components/Cruds/Usuarios.vue'
+import Participantes from '@/components/Cruds/Participantes.vue'
+import Parametros from '@/components/Cruds/Parametros.vue'
 import Roles from '@/components/Cruds/Roles.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    Particioantes,
-    Usuarios,
+    Participantes,
+    Parametros,
     Roles
   },
   data() {
     return {
         participante : false,
         rol : false,
-        usuarios : false,
+        parametros : false,
         Admin : true,
     }
   },
@@ -69,7 +70,15 @@ export default {
     ConsultaP(){
         this.participante = true
         this.Admin = false
-    }
+    },
+    ConsultarRol(){
+        this.rol = true
+        this.Admin = false
+    },
+    ConsultarParam(){
+        this.parametros = true
+        this.Admin = false
+    },
   },
 }
 </script>

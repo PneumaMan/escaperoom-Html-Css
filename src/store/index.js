@@ -11,12 +11,12 @@ const store = createStore({
     id:'',
     rol:0,
     afiliado:[],
-    auth: false
+    auth: false,
+    baseURL:'https://escape-room-app.azurewebsites.net/'
   },
   
   mutations: {
     obtenerUsuario(state, payload){
-      //console.log(payload )
       state.token = payload;
       if(payload === ''){
         state.user = ''

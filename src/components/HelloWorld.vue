@@ -5,44 +5,28 @@
         <h4 class="text-danger">Resultado: 0000</h4>
       </strong>
     </div>
-    <div class="" v-for="(item, index) in Retos" :key="index">
+    <!-- <div class="" v-for="(item, index) in nextReto" :key="index"> -->
+    <div class="" >
       <div class="row">
         <div class="question mt-5 mb-3">
-          <h1>{{ item.preguntaReto }}1</h1>
+          <h1>{{ nextReto.preguntaReto }}</h1>
         </div>
       </div>
-      <div class="row respuestas" v-for="(i, p) in item.respuestas" :key="p">
-        <div class="options">
-        <button class="button col-md-5 col-10 mx-1 my-3  mx-auto" > 🗝️{{i.respuestaReto}} </button>
-      </div>
+      <div class=" respuestas">
+        <div class="options" v-for="(i, p) in nextReto.respuestas" :key="p">
+
+          <button class="button col-md-5 col-10 mx-1 my-3  mx-auto" @click.prevent="showReto(nextReto.id)"> 🗝️{{
+              i.respuestaReto
+          }} </button>
+        </div>
 
       </div>
     </div>
-    <div class="row justify-content-end">
-      <div class="my-5 col align-self-end">
-        <router-link to="/salida">
-          <button type="button" class="btn btn-primary mx-1">Terminar</button>
-        </router-link>
-        <button type="button" class="btn btn-secondary mx-1" data-bs-toggle="modal"
-          data-bs-target="#exampleModal">Salida </button>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">salida voluntaria</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            ¿esta seguro?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary">Si</button>
-          </div>
+    
+    <div class="row" v-show="verQRfin">
+      <div class="card  mx-auto col-md-4 col-10 my-3 " style="border: none;">
+        <div class="card-body">
+          <qr-code text="Hello World!" :size="300" ></qr-code> 
         </div>
       </div>
     </div>
@@ -58,21 +42,59 @@ export default {
   data() {
     return {
       Retos: [],
+      posicionReto: 0,
+      nextReto: [],
+      verQRfin: false
+
     }
-  }, mounted() {
+  },
+  mounted() {
     this.listarRetos();
   },
   methods: {
     listarRetos() {
       this.axios.get('/Retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data.data)
           this.Retos = response.data.data;
+          this.nextReto = this.Retos[this.posicionReto]
         })
         .catch((e) => {
           console.log('error' + e);
         })
     },
+    showReto(i) {
+      this.posicionReto = this.posicionReto + 1
+      console.log(this.posicionReto)
+      this.nextReto = this.Retos[this.posicionReto]
+
+      if (this.Retos.length == this.posicionReto) {
+
+        console.log('esas son todas la preguntas')
+        this.$swal({
+          title: '¡Felicitaciones!',
+          text: "Has contestado todas la preguntas",
+          icon: 'success',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Salir!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.verQRfin = true
+          }
+        })
+      }
+    },
+    genColor() {
+      let rojo = Math.floor(Math.random() * 256)
+      let verde = Math.floor(Math.random() * 256)
+      let azul = Math.floor(Math.random() * 256)
+
+      /* var Col = [ '#ff@000', '#e@C569', '#0efFeR', '#C@CS9F', '#O0@OFT', '#FF3333','#fFFFO0', '#FF6600', 'HFFC569', '#FFCS@e', '#A43E00'];
+      var random_color = Col[Math.floor( Math.random() * Col.length)]; 
+      return random_color */
+      return `rgb(${rojo}, ${verde}, ${azul})`
+    }
 
   },
 }
@@ -84,18 +106,17 @@ export default {
   margin: auto;
 }
 
-.respuestas{
+.respuestas {
   display: flex;
-}
-
-.respuestas > .options {
+  justify-content: space-between;
   flex-direction: row;
 }
 
- .button {
-  border:1px solid  #c60929;
+.button {
+  border: 1px solid #c60929;
   border-radius: 5px;
   height: 200px;
+  width: 250px;
   margin: auto;
   padding: 7%;
   color: rgb(50, 49, 49);
@@ -108,14 +129,21 @@ export default {
 
 }
 
+@media screen and (max-width: 600px) {
+  .respuestas {
+    justify-content: space-between;
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 370px) {
   .button {
-    border: none;
+    border: 1px solid #c60929;
     border-radius: 5px;
     height: 200px;
     margin: auto;
     padding: 3%;
-    color: white;
+    color: rgb(50, 49, 49);
     font-size: 15px;
     font-weight: 500;
   }

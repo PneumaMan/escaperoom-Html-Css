@@ -222,9 +222,10 @@
                                             v-model="reto.preguntaReto"></textarea>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Numero del reto</label>
+                                        <label for="exampleFormControlTextarea1" class="form-label">Numero del
+                                            reto</label>
                                         <input type="number" class="form-control" v-model="reto.numeroReto">
-                                        
+
                                     </div>
 
                                     <hr />
@@ -261,7 +262,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="card w-75 mx-auto">
+                <div class="card w-90 mx-auto">
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
@@ -272,6 +273,7 @@
                                     <th scope="col">Tipo Pregunta</th>
                                     <th scope="col">Bonificación</th>
                                     <th scope="col">Respuestas</th>
+                                    <th scope="col">QR</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
                             </thead>
@@ -281,16 +283,21 @@
                                     <td>{{ item.nombreReto }}</td>
                                     <td>{{ item.preguntaReto }}</td>
                                     <td>{{ item.tipoPregunta }}</td>
-                                    <td>{{ item.bonificacionReto }}</td>
+                                    <td>{{ item.bonificacion }}</td>
+                                    <td>
+                                        <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#modalQR" @click.prevent="CargarQR(item)">QR</button>
+                                    </td>
                                     <td>
                                         <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
                                             data-bs-target="#exampleModalRespuestas">Respuestas</button>
-
                                     </td>
+
 
                                     <td>
                                         <button class="btn btn-outline-warning mx-1">Editar</button>
-                                        <button class="btn btn-outline-danger">Eliminar</button>
+                                        <button class="btn btn-outline-danger"
+                                            @click.prevent="EliminarReto(item.id)">Eliminar</button>
                                     </td>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModalRespuestas" tabindex="-1"
@@ -304,8 +311,30 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item" v-for="(i, p) in item.respuestas" :key="p">{{i.respuestaReto}}</li>
+                                                        <li class="list-group-item" v-for="(i, p) in item.respuestas"
+                                                            :key="p">{{ i.respuestaReto }}</li>
                                                     </ul>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cerrar</button>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal fade" id="modalQR" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <qr-code :text="urlCompleta" :size="300" :color="item.color"
+                                                        :bg-color="item.bgColor" class="mx-auto"></qr-code>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -322,8 +351,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </template>
@@ -375,7 +402,30 @@ export default {
                     }
                 ]
             },
-            id_Reto: 0
+            retoEditar: {
+                id:0,
+                nombreReto: "",
+                preguntaReto: "",
+                tipoPregunta: 1,
+                numeroReto: 1,
+                tipoReto: 1,
+                bonificacionReto: "",
+                escapeRoomId: 0,
+                color: "",
+                bgColor: "",
+                respuestas: [
+                    {
+                        respuestaReto: '',
+                        correcta: false,
+                        retoId: 0
+                    }
+                ]
+            },
+            id_Reto: 0,
+            UrlBase: '',
+            urlCompleta: '',
+            colorQR: '',
+            bgQR: ''
 
         }
     },
@@ -494,11 +544,74 @@ export default {
                         icon: 'error',
                         title: 'Ocurrio un error',
                         text: e.response.data.Errors.ErrorMessage
-,
+                        ,
                     });
                 })
 
         },
+        ActivarEdicionReto(item) {
+            this.retoEditar.id = item.id
+            this.retoEditar.nombreReto = item.nombreReto
+            this.retoEditar.tipoPregunta = item.tipoPregunta
+            this.retoEditar.numeroReto = item.numeroReto
+            this.retoEditar.tipoReto = item.tipoReto
+            this.retoEditar.bonificacionReto = item.bonificacionReto
+            this.retoEditar.escapeRoomId = item.escapeRoomId
+            this.retoEditar.color = item.color
+            this.retoEditar.bgColor = item.bgColor
+            this.retoEditar.respuestas.respuestaReto = item.respuestas.respuestaReto
+            this.retoEditar.respuestas.correcta = item.respuestas.correcta
+            this.retoEditar.respuestas.retoId = item.respuestas.retoId
+
+
+        },
+        EliminarReto(id) {
+            console.log(id)
+            this.$swal({
+                title: '¿Esta Seguro?',
+                text: "Esta accion no se puede revertir",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, eliminar!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.axios.delete(`/Retos/${id}`, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                        .then(res => {
+                            let index = this.Retos.findIndex(item => item._id === res.data.id)
+                            this.Retos.splice(index, 1);
+                            this.$swal(
+                                'Eliminado!',
+                                'El reto a sido eliminado.',
+                                'success'
+                            )
+                        })
+                        .catch(e => {
+                            console.log(e.response);
+                            this.$swal({
+                                position: 'toast-top-end',
+                                icon: 'error',
+                                title: 'Ocurrio un error',
+                                text: e.response.data.errors,
+                            });
+                        })
+
+                }
+            })
+
+        },
+        CargarQR(item) {
+            console.log(item)
+            var URLactual = window.location.host;
+            console.log(URLactual)
+
+            this.UrlBase = URLactual
+            const url = item.urlQR
+            this.urlCompleta = this.UrlBase / url
+            this.colorQR = item.color
+            this.bgQR = item.bgColor
+        }
     },
 
 }

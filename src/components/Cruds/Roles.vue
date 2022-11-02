@@ -3,31 +3,28 @@
         <div class="p-4">
             <div class="row">
                 <div class="row">
-                    <h3>Tipo de retos</h3>
+                    <h3>Roles</h3>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered border-primary">
                         <thead class="table-primary">
                             <tr>
-                                <th scope="col"># doc</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Telefono</th>
-                                <th scope="col">Escape room asociado</th>
-                                <th scope="col">Accion </th>
+                                <th scope="col"># </th>
+                                <th scope="col">Rol</th>
+                                
+                                <!-- <th scope="col">Accion </th> -->
                             </tr>
                         </thead>
                         <tbody class="text-secondary">
                             <tr v-for="(item, index) in Roles" :key="index">
-                                <th scope="row">{{ item.identificacion }}</th>
-                                <td>{{ item.nombres }}{{ item.apellidos }}</td>
-                                <td>{{ item.telefono }}</td>
-                                <td>{{ item.escapeRoom.nombreEscapeRoom }}</td>
-                                <td>
+                                <th scope="row">{{ index +1 }}</th>
+                                <td>{{ item.role }}</td>
+                                <!-- <td>
                                     <button type="button" class="btn btn-outline-warning " data-bs-toggle="modal"
                                         data-bs-target="#EditarModal">
                                         Editar
                                     </button>
-                                </td>
+                                </td> -->
                             </tr>
                         </tbody>
                     </table>
