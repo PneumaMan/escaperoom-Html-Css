@@ -5,7 +5,7 @@
                 <img src="../../assets/Topsecret-amico.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title mb-5">{{ item.nombreEscapeRoom }}</h5>
-                    <a href="/home" class="btn btn-primary mx-1">Empezar</a>
+                    <router-link to="/home" class="btn btn-primary mx-1">Empezar</router-link>
                 </div>
             </div>
         </div>

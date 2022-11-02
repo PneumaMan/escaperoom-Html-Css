@@ -7,7 +7,8 @@
                     <h5 class="card-title">Modulo de escape room's</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
-                    <a href="/modulo-escape" class="btn btn-primary mx-1">Empezar</a>
+                        <router-link to="/modulo-escape" class="btn btn-primary mx-1">Empezar</router-link>
+                    
                 </div>
             </div>
             <div class="card my-2" style="width: 18rem; margin: auto;">
@@ -16,7 +17,8 @@
                     <h5 class="card-title">Modulo de Monitoreo</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
-                    <a href="/consulta" class="btn btn-primary mx-1">Empezar</a>
+                        <router-link to="/perfil" class="btn btn-primary mx-1">Empezar</router-link>
+                    
                 </div>
             </div>
             <div class="card my-2" style="width: 18rem; margin: auto;">
@@ -25,7 +27,7 @@
                     <h5 class="card-title">Modulo Administrativo</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                         card's content.</p>
-                    <a href="/consulta" class="btn btn-primary mx-1">Empezar</a>
+                        <router-link to="/consulta" class="btn btn-primary mx-1">Empezar</router-link>
                 </div>
             </div>
         </div>
