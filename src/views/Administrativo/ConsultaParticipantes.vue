@@ -1,10 +1,13 @@
 <template>
     <div class="container p-4">
+        <div class="" v-show="Admin">
+        <div class="row">
+            <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></router-link>
+        </div>
         <div class="row">
             <h1>Módulo  de administración</h1>
         </div>
-
-        <div class="row my-4" v-show="Admin">
+        <div class="row my-4" >
             <div class="card col-11 col-md-3 mx-1 mx-auto" style="width: 18rem; margin: auto;">
                 <div class="card-body">
                     <img src="../../assets/participantes.png" class="card-img-top" alt="...">
@@ -34,14 +37,24 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <Participantes v-show="participante"/>
         </div>
-        <div class="row">
-            <Roles v-show="rol" />
+        <div class="row"  v-show="participante">
+            <div class="row">
+                <button class="col-1 text-primary" @click="ConsultaP()" style="border: none;background-color: transparent;"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></button>
+            </div>
+            <Participantes/>
         </div>
-        <div class="row">
-            <Parametros v-show="parametros" />
+        <div class="row"  v-show="rol">
+            <div class="row">
+                <button class="col-1 text-primary" @click="ConsultarRol()" style="border: none;background-color: transparent;"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></button>
+        </div>
+            <Roles />
+        </div>
+        <div class="row" v-show="parametros">
+            <div class="row">
+                <button class="col-1 text-primary" @click="ConsultarParam()" style="border: none;background-color: transparent;"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></button>
+        </div>
+            <Parametros />
         </div> 
     </div>
 </template>
@@ -68,16 +81,16 @@ export default {
   },
   methods: {
     ConsultaP(){
-        this.participante = true
-        this.Admin = false
+        this.participante = !this.participante
+        this.Admin = !this.Admin
     },
     ConsultarRol(){
-        this.rol = true
-        this.Admin = false
+        this.rol = !this.rol
+        this.Admin = !this.Admin
     },
     ConsultarParam(){
-        this.parametros = true
-        this.Admin = false
+        this.parametros = !this.parametros
+        this.Admin = !this.Admin
     },
   },
 }

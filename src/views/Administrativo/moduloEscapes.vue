@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div class="row">
+            <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></router-link>
+        </div>
+        <div class="row">
             <h1 class="mx-auto my-3">Modulo de Administrativo de escapes room's</h1>
         </div>
         <div class="row">
@@ -290,7 +293,7 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalRespuestas">Respuestas</button>
+                                            data-bs-target="#exampleModalRespuestas" @click.prevent="CargarRespuestas(item)">Respuestas</button>
                                     </td>
 
 
@@ -328,13 +331,14 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR- {{titulo}}</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <qr-code :text="urlCompleta" :size="300" :color="item.color"
-                                                        :bg-color="item.bgColor" class="mx-auto"></qr-code>
+                                                    <!-- <qr-code :text="urlCompleta" :size="300" :color="colorQR"
+                                                        bg-color="bgQR" class="mx-auto"></qr-code> -->
+                                                    <qr-code :text="urlCompleta" :size="300" class="mx-auto"></qr-code>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -425,7 +429,8 @@ export default {
             UrlBase: '',
             urlCompleta: '',
             colorQR: '',
-            bgQR: ''
+            bgQR: '',
+            titulo:""
 
         }
     },
@@ -562,8 +567,6 @@ export default {
             this.retoEditar.respuestas.respuestaReto = item.respuestas.respuestaReto
             this.retoEditar.respuestas.correcta = item.respuestas.correcta
             this.retoEditar.respuestas.retoId = item.respuestas.retoId
-
-
         },
         EliminarReto(id) {
             console.log(id)
@@ -605,12 +608,33 @@ export default {
             console.log(item)
             var URLactual = window.location.host;
             console.log(URLactual)
-
+            this.titulo = item.nombreReto
             this.UrlBase = URLactual
             const url = item.urlQR
-            this.urlCompleta = this.UrlBase / url
-            this.colorQR = item.color
-            this.bgQR = item.bgColor
+            this.urlCompleta = this.UrlBase+'/'+url
+            console.log( this.urlCompleta)
+            console.log(item.color ,item.bgColor)
+            //this.colorQR = item.color
+            this.colorQR = '#ff00ff'
+            //this.bgQR = item.bgColor
+            this.bgQR = '#ffffff'
+
+            //prueba
+            var variable = 'EscapeRoom'
+            var query = url;
+            var vars = query.split("&");
+            //alert(vars);
+            for (var i=0; i < vars.length; i++) {
+                var pair = vars[i].split("="); 
+                    if (pair[i] == 'EscapeRoom' ) {
+                        console.log(vars[i] )
+                        const idEscape = pair[i+1]
+                        console.log(idEscape)
+                    }
+            }
+        },
+        CargarRespuestas(item){
+            console.log(item)
         }
     },
 

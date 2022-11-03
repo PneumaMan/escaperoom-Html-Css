@@ -2,8 +2,9 @@
     <div class="container">
         <div class="p-4">
             <div class="row">
+                <h3 class="mx-auto mb-5"> Parámetros</h3>
                 <div class="row">
-                    <h3>Tipo de retos</h3>
+                    <h5 class="my-5">Tipo de retos</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered border-primary">
@@ -33,7 +34,7 @@
             </div>
             <div class="row">
                 <div class="row">
-                    <h3>Tipo de preguntas</h3>
+                    <h5 class="my-5">Tipo de preguntas</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered border-primary">
@@ -63,7 +64,7 @@
             </div>
             <div class="row">
                 <div class="row">
-                    <h3>estado de los particiopantes</h3>
+                    <h5 class="my-5">Estado de los participantes</h5>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered border-primary">

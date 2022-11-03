@@ -73,12 +73,28 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Administrativo/moduloEscapes.vue')
   },
   {
-    path: '/escapes',
-    name: 'ecapes',
+    path: '/logueo',
+    name: 'logueo',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Scapes-room.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/logueo.vue')
+  },
+  {
+    path: '/start',
+    name: 'CargaLecturaRetos',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/CargaLecturaRetos.vue')
+  },
+  {
+    path: '/responder-retos',
+    name: 'ResponerRetos',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/ResponerRetos.vue')
   },
   {
     path: '/salida',

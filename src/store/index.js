@@ -9,7 +9,7 @@ const store = createStore({
     user: '',
     email:'',
     id:'',
-    rol:0,
+    rol:'',
     afiliado:[],
     auth: false,
     baseURL:'https://escape-room-app.azurewebsites.net/'
@@ -26,6 +26,8 @@ const store = createStore({
         state.email = state.user.email
         console.log(state.user)
         state.auth = true;
+        state.rol = state.user.roles
+        console.log(state.rol)
       }
     },
     doLogout(state) {

@@ -2,7 +2,7 @@
     <div class="container">
 
         <div class="row">
-            <h5 class="mx-auto"> Participantes</h5>
+            <h3 class="mx-auto"> Participantes</h3>
         </div>
         <div class="row">
             <!-- Button trigger modal -->
