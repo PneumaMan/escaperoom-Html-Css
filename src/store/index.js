@@ -12,10 +12,16 @@ const store = createStore({
     rol:'',
     afiliado:[],
     auth: false,
-    baseURL:'https://escape-room-app.azurewebsites.net/'
+    baseURL:'https://escape-room-app.azurewebsites.net/',
+    datosID:''
   },
   
   mutations: {
+    obtenerIdQR(state,payload){
+      state.datosID = payload
+      console.log( state.datosID)
+
+    },
     obtenerUsuario(state, payload){
       state.token = payload;
       if(payload === ''){
@@ -43,7 +49,7 @@ const store = createStore({
     },
     cerrarSesion({commit}){
       commit('obtenerUsuario', '');
-      commit('doLogout');
+      commit('doLogout'); 
       localStorage.removeItem('token');
       router.push({path:'/'});
       /* this.state.auth = false;
@@ -57,6 +63,9 @@ const store = createStore({
         commit('obtenerUsuario', '');
       }
 
+    },
+    guardarDatosQr({commit}, payload){
+      commit('obtenerIdQR', payload)
     }
   },
   getters: {
