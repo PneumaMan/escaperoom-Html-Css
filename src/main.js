@@ -15,6 +15,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 /* Libreriapara crear QR */
 import VueQRCodeComponent from 'vue-qrcode-component'
 
+
 const app = createApp(App);
 app.use(router);
 app.use(VueSweetalert2);

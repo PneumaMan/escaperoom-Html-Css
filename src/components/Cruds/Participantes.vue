@@ -10,7 +10,34 @@
                 data-bs-target="#exampleModal">
                 Nuevo participante
             </button>
+            <button type="button" class="btn btn-primary col-8 col-md-3 my-5 mx-2" data-bs-toggle="modal"
+                data-bs-target="#QRModal">
+                Codigo Qr - inicio sesión
+            </button>
 
+            <!-- Modal QR-->
+            <div class="modal fade" id="QRModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Codigo QR para el inicio de sesion del
+                                participante</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="mx-auto">
+                                    <qr-code text="https://gray-smoke-09e195710.2.azurestaticapps.net/logueo"
+                                        :size="300"></qr-code>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Modal Crear-->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
@@ -279,7 +306,7 @@ export default {
         },
         editarParticipantes() {
             const _id = this.editarParticipante.id
-            this.axios.put(`/Participantes/${_id}`, this.editarParticipante,{ 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.put(`/Participantes/${_id}`, this.editarParticipante, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     let index = this.participantes.findIndex(item => item._id === this.editarParticipante.id);
                     this.particioantes[index].nombres = this.editarParticipante.nombres;

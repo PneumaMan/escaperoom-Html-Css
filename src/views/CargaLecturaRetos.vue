@@ -1,26 +1,29 @@
 <template>
-    <h3 class="mt-5">Escanea el codigo QR</h3>
-    <div class="p-4" v-show="!verScanner">
-        <div class="row">
-            <p class="text-secondary">presiona la camara </p>
-        </div>
-        <div class="row">
-            <button @click="verScanner = true" style="background-color: transparent; border: none;">
-                <div class="row my-3" style="position: relative; left: 0; top: 0;">
-                    <div class="blob mx-auto mt-5">
+    <div class="container">
+        <h3 class="mt-5">Escanea el codigo QR</h3>
+        <div class="p-4" v-show="!verScanner">
+            <div class="row">
+                <p class="text-secondary">presiona la camara </p>
+            </div>
+            <div class="row">
+                <button @click="verScanner = true" style="background-color: transparent; border: none;">
+                    <div class="row my-3 mx-auto" style="position: relative;">
+                        <div class="blob mt-5">
+                        </div>
+                        <img style="width:400px; left: 20rem;" src="../assets/img-participantes/Camera.png" alt=""
+                            class="img-3d-carga">
                     </div>
-                    <img src="../assets/img-participantes/Camera.png" alt="" class="img-3d-carga">
-                </div>
-            </button>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="p-4" v-show="verScanner">
-        <div class="card mx-auto my-5">
-            <div class="card-body">
-                <!--  <myQRScanner /> -->
-                <p>{{errorQr}}</p>
-                <p>{{decodedString}}</p>
-                <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
+        <div class="p-4" v-show="verScanner">
+            <div class="card mx-auto my-5">
+                <div class="card-body">
+                    <!--  <myQRScanner /> -->
+                    <p>{{ errorQr }}</p>
+                    <p>{{ decodedString }}</p>
+                    <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
+                </div>
             </div>
         </div>
     </div>
@@ -28,13 +31,13 @@
 <script>
 import { QrcodeStream } from 'vue3-qrcode-reader'
 import myQRScanner from "@/components/myQRScanner.vue";
-import {  mapMutations,mapActions, mapState } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 export default {
     data() {
         return {
             verScanner: false,
-            errorQr:'',
-            decodedString:''
+            errorQr: '',
+            decodedString: ''
         }
     },
     components: {
@@ -42,7 +45,7 @@ export default {
         QrcodeStream
     },
     methods: {
-        ...mapMutations(['obtenerIdQR']), 
+        ...mapMutations(['obtenerIdQR']),
         ...mapActions(['guardarDatosQr']),
         async onInit(promise) {
             // show loading indicator
@@ -69,7 +72,7 @@ export default {
                 // hide loading indicator
             }
         },
-        onDecode(decodedString){
+        onDecode(decodedString) {
             this.decodedString = decodedString
             console.log(this.decodedString)
 
@@ -80,14 +83,37 @@ export default {
             console.log(vars)//objeto con los id de escape room y reto
 
             this.obtenerIdQR(vars);
-            this.$router.push({path:'/responder-retos'})
+            this.$router.push({ path: '/responder-retos' })
 
         }
     },
 }
 </script>
 <style scoped>
-@media  (width: 600px)  and (width: 1200px) { 
+.blob {
+    overflow: hidden;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+    background-color: #eb1e1eb0;
+    background-size: cover;
+    background-position: center;
+    position: absolute;
+    z-index: -1;
+    left: 26rem;
+    margin: auto !important;
+}
+
+.img-3d-carga {
+    position: absolute;
+    z-index: 1;
+    top: 30px;
+    left: 320px;
+    width: 90px;
+
+}
+
+@media (width: 600px) and (width: 1200px) {
 
     .bt-consulta {
         border-radius: 15px;
@@ -117,16 +143,17 @@ export default {
         background-color: #eb1e1eb0;
         background-size: cover;
         background-position: center;
-        position:absolute; 
+        position: absolute;
         z-index: -1;
     }
 
-      .img-3d-carga {
+    .img-3d-carga {
         position: absolute;
         z-index: 1;
         top: 60px;
         left: 420px;
         width: 100px;
+
     }
 
 }
@@ -149,8 +176,8 @@ export default {
         background-color: #eb1e1eb0;
         background-size: cover;
         background-position: center;
-
-        /* position:absolute; */
+        left: 55px !important;
+        top: 20px !important;
         z-index: -1;
     }
 
@@ -158,7 +185,8 @@ export default {
         position: absolute;
         z-index: 1;
         top: 50px;
-        width: 300px;
+        width: 320px;
+        left: 0 !important;
     }
 }
 </style>

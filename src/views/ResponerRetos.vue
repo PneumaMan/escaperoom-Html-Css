@@ -1,7 +1,7 @@
 <template>
     <div class="fondo">
         <div class="row ">
-            <img src="../assets/img-participantes/img-reto.png" alt="" class="img-3d-responder my-4">
+            <img src="../assets/img-participantes/img-reto.png" alt="" class="img-3d-responder my-4" style="width:400px;">
         </div>
         <div class="" >
         <div class="row">
@@ -86,6 +86,11 @@ body{
 .bt-respuestas{
     border-radius:15px ;
 }
+
+.img-3d-responder {
+    margin: auto;
+    width: 150px;
+    }
 @media (width: 600px)  and (width: 1200px) {
  .img-3d-responder {
     margin: auto;

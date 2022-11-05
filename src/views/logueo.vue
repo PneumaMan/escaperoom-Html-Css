@@ -2,17 +2,18 @@
     <div class="container">
         <div class=" pg-inicial">
             <div class="row my-3" style="position: relative; left: 0; top: 0;">
-                <div class="blob-logueo mx-auto mt-5"></div>
-                <img src="../assets/img-participantes/img-inicial.png" alt="" class="img-3d-logueo mx-auto" style="width:450px;">
+                <div class="blob-logueo mt-5"></div>
+                <img src="../assets/img-participantes/img-inicial.png" alt="" class="img-3d-logueo mx-auto mt-5" style="width:450px;">
             </div>
             <div class="row">
-                <div class="card  my-5 tarjeta-from">
+                <div class="card  my-5 tarjeta-from col-8 col-md-6 mx-auto">
                     <div class="card-body">
                         <div class=" col-md-6 mx-auto">
                             <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
                                     documento</Strong></label>
-                            <input type="text" class="form-control-plaintext text-center">
-                            <router-link to="/start"><button class="btn btn-warning my-3 bt-consulta">Consultar</button>
+                            <input type="text" class="form-control-plaintext text-center" style="border-bottom: 1px solid #ebcc24;">
+                            <router-link to="/start"><button class="btn btn-warning my-3 bt-consulta"
+                                style="border-radius: 15px;width: 120px;">Consultar</button>
                             </router-link>
                         </div>
                     </div>
@@ -32,6 +33,18 @@ export default {
 }
 </script>
 <style scoped>
+.blob-logueo {
+        overflow: hidden;
+        width: 18rem;
+        height: 18rem;
+        border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+        background-color: #ebcc24;
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        z-index: -1;
+        left: 26rem;
+    }
 @media (width: 1201px) and (width: 1350px) {
     .bt-consulta {
         border-radius: 15px;
@@ -47,10 +60,6 @@ export default {
         background-color: rgba(255, 255, 255, .15);
         backdrop-filter: blur(5px);
         border: none;
-    }
-
-    .form-control-plaintext {
-        border-bottom: 1px solid #ebcc24;
     }
 
     .blob-logueo {
@@ -103,7 +112,8 @@ export default {
         background-color: #ebcc24;
         background-size: cover;
         background-position: center;
-        position: absolute;
+        left: 55px !important;
+        top: 20px !important;
         z-index: -1;
     }
 
@@ -125,25 +135,26 @@ export default {
         background-color: rgba(255, 255, 255, .15);
         backdrop-filter: blur(5px);
         border: none;
+        top: 300px;
     }
 
     .blob-logueo {
         overflow: hidden;
-        width: 14rem;
-        height: 14rem;
+        width: 16rem;
+        height: 16rem;
         border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
         background-color: #ebcc24;
         background-size: cover;
         background-position: center;
-
-        /* position:absolute; */
+        left: 50px !important;
+        top: 20px !important;
         z-index: -1;
     }
 
     .img-3d-logueo {
         position: absolute;
         z-index: 1;
-        top: 50px;
+        top: 30px;
     }
 }
 </style>

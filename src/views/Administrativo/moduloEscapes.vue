@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <div class="row">
-            <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i></router-link>
+            <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i>
+            </router-link>
         </div>
         <div class="row">
             <h1 class="mx-auto my-3">Modulo de Administrativo de escapes room's</h1>
@@ -86,7 +87,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Organizador</th>
                                 <th scope="col">Retos</th>
-
+                                <th scope="col">Escape room</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -100,9 +101,14 @@
                                         @click.prevent="activarIdReto(item.id)">Retos</button>
                                 </td>
                                 <td>
+                                    <button class="btn btn-outline-info mx-1">Inicar</button>
+                                    <button class="btn btn-outline-danger mx-1">Terminar</button>
+                                </td>
+                                <td>
                                     <button class="btn btn-outline-warning mx-1"
                                         @click.prevent="ActivarEditarEscape(item)" data-bs-toggle="modal"
                                         data-bs-target="#ModalEditarEscape">Editar</button>
+
                                 </td>
                             </tr>
                         </tbody>
@@ -249,7 +255,7 @@
                                         </span>
                                         <div class="form-check col-8 col-md-6 ml-2">
                                             <input class="form-check-input" type="checkbox" value="" id=""
-                                                v-model="reto.respuestas.correcta" />
+                                                v-model="input.correcta" />
                                             <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
                                         </div>
                                     </div>
@@ -264,7 +270,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="row">
+                <!-- Tabla de los retos -->
                 <div class="card w-90 mx-auto">
                     <div class="table-responsive">
                         <table class="table">
@@ -293,16 +301,17 @@
                                     </td>
                                     <td>
                                         <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalRespuestas" @click.prevent="CargarRespuestas(item)">Respuestas</button>
+                                            data-bs-target="#exampleModalRespuestas"
+                                            @click.prevent="CargarRespuestas(item)">Respuestas</button>
                                     </td>
-
-
                                     <td>
-                                        <button class="btn btn-outline-warning mx-1">Editar</button>
+                                        <button class="btn btn-outline-warning mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#ModalEditarRetos"
+                                            @click.prevent="ActivarEdicionReto(item)">Editar</button>
                                         <button class="btn btn-outline-danger"
                                             @click.prevent="EliminarReto(item.id)">Eliminar</button>
                                     </td>
-                                    <!-- Modal -->
+                                    <!-- Modal Respuestas-->
                                     <div class="modal fade" id="exampleModalRespuestas" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -326,19 +335,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Modal QR-->
                                     <div class="modal fade" id="modalQR" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR- {{titulo}}</h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">QR- {{ titulo }}
+                                                    </h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- <qr-code :text="urlCompleta" :size="300" :color="colorQR"
                                                         bg-color="bgQR" class="mx-auto"></qr-code> -->
-                                                    <qr-code :text="urlCompleta" :size="300" class="mx-auto"></qr-code>
+
+                                                    <qrcode-vue :value="urlCompleta" :size="size" level="H"
+                                                        :background="bgQR" :foreground="colorQR" />
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -355,14 +368,94 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal EDITAR retos -->
+            <div class="modal fade" id="ModalEditarRetos" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar retos </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form">
+                                <div class="row">
+                                    <div class="mb-3 col-8 col-md-6">
+                                        <label for="" class="form-label">Nombre del reto</label>
+                                        <input type="text" class="form-control" v-model="retoEditar.nombreReto">
+                                    </div>
+                                    <div class="mb-3 col-8 col-md-6">
+                                        <label for="" class="form-label">Tiempo Bonificación
+                                        </label>
+                                        <input type="time" class="form-control" v-model="retoEditar.bonificacionReto">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-8 col-md-6">
+                                        <label for="" class="form-label">Color del QR
+                                        </label>
+                                        <input type="color" class="form-control" v-model="retoEditar.color">
+                                    </div>
+                                    <div class="mb-3 col-8 col-md-6">
+                                        <label for="" class="form-label">Color de fondo QR
+                                        </label>
+                                        <input type="color" class="form-control" v-model="retoEditar.bgColor">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Enunciado de la
+                                        pregunta</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                        v-model="retoEditar.preguntaReto"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleFormControlTextarea1" class="form-label">Numero del
+                                        reto</label>
+                                    <input type="number" class="form-control" v-model="retoEditar.numeroReto">
+
+                                </div>
+
+                                <hr />
+                                <h5 class="mx-auto">Respuestas</h5>
+                                <hr />
+                                <div class="row" v-for="(input, k) in retoEditar.respuestas" :key="k">
+                                    <div class="form-group col-8 col-md-8 my-3">
+                                        <label for="exampleFormControlTextarea1" class="form-label mx-auto">Enunciado de
+                                            la respuesta # {{ k + 1 }}
+                                        </label>
+                                        <input type="text" class="form-control " v-model="input.respuestaReto">
+                                    </div>
+                                    <div class="form-check col-8 col-md-6 ml-2">
+                                        <input class="form-check-input" type="checkbox"
+                                            :value="retoEditar.respuestas.correcta" id="flexCheckDefault"
+                                            v-model="retoEditar.respuestas.correcta" />
+                                        <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" @click.prevent="editarReto()"
+                                data-bs-dismiss="modal">Actualizar</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </div>
 </template>
 <script>
 import Retos from '@/components/retos.vue'
+import QrcodeVue from 'qrcode.vue'
+
 export default {
     components: {
-        Retos
+        Retos,
+        QrcodeVue
+
     },
     data() {
         return {
@@ -407,7 +500,7 @@ export default {
                 ]
             },
             retoEditar: {
-                id:0,
+                id: 0,
                 nombreReto: "",
                 preguntaReto: "",
                 tipoPregunta: 1,
@@ -430,8 +523,8 @@ export default {
             urlCompleta: '',
             colorQR: '',
             bgQR: '',
-            titulo:""
-
+            titulo: "",
+            size: 300,
         }
     },
     mounted() {
@@ -555,7 +648,9 @@ export default {
 
         },
         ActivarEdicionReto(item) {
+            console.log(item)
             this.retoEditar.id = item.id
+            this.retoEditar.preguntaReto = item.preguntaReto
             this.retoEditar.nombreReto = item.nombreReto
             this.retoEditar.tipoPregunta = item.tipoPregunta
             this.retoEditar.numeroReto = item.numeroReto
@@ -564,9 +659,29 @@ export default {
             this.retoEditar.escapeRoomId = item.escapeRoomId
             this.retoEditar.color = item.color
             this.retoEditar.bgColor = item.bgColor
-            this.retoEditar.respuestas.respuestaReto = item.respuestas.respuestaReto
+            this.retoEditar.respuestas = item.respuestas
             this.retoEditar.respuestas.correcta = item.respuestas.correcta
             this.retoEditar.respuestas.retoId = item.respuestas.retoId
+        },
+        editarReto() {
+            console.log(this.retoEditar)
+            this.axios.put(`/Retos/${this.retoEditar.id}`, this.retoEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then(res => {
+                    this.$swal(
+                        'Actualizado!',
+                        'El reto a sido actualizado.',
+                        'success'
+                    )
+                })
+                .catch(e => {
+                    console.log(e.response);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: 'Ocurrio un error',
+                        text: e.response.data.errors,
+                    });
+                })
         },
         EliminarReto(id) {
             console.log(id)
@@ -611,19 +726,18 @@ export default {
             this.titulo = item.nombreReto
             this.UrlBase = URLactual
             const url = item.urlQR
-            this.urlCompleta = this.UrlBase+'/'+url
-            console.log( this.urlCompleta)
-            console.log(item.color ,item.bgColor)
-            //this.colorQR = item.color
-            this.colorQR = '#ff00ff'
-            //this.bgQR = item.bgColor
-            this.bgQR = '#ffffff'
+            this.urlCompleta = this.UrlBase + '/' + url
+            console.log(this.urlCompleta)
+            console.log(item.color, item.bgColor)
+            this.colorQR = item.color
+            this.bgQR = item.bgColor
+
 
             //prueba
-            var variable = 'EscapeRoom'
+            /* var variable = 'EscapeRoom'
             var query = url;
             var vars = query.split("&");
-            //alert(vars);
+
             for (var i=0; i < vars.length; i++) {
                 var pair = vars[i].split("="); 
                     if (pair[i] == 'EscapeRoom' ) {
@@ -631,11 +745,12 @@ export default {
                         const idEscape = pair[i+1]
                         console.log(idEscape)
                     }
-            }
+            } */
         },
-        CargarRespuestas(item){
+        CargarRespuestas(item) {
             console.log(item)
-        }
+        },
+
     },
 
 }
