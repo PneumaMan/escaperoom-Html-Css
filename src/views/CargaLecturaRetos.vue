@@ -3,6 +3,9 @@
         <h3 class="mt-5">Escanea el codigo QR</h3>
         <div class="p-4" v-show="!verScanner">
             <div class="row">
+                <p class="text-secondary">{{nextReto}}</p>
+            </div>
+            <div class="row">
                 <p class="text-secondary">presiona la camara </p>
             </div>
             <div class="row">
@@ -40,7 +43,7 @@ export default {
             errorQr: '',
             decodedString: '',
             datos:'',
-            Valores:''
+            Valores:'',
         }
     },
     components: {
@@ -48,6 +51,7 @@ export default {
         QrcodeStream
     },
     methods: {
+        ...mapState(['nextReto']),
         ...mapMutations(['obtenerIdQR']),
         ...mapActions(['guardarDatosQr']),
         async onInit(promise) {

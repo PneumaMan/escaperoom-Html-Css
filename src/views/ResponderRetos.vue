@@ -6,17 +6,16 @@
         </div>
         <div class="">
             <div class="row">
-                <h1 class="text-white">{{ preguntaReto }}</h1>
+                <h1 class="text-white">{{ preguntaR }}</h1>
                
             </div>
             <div class="row">
                 <div class="card my-5">
                     <div class="card-body p-4">
-                        <div class="row" v-for="(r, index) in Retos.respuestas" :key="index">
-                            <button class="btn btn-danger bt-respuestas my-2">
-                                <router-link to="/start" class="text-white">{{ r.respuestaReto }}</router-link>
-                            </button>
-                        </div>
+                       <div class="row" v-for="(r, index) in respuestas" :key="index">
+                            <button class="btn btn-danger bt-respuestas my-2" :value="r.id"
+                            @click.prevent="ResponderReto(r.id)">{{ r.respuestaReto }}</button>
+                        </div> 
                     </div>
                 </div>
             </div>
@@ -33,8 +32,8 @@
                         <div class="modal-body">
                             
                             <div class=" col-md-6 mx-auto">
-                                <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
-                                        documento</Strong></label>
+                                <label for="" class="form-label text-secondary"> Ingresa el numero de
+                                        documento</label>
                                 <input type="text" class="form-control-plaintext text-center"
                                     style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
 
@@ -44,7 +43,7 @@
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                 @click.prevent="TokenParticipante = false">Cerrar</button>
                             <button class="btn btn-warning my-3 bt-consulta" style="border-radius: 15px;width: 120px;"
-                                @click.prevent="AutenticacionParticipante()">Consultar</button>
+                                @click.prevent="AutenticacionParticipante()">Iniciar sesión</button>
                         </div>
                     </div>
                 </div>
@@ -60,28 +59,39 @@ export default {
             IdEscapeRoom: 0,
             IdReto: 0,
             Retos: [],
-            preguntaReto: '',
+            respuestas: [],
+            preguntaR: '',
             TokenParticipante: true,
             url: '',
             autenticacion: {
                 identificacion: "",
                 escapeRoomId: "",
-                retoId: ""
+                retoId: "" 
+                /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
+                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA" 
+             */
             },
             ControlReto: {
                 participanteId: 1,
-                retoId: ""
-            }
+                retoId: "",
+                respuestaId:''
+            },
+            AutenParti:[]
         }
     },
     mounted() {
         this.ValidarLocalStorage()
-        this.CargarReto()
+        //this.CargarReto()
     },
     methods: {
         ValidarLocalStorage() {
-            //console.log(window.localStorage.token)
-            if (window.localStorage.token == '') {
+            /* console.log(window.localStorage.token)
+            if (window.localStorage.token == null) {
+                this.TokenParticipante = true
+            }else{
+                this.TokenParticipante = false
+            } */
+            if (window.localStorage.participanteId == null) {
                 this.TokenParticipante = true
             }else{
                 this.TokenParticipante = false
@@ -101,33 +111,47 @@ export default {
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.autenticacion.escapeRoomId =  this.IdEscapeRoom
+             this.autenticacion.escapeRoomId =  this.IdEscapeRoom
             this.autenticacion.retoId = this.IdReto
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
-                    console.log(res.data, 'informacion participante')
+                    console.log(res.data.data, 'informacion participante')
+                    this.Retos = res.data.data
+                    this.preguntaR = this.Retos.nextReto.preguntaReto
+                    this.respuestas =  this.Retos.nextReto.respuestas
+                    console.log(this.respuestas)
+                    localStorage.setItem("participanteId", res.data.data.id);
+                    this.$store.state.participanteId = localStorage.getItem("participanteId");
+                    this.TokenParticipante = false
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 })
         },
-        CargarReto() {
-            this.ControlReto.retoId = this.IdReto
+        ResponderReto(id) {
+            console.log(id)
+            this.ControlReto.respuestaId = id
+            this.ControlReto.retoId = this.Retos.nextReto.id
+            this.ControlReto.participanteId = this.$store.state.participanteId
             console.log(this.ControlReto)
-            this.axios.post('/GameControl/reto', this.ControlReto,{ 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
                     console.log(res.data)
+                    this.GamecontrolReto = res.data.data
+                    this.$store.state.nextReto = this.GamecontrolReto.nextRetoMessage
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 })

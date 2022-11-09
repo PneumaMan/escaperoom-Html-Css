@@ -98,18 +98,18 @@
                                 <td>{{ item.organizador }}</td>
                                 <td>
                                     <button class="btn btn-outline-primary mx-1"
-                                        @click.prevent="activarIdReto(item.id)">Retos</button>
+                                        @click.prevent="activarIdReto(item.id)"><i class="bi bi-journal-medical"></i></button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-info mx-1"
-                                        @click.prevent="IniciarEscape(item.id)">Inicar</button>
+                                    <button class="btn btn-outline-success mx-1"
+                                        @click.prevent="IniciarEscape(item.id)"><i class="bi bi-power"></i></button>
                                     <button class="btn btn-outline-danger mx-1"
-                                        @click.prevent="TerminarEscape(item.id)">Finalizar</button>
+                                        @click.prevent="TerminarEscape(item.id)"><i class="bi bi-power"></i></button>
                                 </td>
                                 <td>
                                     <button class="btn btn-outline-warning mx-1"
                                         @click.prevent="ActivarEditarEscape(item)" data-bs-toggle="modal"
-                                        data-bs-target="#ModalEditarEscape">Editar</button>
+                                        data-bs-target="#ModalEditarEscape"><i class="bi bi-pencil-square"></i></button>
 
                                 </td>
                             </tr>
@@ -243,14 +243,14 @@
                                     </div>
                                     <div class="mb-3 form-floating">
                                         <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="reto.tipoPregunta">
-                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.abreviatura }}</option>
+                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.descripcion }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de pregunta</label>
                                         
                                     </div>
                                     <div class="mb-3 form-floating">
                                         <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="reto.tipoReto">
-                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.abreviatura }}</option>
+                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.descripcion }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de reto</label>
                                         
@@ -315,20 +315,21 @@
                                     <td>{{ item.tipoRetoDescription }}</td>
                                     <td>{{ item.bonificacion }}</td>
                                     <td>
-                                        <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
-                                            data-bs-target="#modalQR" @click.prevent="CargarQR(item)">QR</button>
-                                    </td>
-                                    <td>
                                         <button class="btn btn-outline-primary mx-1" data-bs-toggle="modal"
                                             data-bs-target="#exampleModalRespuestas"
-                                            @click.prevent="CargarRespuestas(item)">Respuestas</button>
+                                            @click.prevent="CargarRespuestas(item)"><i class="bi bi-list-check"></i></button>
                                     </td>
+                                    <td>
+                                        <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#modalQR" @click.prevent="CargarQR(item)"><i class="bi bi-qr-code-scan"></i></button>
+                                    </td>
+                                    
                                     <td>
                                         <button class="btn btn-outline-warning mx-1" data-bs-toggle="modal"
                                             data-bs-target="#ModalEditarRetos"
-                                            @click.prevent="ActivarEdicionReto(item)">Editar</button>
+                                            @click.prevent="ActivarEdicionReto(item)"><i class="bi bi-pencil-square"></i></button>
                                         <button class="btn btn-outline-danger"
-                                            @click.prevent="EliminarReto(item.id)">Eliminar</button>
+                                            @click.prevent="EliminarReto(item.id)"><i class="bi bi-trash3-fill"></i></button>
                                     </td>
                                     <!-- Modal Respuestas-->
                                     <div class="modal fade" id="exampleModalRespuestas" tabindex="-1"
@@ -431,13 +432,13 @@
                                 </div>
                                 <div class="mb-3 form-floating">
                                         <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="retoEditar.tipoPregunta">
-                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.abreviatura }}</option>
+                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.descripcion }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de pregunta</label>
                                     </div>
                                     <div class="mb-3 form-floating">
                                         <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="retoEditar.tipoReto">
-                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.abreviatura }}</option>
+                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.descripcion }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de reto</label>
                                     </div>
@@ -774,15 +775,16 @@ export default {
         IniciarEscape(escapeRoomId) {
             this.EscapeRoomId = escapeRoomId
             console.log(escapeRoomId)
-            const config = {
-                headers: {
-                    header1: this.EscapeRoomId
-                }
-            };
             const url = "/GameControl/escape-room/iniciar";
-            this.axios.post(url, config, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+
+            this.axios.post(url, {escapeRoomId}, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     console.log(res.data)
+                    this.$swal(
+                        '🎉🥳!',
+                        'El escape room ha iniciado.',
+                        'success'
+                    )
                 })
                 .catch(e => {
                     console.log(e);
@@ -797,16 +799,16 @@ export default {
         TerminarEscape(escapeRoomId) {
             this.EscapeRoomId = escapeRoomId
             console.log(escapeRoomId)
-            const config = {
-                headers: {
-                    header1: this.EscapeRoomId
-                }
-            };
             const url = "/GameControl/escape-room/finalizar";
-            this.axios.post(url, config, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            this.axios.post(url, {escapeRoomId}, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     console.log(res.data)
                     //this.IniciarTerminarER.push(res.data);
+                    this.$swal(
+                        '🎉🥳!',
+                        'El escape room ha finalizado.',
+                        'success'
+                    )
                 })
                 .catch(e => {
                     console.log(e.response.data.Errors);
