@@ -24,8 +24,8 @@
                 <div class="card-body">
                     <!--  <myQRScanner /> -->
                     <p>{{ errorQr }}</p>
-                    <p>{{ decodedString }}</p>
-                    <p>{{ Valores }}</p>
+                    <p>{{ IdEscapeRoom}}</p>
+                    <p>{{ IdReto }}</p>
                     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
                 </div>
             </div>
@@ -44,6 +44,8 @@ export default {
             decodedString: '',
             datos:'',
             Valores:'',
+            IdEscapeRoom:'',
+            IdReto:'',
         }
     },
     components: {
@@ -93,7 +95,16 @@ export default {
             this.obtenerIdQR(vars);
             this.datos = vars
             /* this.$router.push({ path: '/responder-retos' })  */
-
+            for (let index = 0; index < this.datos.length; index++) {
+                const element = this.datos[index];
+                console.log(element)
+                var idE = this.datos[0].split("=");
+                this.IdEscapeRoom = idE
+                console.log(idE[1], this.IdEscapeRoom)
+                var idR  = this.datos[1].split("=");
+                this.IdReto = idR[1]
+                console.log(idR)
+            }
         }
     },
 }
