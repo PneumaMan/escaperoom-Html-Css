@@ -7,7 +7,7 @@
         <div class="">
             <div class="row">
                 <h1 class="text-white">{{ preguntaReto }}</h1>
-                <p>{{datos}}</p>
+               
             </div>
             <div class="row">
                 <div class="card my-5">
@@ -31,7 +31,7 @@
                                 @click.prevent="TokenParticipante = false"></button>
                         </div>
                         <div class="modal-body">
-                            <p>{{IdReto}}</p>
+                            
                             <div class=" col-md-6 mx-auto">
                                 <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
                                         documento</Strong></label>
@@ -65,32 +65,35 @@ export default {
             url: '',
             autenticacion: {
                 identificacion: "",
-                escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqLDbvlDUEIPhExcsw8pnHTobR56L_c1MSS36kqX9pflFXwIaZayG1urSV5sM-1F4Vh2Zn80SgsQCx49XKMo3FJh5F_kY3EYG75VbmKBAcPTA",
-                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUprwQiN0QvSj_8M1tPFk-VVfTau4ir_5Pr2t9C_V7Q0wgmkWJOnwsWFd---WkDE04O99WAyEzMBs_YfYSG8FOw5EktmisppcRRbGOAUHuPdKA"
+                escapeRoomId: "",
+                retoId: ""
             },
             ControlReto: {
-                participanteId: "",
+                participanteId: 1,
                 retoId: ""
             }
         }
     },
     mounted() {
         this.ValidarLocalStorage()
+        this.CargarReto()
     },
     methods: {
         ValidarLocalStorage() {
             //console.log(window.localStorage.token)
             if (window.localStorage.token == '') {
                 this.TokenParticipante = true
+            }else{
+                this.TokenParticipante = false
             }
-            
+
             this.datos = this.$store.state.datosID
             for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
-                this.IdEscapeRoom = this.datos[0]
                 var idE = this.datos[0].split("=");
-                console.log(idE[1])
+                this.IdEscapeRoom = idE
+                console.log(idE[1], this.IdEscapeRoom)
                 var idR  = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
@@ -98,8 +101,9 @@ export default {
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.ControlReto.retoId = this.autenticacion.retoId
-            this.axios.post('/GameControl/participante/login', this.ControlReto)
+            this.autenticacion.escapeRoomId =  this.IdEscapeRoom
+            this.autenticacion.retoId = this.IdReto
+            this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data, 'informacion participante')
                 }).catch(e => {
@@ -113,7 +117,9 @@ export default {
                 })
         },
         CargarReto() {
-            this.axios.post('/GameControl/reto', this.autenticacion)
+            this.ControlReto.retoId = this.IdReto
+            console.log(this.ControlReto)
+            this.axios.post('/GameControl/reto', this.ControlReto,{ 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     console.log(res.data)
                 }).catch(e => {
