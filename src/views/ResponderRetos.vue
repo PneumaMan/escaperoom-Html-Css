@@ -7,6 +7,7 @@
         <div class="">
             <div class="row">
                 <h1 class="text-white">{{ preguntaReto }}</h1>
+                <p>{{datos}}</p>
             </div>
             <div class="row">
                 <div class="card my-5">
@@ -30,18 +31,20 @@
                                 @click.prevent="TokenParticipante = false"></button>
                         </div>
                         <div class="modal-body">
+                            <p>{{datos}}</p>
                             <div class=" col-md-6 mx-auto">
-                            <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
-                                    documento</Strong></label>
-                            <input type="text" class="form-control-plaintext text-center" style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
-                           
-                        </div>
+                                <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
+                                        documento</Strong></label>
+                                <input type="text" class="form-control-plaintext text-center"
+                                    style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
+
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                 @click.prevent="TokenParticipante = false">Cerrar</button>
-                                <button class="btn btn-warning my-3 bt-consulta"
-                                style="border-radius: 15px;width: 120px;" @click.prevent="AutenticacionParticipante()">Consultar</button>
+                            <button class="btn btn-warning my-3 bt-consulta" style="border-radius: 15px;width: 120px;"
+                                @click.prevent="AutenticacionParticipante()">Consultar</button>
                         </div>
                     </div>
                 </div>
@@ -59,11 +62,15 @@ export default {
             Retos: [],
             preguntaReto: '',
             TokenParticipante: true,
-            url:'',
-            autenticacion:{
+            url: '',
+            autenticacion: {
                 identificacion: "",
                 escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqLDbvlDUEIPhExcsw8pnHTobR56L_c1MSS36kqX9pflFXwIaZayG1urSV5sM-1F4Vh2Zn80SgsQCx49XKMo3FJh5F_kY3EYG75VbmKBAcPTA",
                 retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUprwQiN0QvSj_8M1tPFk-VVfTau4ir_5Pr2t9C_V7Q0wgmkWJOnwsWFd---WkDE04O99WAyEzMBs_YfYSG8FOw5EktmisppcRRbGOAUHuPdKA"
+            },
+            ControlReto: {
+                participanteId: "",
+                retoId: ""
             }
         }
     },
@@ -77,10 +84,12 @@ export default {
                 this.TokenParticipante = true
             }
             console.log(window.location)
-            this.url= window.location
+            this.url = window.location
+
             
-            /* this.datos = this.$store.state.datosID
-            for (let index = 0; index < this.datos.length; index++) {
+
+            this.datos = this.$store.state.datosID
+            /* for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
                 this.IdEscapeRoom = this.datos[0]
@@ -89,22 +98,37 @@ export default {
                 this.IdReto = this.datos[1].split("=");
                 var idR = this.IdReto[1]
                 console.log(idR)
-            } */
+            }  */
         },
-        AutenticacionParticipante(){
+        AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.axios.post('/GameControl/participante/login', this.autenticacion)
-            .then(res => {
-                console.log(res.data)
-            }).catch( e => {
-                console.log(e)
-                this.$swal({
+            this.ControlReto.retoId = this.autenticacion.retoId
+            this.axios.post('/GameControl/participante/login', this.ControlReto)
+                .then(res => {
+                    console.log(res.data, 'informacion participante')
+                }).catch(e => {
+                    console.log(e)
+                    this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
-                        title:e.response.data.Message,
-                        
+                        title: e.response.data.Message,
+
                     });
-            }) 
+                })
+        },
+        CargarReto() {
+            this.axios.post('/GameControl/reto', this.autenticacion)
+                .then(res => {
+                    console.log(res.data)
+                }).catch(e => {
+                    console.log(e)
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+
+                    });
+                })
         }
     },
 }

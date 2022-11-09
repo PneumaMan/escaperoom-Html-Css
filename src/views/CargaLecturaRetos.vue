@@ -88,7 +88,7 @@ export default {
 
             this.obtenerIdQR(vars);
             this.datos = vars
-             /* this.$router.push({ path: '/responder-retos' })  */
+            this.$router.push({ path: '/responder-retos' }) 
 
         }
     },
