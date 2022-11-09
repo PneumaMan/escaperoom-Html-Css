@@ -18,7 +18,7 @@
             <!-- Modal QR-->
             <div class="modal fade" id="QRModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content"> 
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Codigo QR para el inicio de sesion del
                                 participante</h1>
@@ -27,7 +27,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="mx-auto">
-                                    <qr-code text="https://gray-smoke-09e195710.2.azurestaticapps.net/logueo?hgsjdhgsajdgasdhgj"
+                                    <qr-code :text="urlBaseQr"
                                         :size="300"></qr-code>
                                 </div>
                             </div>
@@ -241,11 +241,13 @@ export default {
                 escapeRoomId: 0,
                 estado: 0
             },
+            urlBaseQr:''
         }
     },
     mounted() {
         this.listarParticipante();
         this.listarEscapes();
+        this.ObtenerUrlBase()
     },
     methods: {
         listarParticipante() {
@@ -331,6 +333,12 @@ export default {
                     });
                 })
         },
+        ObtenerUrlBase(){
+            var URLactual = window.location.host;
+            console.log(URLactual)
+            this.urlBaseQr = URLactual +'/scan-qr' 
+            console.log(this.urlBaseQr)
+        }
     },
 }
 </script>
