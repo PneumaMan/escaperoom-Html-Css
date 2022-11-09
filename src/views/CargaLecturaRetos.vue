@@ -3,7 +3,8 @@
         <h3 class="mt-5">Escanea el codigo QR</h3>
         <div class="p-4" v-show="!verScanner">
             <div class="row">
-                <p class="text-secondary">{{nextReto}}</p>
+                <h3>{{siguienteReto}}</h3>
+                
             </div>
             <div class="row">
                 <p class="text-secondary">presiona la camara </p>
@@ -46,11 +47,15 @@ export default {
             Valores:'',
             IdEscapeRoom:'',
             IdReto:'',
+            siguienteReto: ''
         }
     },
     components: {
         myQRScanner: myQRScanner,
         QrcodeStream
+    },
+    mounted() {
+        this.siguienteRet()
     },
     methods: {
         ...mapState(['nextReto']),
@@ -108,6 +113,9 @@ export default {
                 console.log(idR)
             }
             this.$router.push({ path: '/responder-retos' })
+        },
+        siguienteRet(){
+            this.siguienteReto = this.$store.state.nextReto
         }
     },
 }

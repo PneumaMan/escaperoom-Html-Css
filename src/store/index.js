@@ -16,7 +16,7 @@ const store = createStore({
     baseURL:'https://escape-room-app.azurewebsites.net/',
     datosID:'',
     participanteId:'',
-    nextReto:'',
+    nextReto:'Dirígete al reto 1',
     IdEscapeRoom:'',
     IdReto:'',
   },
@@ -43,12 +43,20 @@ const store = createStore({
       state.auth = false;
       state.user = '';
       console.log(state.auth)
+    },
+    obternerIdParticipante(state, payload){
+      state.participanteId = payload
+
     }
   },
   actions: {
     guardarUsuario({commit}, payload){
       localStorage.setItem('token', payload);
       commit('obtenerUsuario', payload)
+    },
+    guardarIdParticipante({commit}, payload){
+      localStorage.setItem('participanteId', payload);
+      commit('obternerIdParticipante', payload)
     },
     cerrarSesion({commit}){
       /* Logout  backend */
@@ -75,6 +83,14 @@ const store = createStore({
         commit('obtenerUsuario', '');
       }
 
+    },
+    leerIdParticipante({commit}){
+      const idPa = localStorage.getItem('participanteId');
+      if(idPa){
+        commit('obternerIdParticipante', idPa);
+      }else{
+        commit('obternerIdParticipante', '');
+      }
     },
     guardarDatosQr({commit}, payload){
       commit('obtenerIdQR', payload)

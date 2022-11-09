@@ -1,24 +1,30 @@
 <template>
     <div class="fondo">
         <div class="row ">
-            <img src="../assets/img-participantes/img-reto.png" alt="" class="img-3d-responder my-4"
+            <img src="../assets/img-participantes/img-reto.png" alt="" class="img-3d-responder mt-4"
                 style="width:400px;">
+        </div>
+        <div class="row">
+            <div class="mx-auto">
+                <button class="btn btn-danger mx-1" @click.prevent="salidaVoluntaria()"><abbr title="Salida voluntaria">Salida voluntaria</abbr></button>
+                <button class="btn btn-success mx-1" v-show="escapar">Escapar</button>
+            </div>
         </div>
         <div class="">
             <div class="row">
                 <h1 class="text-white">{{ preguntaR }}</h1>
-               
             </div>
             <div class="row">
                 <div class="card my-5">
                     <div class="card-body p-4">
-                       <div class="row" v-for="(r, index) in respuestas" :key="index">
+                        <div class="row" v-for="(r, index) in respuestas" :key="index">
                             <button class="btn btn-danger bt-respuestas my-2" :value="r.id"
-                            @click.prevent="ResponderReto(r.id)">{{ r.respuestaReto }}</button>
-                        </div> 
+                                @click.prevent="ResponderReto(r.id)">{{ r.respuestaReto }}</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <div class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel"
                 v-show="TokenParticipante" style="display: block; background-color: #00000054;" aria-modal="true"
                 role="dialog">
@@ -30,10 +36,10 @@
                                 @click.prevent="TokenParticipante = false"></button>
                         </div>
                         <div class="modal-body">
-                            
+
                             <div class=" col-md-6 mx-auto">
                                 <label for="" class="form-label text-secondary"> Ingresa el numero de
-                                        documento</label>
+                                    documento</label>
                                 <input type="text" class="form-control-plaintext text-center"
                                     style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
 
@@ -52,6 +58,7 @@
     </div>
 </template>
 <script>
+import {  mapMutations,mapActions, mapState } from "vuex";
 export default {
     data() {
         return {
@@ -66,17 +73,18 @@ export default {
             autenticacion: {
                 identificacion: "",
                 escapeRoomId: "",
-                retoId: "" 
-                /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
+                retoId: ""
+               /*  escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
                 retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA" 
-             */
+              */
             },
             ControlReto: {
                 participanteId: 1,
                 retoId: "",
-                respuestaId:''
+                respuestaId: ''
             },
-            AutenParti:[]
+            AutenParti: [],
+            escapar: false
         }
     },
     mounted() {
@@ -84,19 +92,14 @@ export default {
         //this.CargarReto()
     },
     methods: {
+        ...mapMutations(['obternerIdParticipante']), 
+        ...mapActions(['guardarIdParticipante','leerIdParticipante']),
         ValidarLocalStorage() {
-            /* console.log(window.localStorage.token)
-            if (window.localStorage.token == null) {
-                this.TokenParticipante = true
-            }else{
-                this.TokenParticipante = false
-            } */
             if (window.localStorage.participanteId == null) {
                 this.TokenParticipante = true
-            }else{
+            } else {
                 this.TokenParticipante = false
             }
-
             this.datos = this.$store.state.datosID
             for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
@@ -104,24 +107,23 @@ export default {
                 var idE = this.datos[0].split("=");
                 this.IdEscapeRoom = idE
                 console.log(idE[1], this.IdEscapeRoom)
-                var idR  = this.datos[1].split("=");
+                var idR = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
             }
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.autenticacion.escapeRoomId =  this.$store.state.IdEscapeRoom
+            this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
             this.autenticacion.retoId = this.$store.state.IdReto
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data.data, 'informacion participante')
                     this.Retos = res.data.data
                     this.preguntaR = this.Retos.nextReto.preguntaReto
-                    this.respuestas =  this.Retos.nextReto.respuestas
+                    this.respuestas = this.Retos.nextReto.respuestas
                     console.log(this.respuestas)
-                    localStorage.setItem("participanteId", res.data.data.id);
-                    this.$store.state.participanteId = localStorage.getItem("participanteId");
+                    this.guardarIdParticipante(res.data.data.id)
                     this.TokenParticipante = false
                 }).catch(e => {
                     console.log(e)
@@ -144,6 +146,7 @@ export default {
                     console.log(res.data)
                     this.GamecontrolReto = res.data.data
                     this.$store.state.nextReto = this.GamecontrolReto.nextRetoMessage
+                    this.$router.push({path:'/scan-qr'})
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
@@ -154,7 +157,20 @@ export default {
 
                     });
                 })
+        },
+        salidaVoluntaria() {
+            const item = this.$store.state.participanteId
+            console.log(item)
+            this.axios.post('/GameControl/escape-room/salidavoluntaria', {item})
+                .then(res => {
+                    // Agrega al inicio de nuestro array notas
+                    console.log(res.data);
+                })
+                .catch(e => {
+                    console.log(e);
+                })
         }
+
     },
 }
 </script>
