@@ -73,10 +73,10 @@ export default {
             autenticacion: {
                 identificacion: "",
                 escapeRoomId: "",
-                retoId: ""
+                retoId: "" 
                /*  escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
                 retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA" 
-              */
+               */
             },
             ControlReto: {
                 participanteId: 1,
@@ -153,7 +153,7 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        text: e.response.data.Errors[0].ErrorMessage
+                        /* text: e.response.data.Errors[0].ErrorMessage */
 
                     });
                 })
@@ -167,7 +167,12 @@ export default {
                     console.log(res.data);
                 })
                 .catch(e => {
-                    console.log(e);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+                        /* text: e.response.data.Errors[0].ErrorMessage */
+                    });
                 })
         }
 
