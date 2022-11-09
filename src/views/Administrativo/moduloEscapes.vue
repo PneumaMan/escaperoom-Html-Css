@@ -761,7 +761,7 @@ export default {
             this.titulo = item.nombreReto
             this.UrlBase = URLactual
             const url = item.urlQR
-            this.urlCompleta = this.UrlBase + '/responder-retos/' + url
+            this.urlCompleta = this.UrlBase + '/' + url
             console.log(this.urlCompleta)
             console.log(item.color, item.bgColor)
             this.colorQR = item.color

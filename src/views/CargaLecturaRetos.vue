@@ -22,6 +22,7 @@
                     <!--  <myQRScanner /> -->
                     <p>{{ errorQr }}</p>
                     <p>{{ decodedString }}</p>
+                    <p>{{ Valores }}</p>
                     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
                 </div>
             </div>
@@ -38,7 +39,8 @@ export default {
             verScanner: false,
             errorQr: '',
             decodedString: '',
-            datos:''
+            datos:'',
+            Valores:''
         }
     },
     components: {
@@ -82,10 +84,11 @@ export default {
             console.log(datos[1])
             var vars = datos[1].split("&");
             console.log(vars)//objeto con los id de escape room y reto
+            this.Valores = vars
 
             this.obtenerIdQR(vars);
             this.datos = vars
-            /* this.$router.push({ path: '/responder-retos' }) */
+             /* this.$router.push({ path: '/responder-retos' })  */
 
         }
     },
