@@ -111,8 +111,8 @@ export default {
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-             this.autenticacion.escapeRoomId =  this.IdEscapeRoom
-            this.autenticacion.retoId = this.IdReto
+            this.autenticacion.escapeRoomId =  this.$store.state.IdEscapeRoom
+            this.autenticacion.retoId = this.$store.state.IdReto
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data.data, 'informacion participante')

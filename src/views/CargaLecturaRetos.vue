@@ -99,12 +99,15 @@ export default {
                 const element = this.datos[index];
                 console.log(element)
                 var idE = this.datos[0].split("=");
-                this.IdEscapeRoom = idE
                 console.log(idE[1], this.IdEscapeRoom)
+                this.IdEscapeRoom = idE[1]
+                this.$store.state.IdEscapeRoom = idE[1]
                 var idR  = this.datos[1].split("=");
                 this.IdReto = idR[1]
+                this.$store.state.IdReto = idR[1]
                 console.log(idR)
             }
+            this.$router.push({ path: '/responder-retos' })
         }
     },
 }

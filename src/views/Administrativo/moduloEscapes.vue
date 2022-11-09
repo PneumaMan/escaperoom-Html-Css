@@ -367,7 +367,7 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <qrcode-vue :value="urlCompleta" :size="size" level="H"
+                                                    <qrcode-vue :value="urlCompleta" :size="size" level="H" :margin="Margin"
                                                         :background="bgQR" :foreground="colorQR" />
                                                 </div>
                                                 <div class="modal-footer">
@@ -554,6 +554,7 @@ export default {
             bgQR: '',
             titulo: "",
             size: 300,
+            Margin:2,
             IniciarTerminarER: [],
             cargaOpcRespRetos: [],
             TipoPreguntas : [],

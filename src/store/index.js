@@ -16,7 +16,9 @@ const store = createStore({
     baseURL:'https://escape-room-app.azurewebsites.net/',
     datosID:'',
     participanteId:'',
-    nextReto:''
+    nextReto:'',
+    IdEscapeRoom:'',
+    IdReto:'',
   },
   
   mutations: {
