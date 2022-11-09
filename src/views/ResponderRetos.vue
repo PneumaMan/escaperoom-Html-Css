@@ -31,7 +31,7 @@
                                 @click.prevent="TokenParticipante = false"></button>
                         </div>
                         <div class="modal-body">
-                            <p>{{datos}}</p>
+                            <p>{{IdReto}}</p>
                             <div class=" col-md-6 mx-auto">
                                 <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
                                         documento</Strong></label>
@@ -83,22 +83,18 @@ export default {
             if (window.localStorage.token == '') {
                 this.TokenParticipante = true
             }
-            console.log(window.location)
-            this.url = window.location
-
             
-
             this.datos = this.$store.state.datosID
-            /* for (let index = 0; index < this.datos.length; index++) {
+            for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
                 this.IdEscapeRoom = this.datos[0]
                 var idE = this.datos[0].split("=");
                 console.log(idE[1])
-                this.IdReto = this.datos[1].split("=");
-                var idR = this.IdReto[1]
+                var idR  = this.datos[1].split("=");
+                this.IdReto = idR[1]
                 console.log(idR)
-            }  */
+            }
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
