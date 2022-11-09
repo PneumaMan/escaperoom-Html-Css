@@ -34,7 +34,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/Auth/inicioparticipante.vue'),
-     meta: { requireAuth: true },
+     meta: { rol : 'Participante'  },
   },
   {
     path: '/perfil',
@@ -82,7 +82,7 @@ const routes = [
      meta: { requireAuth: true },
   },
   {
-    path: '/logueo',
+    path: '/login-participantes',
     name: 'logueo',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -90,23 +90,21 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/logueo.vue')
   },
   {
-    path: '/start',
+    path: '/scan-qr',
     name: 'CargaLecturaRetos',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/CargaLecturaRetos.vue'),
-     meta: { requireAuth: true },
+
   },
   {
     path: '/responder-retos',
-    name: 'ResponerRetos',
+    name: 'ResponderRetos',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/ResponerRetos.vue'),
-    props: true,
-     meta: { requireAuth: true },
+    component: () => import(/* webpackChunkName: "about" */ '../views/ResponderRetos.vue'),
   },
   {
     path: '/salida',
@@ -131,16 +129,24 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const rutaProtegida = to.matched.some(record => record.meta.requireAuth);
+  const rol= store.state.rol
   if (rutaProtegida && store.state.token === '' ) {
     if (store.state.auth) {
       next();
     } else {
       next({ name: "inicio" });
+      /* if (rol != 'Participante') {
+        next({ name: "inicio" }); //Administrador
+      } else {
+        next({ name: "logueo" });  //Inicio de sesion participante
+      } */
     }
   } else {
     next();
   }
 });
+
+
 
 
 

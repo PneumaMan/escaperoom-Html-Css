@@ -11,14 +11,15 @@
                         <div class=" col-md-6 mx-auto">
                             <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
                                     documento</Strong></label>
-                            <input type="text" class="form-control-plaintext text-center" style="border-bottom: 1px solid #ebcc24;">
-                            <router-link to="/start"><button class="btn btn-warning my-3 bt-consulta"
+                            <input type="text" class="form-control-plaintext text-center" style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
+                           <button class="btn btn-warning my-3 bt-consulta"
+                                style="border-radius: 15px;width: 120px;" @click.prevent="AutenticacionParticipante()">Consultar</button>
+                            <!-- <router-link to="/start"><button class="btn btn-warning my-3 bt-consulta"
                                 style="border-radius: 15px;width: 120px;">Consultar</button>
-                            </router-link>
+                            </router-link> -->
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -27,7 +28,30 @@
 export default {
     data() {
         return {
-            inicioParticipante: true
+            inicioParticipante: true,
+            autenticacion:{
+                identificacion: "",
+                escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqLDbvlDUEIPhExcsw8pnHTobR56L_c1MSS36kqX9pflFXwIaZayG1urSV5sM-1F4Vh2Zn80SgsQCx49XKMo3FJh5F_kY3EYG75VbmKBAcPTA",
+                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUprwQiN0QvSj_8M1tPFk-VVfTau4ir_5Pr2t9C_V7Q0wgmkWJOnwsWFd---WkDE04O99WAyEzMBs_YfYSG8FOw5EktmisppcRRbGOAUHuPdKA"
+            }
+        }
+    },
+    methods: {
+        AutenticacionParticipante(){
+            console.log(this.autenticacion)
+            this.axios.post('/GameControl/participante/login', this.autenticacion)
+            .then(res => {
+                console.log(res.data)
+            }).catch( e => {
+                console.log(e)
+                this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title:e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage,
+                    });
+            }) 
+
         }
     },
 }

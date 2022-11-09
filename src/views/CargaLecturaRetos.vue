@@ -37,7 +37,8 @@ export default {
         return {
             verScanner: false,
             errorQr: '',
-            decodedString: ''
+            decodedString: '',
+            datos:''
         }
     },
     components: {
@@ -83,7 +84,8 @@ export default {
             console.log(vars)//objeto con los id de escape room y reto
 
             this.obtenerIdQR(vars);
-            this.$router.push({ path: '/responder-retos' })
+            this.datos = vars
+            /* this.$router.push({ path: '/responder-retos' }) */
 
         }
     },

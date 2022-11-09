@@ -101,8 +101,10 @@
                                         @click.prevent="activarIdReto(item.id)">Retos</button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-info mx-1">Inicar</button>
-                                    <button class="btn btn-outline-danger mx-1">Terminar</button>
+                                    <button class="btn btn-outline-info mx-1"
+                                        @click.prevent="IniciarEscape(item.id)">Inicar</button>
+                                    <button class="btn btn-outline-danger mx-1"
+                                        @click.prevent="TerminarEscape(item.id)">Finalizar</button>
                                 </td>
                                 <td>
                                     <button class="btn btn-outline-warning mx-1"
@@ -209,8 +211,12 @@
                                         <div class="mb-3 col-8 col-md-6">
                                             <label for="" class="form-label">Tiempo Bonificación
                                             </label>
-                                            <input type="time" class="form-control" v-model="reto.bonificacionReto">
+                                            <input type="time" class="form-control" v-model="reto.bonificacionReto"
+                                                >
                                         </div>
+                                        <datalist id="listahorasdeseadas">
+                                            <option value="24:00:10">00:00:10</option>
+                                        </datalist>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-8 col-md-6">
@@ -234,7 +240,20 @@
                                         <label for="exampleFormControlTextarea1" class="form-label">Numero del
                                             reto</label>
                                         <input type="number" class="form-control" v-model="reto.numeroReto">
-
+                                    </div>
+                                    <div class="mb-3 form-floating">
+                                        <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="reto.tipoPregunta">
+                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.abreviatura }}</option>
+                                        </select>
+                                        <label for="floatingSelect" class="form-label">Tipo de pregunta</label>
+                                        
+                                    </div>
+                                    <div class="mb-3 form-floating">
+                                        <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="reto.tipoReto">
+                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.abreviatura }}</option>
+                                        </select>
+                                        <label for="floatingSelect" class="form-label">Tipo de reto</label>
+                                        
                                     </div>
 
                                     <hr />
@@ -281,7 +300,7 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Nombre reto</th>
                                     <th scope="col">Pregunta</th>
-                                    <th scope="col">Tipo Pregunta</th>
+                                    <th scope="col">Tipo Reto</th>
                                     <th scope="col">Bonificación</th>
                                     <th scope="col">Respuestas</th>
                                     <th scope="col">QR</th>
@@ -293,7 +312,7 @@
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ item.nombreReto }}</td>
                                     <td>{{ item.preguntaReto }}</td>
-                                    <td>{{ item.tipoPregunta }}</td>
+                                    <td>{{ item.tipoRetoDescription }}</td>
                                     <td>{{ item.bonificacion }}</td>
                                     <td>
                                         <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
@@ -323,8 +342,8 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item" v-for="(i, p) in item.respuestas"
-                                                            :key="p">{{ i.respuestaReto }}</li>
+                                                        <li class="list-group-item" v-for="(i, p) in cargaOpcRespRetos"
+                                                            :key="p">🔹{{ i.respuestaReto }}</li>
                                                     </ul>
                                                 </div>
                                                 <div class="modal-footer">
@@ -347,9 +366,6 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <!-- <qr-code :text="urlCompleta" :size="300" :color="colorQR"
-                                                        bg-color="bgQR" class="mx-auto"></qr-code> -->
-
                                                     <qrcode-vue :value="urlCompleta" :size="size" level="H"
                                                         :background="bgQR" :foreground="colorQR" />
                                                 </div>
@@ -412,8 +428,19 @@
                                     <label for="exampleFormControlTextarea1" class="form-label">Numero del
                                         reto</label>
                                     <input type="number" class="form-control" v-model="retoEditar.numeroReto">
-
                                 </div>
+                                <div class="mb-3 form-floating">
+                                        <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="retoEditar.tipoPregunta">
+                                            <option :value="item.id" v-for="(item, index) in TipoPreguntas" :key="index">{{ item.abreviatura }}</option>
+                                        </select>
+                                        <label for="floatingSelect" class="form-label">Tipo de pregunta</label>
+                                    </div>
+                                    <div class="mb-3 form-floating">
+                                        <select class="form-select"  id="floatingSelect" aria-label="Floating label select example" v-model="retoEditar.tipoReto">
+                                            <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{ item.abreviatura }}</option>
+                                        </select>
+                                        <label for="floatingSelect" class="form-label">Tipo de reto</label>
+                                    </div>
 
                                 <hr />
                                 <h5 class="mx-auto">Respuestas</h5>
@@ -425,12 +452,13 @@
                                         </label>
                                         <input type="text" class="form-control " v-model="input.respuestaReto">
                                     </div>
-                                    <div class="form-check col-8 col-md-6 ml-2">
-                                        <input class="form-check-input" type="checkbox"
-                                            :value="retoEditar.respuestas.correcta" id="flexCheckDefault"
-                                            v-model="retoEditar.respuestas.correcta" />
-                                        <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
-                                    </div>
+
+                                        <div class="form-check col-8 col-md-6 ml-2">
+                                            <input class="form-check-input" type="checkbox" value="" id=""
+                                                v-model="input.correcta" />
+                                            <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                        </div>
+
                                 </div>
                             </div>
                         </div>
@@ -487,7 +515,7 @@ export default {
                 tipoPregunta: 1,
                 numeroReto: 1,
                 tipoReto: 1,
-                bonificacionReto: "",
+                bonificacionReto: "00:00:10",
                 escapeRoomId: 0,
                 color: "",
                 bgColor: "",
@@ -506,7 +534,7 @@ export default {
                 tipoPregunta: 1,
                 numeroReto: 1,
                 tipoReto: 1,
-                bonificacionReto: "",
+                bonificacionReto: "00:00:10",
                 escapeRoomId: 0,
                 color: "",
                 bgColor: "",
@@ -525,11 +553,18 @@ export default {
             bgQR: '',
             titulo: "",
             size: 300,
+            IniciarTerminarER: [],
+            cargaOpcRespRetos: [],
+            TipoPreguntas : [],
+            TipoRetos : [],
+            EscapeRoomId: 0
         }
     },
     mounted() {
         this.listarEscapes();
         this.listarRetos();
+        this.listarPreguntas();
+        this.listarTipoRetos()
     },
     methods: {
         agregarEscape() {
@@ -608,7 +643,7 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: 'Ocurrio un error',
-                        text: e,
+                        text: e.data.Errors[0].ErrorMessage,
                     });
                 })
         },
@@ -641,7 +676,7 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: 'Ocurrio un error',
-                        text: e.response.data.Errors.ErrorMessage
+                        text: e.response.data.Errors[0].ErrorMessage
                         ,
                     });
                 })
@@ -655,7 +690,7 @@ export default {
             this.retoEditar.tipoPregunta = item.tipoPregunta
             this.retoEditar.numeroReto = item.numeroReto
             this.retoEditar.tipoReto = item.tipoReto
-            this.retoEditar.bonificacionReto = item.bonificacionReto
+            //this.retoEditar.bonificacionReto = item.bonificacionReto
             this.retoEditar.escapeRoomId = item.escapeRoomId
             this.retoEditar.color = item.color
             this.retoEditar.bgColor = item.bgColor
@@ -706,7 +741,7 @@ export default {
                             )
                         })
                         .catch(e => {
-                            console.log(e.response);
+                            console.log(e.response.data.errors);
                             this.$swal({
                                 position: 'toast-top-end',
                                 icon: 'error',
@@ -726,29 +761,83 @@ export default {
             this.titulo = item.nombreReto
             this.UrlBase = URLactual
             const url = item.urlQR
-            this.urlCompleta = this.UrlBase + '/' + url
+            this.urlCompleta = this.UrlBase + '/responder-retos/' + url
             console.log(this.urlCompleta)
             console.log(item.color, item.bgColor)
             this.colorQR = item.color
             this.bgQR = item.bgColor
-
-
-            //prueba
-            /* var variable = 'EscapeRoom'
-            var query = url;
-            var vars = query.split("&");
-
-            for (var i=0; i < vars.length; i++) {
-                var pair = vars[i].split("="); 
-                    if (pair[i] == 'EscapeRoom' ) {
-                        console.log(vars[i] )
-                        const idEscape = pair[i+1]
-                        console.log(idEscape)
-                    }
-            } */
         },
         CargarRespuestas(item) {
-            console.log(item)
+            console.log(item.respuestas)
+            this.cargaOpcRespRetos = item.respuestas
+        },
+        IniciarEscape(escapeRoomId) {
+            this.EscapeRoomId = escapeRoomId
+            console.log(escapeRoomId)
+            const config = {
+                headers: {
+                    header1: this.EscapeRoomId
+                }
+            };
+            const url = "/GameControl/escape-room/iniciar";
+            this.axios.post(url, config, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then(res => {
+                    console.log(res.data)
+                })
+                .catch(e => {
+                    console.log(e);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage,
+                    });
+                })
+        },
+        TerminarEscape(escapeRoomId) {
+            this.EscapeRoomId = escapeRoomId
+            console.log(escapeRoomId)
+            const config = {
+                headers: {
+                    header1: this.EscapeRoomId
+                }
+            };
+            const url = "/GameControl/escape-room/finalizar";
+            this.axios.post(url, config, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then(res => {
+                    console.log(res.data)
+                    //this.IniciarTerminarER.push(res.data);
+                })
+                .catch(e => {
+                    console.log(e.response.data.Errors);
+                    console.log(e.response.data.Message);
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage,
+                    });
+                })
+        },
+        listarPreguntas() {
+            this.axios.get('/Parameters/tipos-preguntas', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then((response) => {
+                    console.log(response.data)
+                    this.TipoPreguntas = response.data.data;
+                })
+                .catch((e) => {
+                    console.log('error' + e);
+                })
+        },
+        listarTipoRetos() {
+            this.axios.get('/Parameters/tipos-retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+                .then((response) => {
+                    console.log(response.data)
+                    this.TipoRetos = response.data.data;
+                })
+                .catch((e) => {
+                    console.log('error' + e);
+                })
         },
 
     },

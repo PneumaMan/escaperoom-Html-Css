@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createStore } from 'vuex'
 import decode from "jwt-decode";
 import router from '../router/index';
+import axios from "axios"
 
 const store = createStore({
   state: {
@@ -10,10 +11,11 @@ const store = createStore({
     email:'',
     id:'',
     rol:'',
-    afiliado:[],
+    UsuarioAdmin:[],
     auth: false,
     baseURL:'https://escape-room-app.azurewebsites.net/',
-    datosID:''
+    datosID:'',
+    participanteId:''
   },
   
   mutations: {
@@ -30,10 +32,8 @@ const store = createStore({
       }else{
         state.user = decode(payload);
         state.email = state.user.email
-        console.log(state.user)
         state.auth = true;
         state.rol = state.user.roles
-        console.log(state.rol)
       }
     },
     doLogout(state) {
@@ -48,12 +48,21 @@ const store = createStore({
       commit('obtenerUsuario', payload)
     },
     cerrarSesion({commit}){
-      commit('obtenerUsuario', '');
-      commit('doLogout'); 
-      localStorage.removeItem('token');
-      router.push({path:'/'});
-      /* this.state.auth = false;
-      console.log(this.state.auth) */
+      /* Logout  backend */
+      const url = "/Logout";
+      axios.post(url,{email:store.state.email}, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` }})
+      .then(res => {
+        console.log(res.data)
+        this.UsuarioAdmin.push(res.data)
+        commit('obtenerUsuario', '');
+        commit('doLogout'); 
+        localStorage.removeItem('token');
+        router.push({path:'/'});
+    }).catch( e => {
+        console.log(e.response.data.Errors[0].ErrorMessage)
+    })
+
+      
     },
     leerToken({commit}){
       const token = localStorage.getItem('token');

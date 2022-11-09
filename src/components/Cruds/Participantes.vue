@@ -27,7 +27,7 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="mx-auto">
-                                    <qr-code text="https://gray-smoke-09e195710.2.azurestaticapps.net/logueo"
+                                    <qr-code text="https://gray-smoke-09e195710.2.azurestaticapps.net/logueo?hgsjdhgsajdgasdhgj"
                                         :size="300"></qr-code>
                                 </div>
                             </div>

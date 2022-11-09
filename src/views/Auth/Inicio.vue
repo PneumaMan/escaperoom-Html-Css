@@ -62,7 +62,7 @@ export default {
     ...mapActions(['guardarUsuario','leerToken']),
     ...mapState(['rol']),
     login(){
-        console.log(this.usuario)
+        console.log(this.usuario) 
         this.axios.post('/login', this.usuario)
         .then(res => {
             console.log(res.data.data.jwToken);
