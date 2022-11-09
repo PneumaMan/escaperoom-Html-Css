@@ -129,7 +129,6 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 })
