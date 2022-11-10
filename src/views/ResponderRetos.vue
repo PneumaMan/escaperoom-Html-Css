@@ -92,7 +92,6 @@ export default {
     },
     mounted() {
         this.ValidarLocalStorage()
-        //this.traerReto()
     },
     methods: {
         ...mapMutations(['obternerIdParticipante']), 
@@ -102,9 +101,10 @@ export default {
                 this.TokenParticipante = true
             } else {
                 this.TokenParticipante = false
+                this.traerReto()
             }
             this.datos = this.$store.state.datosID
-            for (let index = 0; index < this.datos.length; index++) {
+            /* for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
                 var idE = this.datos[0].split("=");
@@ -113,7 +113,7 @@ export default {
                 var idR = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
-            }
+            } */
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
@@ -177,7 +177,7 @@ export default {
                     });
                 })
         },
-        /* traerReto(){
+        traerReto(){
             this.postReto.participanteId = this.$store.state.participanteId
             this.postReto.retoId = this.$store.state.IdReto 
             this.axios.post('/GameControl/reto',this.postReto)
@@ -197,7 +197,7 @@ export default {
                     });
                 })
 
-        } */
+        } 
 
         
     },
