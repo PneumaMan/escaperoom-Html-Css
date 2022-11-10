@@ -128,8 +128,6 @@ export default {
                     console.log(this.respuestas) 
                     this.guardarIdParticipante(res.data.data.id)
                     this.TokenParticipante = false
-
-                    this.traerReto()
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
@@ -179,7 +177,7 @@ export default {
                     });
                 })
         },
-        traerReto(){
+        /* traerReto(){
             this.postReto.participanteId = this.$store.state.participanteId
             this.postReto.retoId = this.$store.state.IdReto 
             this.axios.post('/GameControl/reto',this.postReto)
@@ -195,11 +193,11 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        /* text: e.response.data.Errors[0].ErrorMessage */
+                        
                     });
                 })
 
-        }
+        } */
 
         
     },
