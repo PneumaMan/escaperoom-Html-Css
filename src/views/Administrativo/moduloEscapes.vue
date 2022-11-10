@@ -367,8 +367,7 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <qrcode-vue :value="urlCompleta" :size="size"
-                                                        :background="bgQR" :foreground="colorQR" />
+                                                    <qrcode-vue :value="urlCompleta" :size="size"/>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
