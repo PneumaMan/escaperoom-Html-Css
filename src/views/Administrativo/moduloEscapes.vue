@@ -4,7 +4,7 @@
             <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i>
             </router-link>
         </div>
-        <div class="row">
+        <div class="row"> 
             <h1 class="mx-auto my-3">Modulo de Administrativo de escapes room's</h1>
         </div>
         <div class="row">

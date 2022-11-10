@@ -116,6 +116,15 @@ const routes = [
      meta: { requireAuth: true },
   },
   {
+    path: '/salida-voluntaria',
+    name: 'salidaVoluntaria',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/SalidasVoluntaria.vue'),
+     
+  },
+  {
     path:'/dashboard',
     name:'Dashboard',
     component:Dashboard,

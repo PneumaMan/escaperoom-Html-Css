@@ -1,6 +1,6 @@
 <template>
     <div class="fondo">
-        <NavbarParticipantes/>
+        <NavbarParticipantes />
         <div class="row">
             <img src="../assets/Logo-Escape-room-Blanco.png" alt="" class="Lg-Escape-blanco mt-5">
         </div>
@@ -10,7 +10,8 @@
         </div>
         <div class="row">
             <div class="mx-auto">
-                <button class="btn btn-danger mx-1" @click.prevent="salidaVoluntaria()"><abbr title="Salida voluntaria">Salida voluntaria</abbr></button>
+                <button class="btn btn-danger mx-1" @click.prevent="salidaVoluntaria()"><abbr
+                        title="Salida voluntaria">Salida voluntaria</abbr></button>
                 <button class="btn btn-success mx-1" v-show="escapar">Escapar</button>
             </div>
         </div>
@@ -58,15 +59,20 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <Encuesta v-show="FinParticipante"/>
+        </div>
     </div>
 </template>
 <script>
-import {  mapMutations,mapActions, mapState } from "vuex";
+import { mapMutations, mapActions, mapState } from "vuex";
 import NavbarParticipantes from '@/components/Navbar-Participante.vue'
+import Encuesta from '@/components/encuesta.vue'
 export default {
     components: {
-    NavbarParticipantes
-  },
+        NavbarParticipantes,
+        Encuesta
+    },
     data() {
         return {
             datos: [],
@@ -79,11 +85,11 @@ export default {
             url: '',
             autenticacion: {
                 identificacion: "",
-             escapeRoomId: "",
-                retoId: "" 
-                 /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
-                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA" 
-                */
+                escapeRoomId: "",
+                retoId: ""  
+                /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
+                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA"
+ */
             },
             ControlReto: {
                 participanteId: 1,
@@ -92,18 +98,21 @@ export default {
             },
             AutenParti: [],
             escapar: false,
-            postReto:{
+            postReto: {
                 participanteId: "",
                 retoId: ""
-            }
+            },
+            idSalidaVol:'',
+            FinParticipante:false
+            
         }
     },
     mounted() {
         this.ValidarLocalStorage()
     },
     methods: {
-        ...mapMutations(['obternerIdParticipante']), 
-        ...mapActions(['guardarIdParticipante','leerIdParticipante']),
+        ...mapMutations(['obternerIdParticipante']),
+        ...mapActions(['guardarIdParticipante', 'leerIdParticipante']),
         ValidarLocalStorage() {
             if (window.localStorage.participanteId == null) {
                 this.TokenParticipante = true
@@ -121,7 +130,7 @@ export default {
                 var idR = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
-            } 
+            }
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
@@ -133,7 +142,7 @@ export default {
                     this.Retos = res.data.data
                     this.preguntaR = this.Retos.nextReto.preguntaReto
                     this.respuestas = this.Retos.nextReto.respuestas
-                    console.log(this.respuestas) 
+                    console.log(this.Retos.nextReto)
                     this.guardarIdParticipante(res.data.data.id)
                     this.$store.state.nombreParticipante = res.data.data.fullName
                     this.TokenParticipante = false
@@ -157,7 +166,7 @@ export default {
                     console.log(res.data)
                     this.GamecontrolReto = res.data.data
                     this.$store.state.nextReto = this.GamecontrolReto.nextRetoMessage
-                    this.$router.push({path:'/scan-qr'})
+                    this.$router.push({ path: '/scan-qr' })
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
@@ -170,26 +179,30 @@ export default {
                 })
         },
         salidaVoluntaria() {
-            const item = this.$store.state.participanteId
-            console.log(item)
-            this.axios.post('/GameControl/escape-room/salidavoluntaria', {item})
+            const participanteId = this.$store.state.participanteId
+            console.log({participanteId})          
+            this.axios.post('/GameControl/escape-room/salidavoluntaria',  {participanteId})
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     console.log(res.data);
+                    const array = []
+                    array.push(res.data)
+                    this.$router.push({ path: '/salida-voluntaria' })
                 })
                 .catch(e => {
+                    console.log(e)
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        /* text: e.response.data.Errors[0].ErrorMessage */
+                        
                     });
                 })
         },
-        traerReto(){
+        traerReto() {
             this.postReto.participanteId = this.$store.state.participanteId
-            this.postReto.retoId = this.$store.state.IdReto 
-            this.axios.post('/GameControl/reto',this.postReto)
+            this.postReto.retoId = this.$store.state.IdReto
+            this.axios.post('/GameControl/reto', this.postReto)
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     console.log(res.data);
@@ -202,13 +215,14 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        
+
                     });
                 })
 
-        } 
-
+        },
         
+
+
     },
 }
 </script>
@@ -240,27 +254,30 @@ body {
     margin: auto;
     width: 150px;
 }
-.Lg-Escape-blanco{
-        width:450px ;
-        margin: auto;
-    }
+
+.Lg-Escape-blanco {
+    width: 450px;
+    margin: auto;
+}
 
 @media (width: 600px) and (width: 1200px) {
     .img-3d-responder {
         margin: auto;
         width: 150px;
     }
-    .Lg-Escape-blanco{
-        width:320px ;
+
+    .Lg-Escape-blanco {
+        width: 320px;
         margin: auto;
     }
 }
 
 @media screen and (max-width: 400px) {
-    .Lg-Escape-blanco{
-        width:300px ;
+    .Lg-Escape-blanco {
+        width: 300px;
         margin: auto;
     }
+
     .img-3d-responder {
 
         top: 70px;
