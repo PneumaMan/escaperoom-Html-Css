@@ -1,5 +1,9 @@
 <template>
     <div class="fondo">
+        <NavbarParticipantes/>
+        <div class="row">
+            <img src="../assets/Logo-Escape-room-Blanco.png" alt="" class="Lg-Escape-blanco mt-5">
+        </div>
         <div class="row ">
             <img src="../assets/img-participantes/img-reto.png" alt="" class="img-3d-responder mt-4"
                 style="width:400px;">
@@ -58,7 +62,11 @@
 </template>
 <script>
 import {  mapMutations,mapActions, mapState } from "vuex";
+import NavbarParticipantes from '@/components/Navbar-Participante.vue'
 export default {
+    components: {
+    NavbarParticipantes
+  },
     data() {
         return {
             datos: [],
@@ -104,7 +112,7 @@ export default {
                 this.traerReto()
             }
             this.datos = this.$store.state.datosID
-            /* for (let index = 0; index < this.datos.length; index++) {
+            for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
                 var idE = this.datos[0].split("=");
@@ -113,7 +121,7 @@ export default {
                 var idR = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
-            } */
+            } 
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
@@ -127,6 +135,7 @@ export default {
                     this.respuestas = this.Retos.nextReto.respuestas
                     console.log(this.respuestas) 
                     this.guardarIdParticipante(res.data.data.id)
+                    this.$store.state.nombreParticipante = res.data.data.fullName
                     this.TokenParticipante = false
                 }).catch(e => {
                     console.log(e)
@@ -231,15 +240,27 @@ body {
     margin: auto;
     width: 150px;
 }
+.Lg-Escape-blanco{
+        width:450px ;
+        margin: auto;
+    }
 
 @media (width: 600px) and (width: 1200px) {
     .img-3d-responder {
         margin: auto;
         width: 150px;
     }
+    .Lg-Escape-blanco{
+        width:320px ;
+        margin: auto;
+    }
 }
 
 @media screen and (max-width: 400px) {
+    .Lg-Escape-blanco{
+        width:300px ;
+        margin: auto;
+    }
     .img-3d-responder {
 
         top: 70px;

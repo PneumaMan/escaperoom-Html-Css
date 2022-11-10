@@ -24,11 +24,13 @@
       </form>
     </div>
   </nav>
+  
   <router-view />
 </template>
 <script>
 
 import { mapState, mapActions, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
@@ -41,6 +43,7 @@ export default {
   methods: {
     ...mapActions(["cerrarSesion"]),
   },
+  
 };
 </script>
 <style>

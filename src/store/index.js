@@ -16,6 +16,7 @@ const store = createStore({
     baseURL:'https://escape-room-app.azurewebsites.net/',
     datosID:'',
     participanteId:'',
+    nombreParticipante:'',
     nextReto:'Dirígete al reto 1',
     IdEscapeRoom:'',
     IdReto:'',
@@ -46,7 +47,6 @@ const store = createStore({
     },
     obternerIdParticipante(state, payload){
       state.participanteId = payload
-
     }
   },
   actions: {

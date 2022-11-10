@@ -1,13 +1,15 @@
 <template>
     <div class="container">
-        <h3 class="mt-5">Escanea el codigo QR</h3>
+        <div class="row">
+            <img src="../assets/Logo-Escape-room-Rojo.png" alt="" class="Lg-Escape">
+        </div>
+        <!-- <h3 class="mt-2">Escanea el codigo QR</h3> -->
         <div class="p-4" v-show="!verScanner">
             <div class="row">
                 <h3>{{siguienteReto}}</h3>
-                
             </div>
             <div class="row">
-                <p class="text-secondary">presiona la camara </p>
+                <p class="text-secondary">presiona la camara y escanea el codigo QR </p>
             </div>
             <div class="row">
                 <button @click="verScanner = true" style="background-color: transparent; border: none;">
@@ -144,26 +146,15 @@ export default {
 
 }
 
-@media (width: 600px) and (width: 1200px) {
-
-    .bt-consulta {
-        border-radius: 15px;
-        width: 120px;
-        color: white;
-        background-color: #ebcc24;
-    }
-
-    .tarjeta-from {
-        width: 100rem;
+.Lg-Escape{
+        width:450px ;
         margin: auto;
-        box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-        background-color: rgba(255, 255, 255, .15);
-        backdrop-filter: blur(5px);
-        border: none;
     }
 
-    .form-control-plaintext {
-        border-bottom: 1px solid #ebcc24;
+@media (width: 600px) and (width: 1200px) {
+    .Lg-Escape{
+        width:320px ;
+        margin: auto;
     }
 
     .blob {
@@ -189,16 +180,39 @@ export default {
 
 }
 
-@media screen and (max-width: 400px) {
-    .tarjeta-from {
-        width: 20rem;
+@media (min-width: 401px) and (max-width: 600px) {
+    .Lg-Escape{
+        width:320px ;
         margin: auto;
-        box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
-        background-color: rgba(255, 255, 255, .15);
-        backdrop-filter: blur(5px);
-        border: none;
+    }
+    .blob {
+        overflow: hidden;
+        width: 16rem;
+        height: 16rem;
+        border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+        background-color: #eb1e1eb0;
+        background-size: cover;
+        background-position: center;
+        left: 75px !important;
+        top: 20px !important;
+        z-index: -1;
+        margin: auto;
     }
 
+    .img-3d-carga {
+        position: absolute;
+        z-index: 1;
+        top: 50px;
+        width: 300px;
+        left: 0 !important;
+    }
+
+}
+@media screen and (max-width: 400px) {
+    .Lg-Escape{
+        width:300px ;
+        margin: auto;
+    }
     .blob {
         overflow: hidden;
         width: 14rem;
