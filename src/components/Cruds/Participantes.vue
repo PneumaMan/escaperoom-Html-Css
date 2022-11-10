@@ -81,7 +81,7 @@
                                     <label for="" class="col-sm-3 col-form-label mr-3">Tiempo restante:</label>
                                     <div class="col-sm-8">
                                         <input type="time" class="form-control-plaintext" id=""
-                                            v-model="newParticipante.tiempoRestante">
+                                            v-model="newParticipante.TiempoRestanteParticipante">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -227,7 +227,7 @@ export default {
                 apellidos: "",
                 telefono: 0,
                 estado: 1,
-                tiempoRestante: "",
+                TiempoRestanteParticipante: "00:00:10",
                 escapeRoomId: 0
             },
             editarParticipante: {
@@ -302,7 +302,7 @@ export default {
             this.editarParticipante.apellidos = item.apellidos
             this.editarParticipante.telefono = item.telefono
             this.editarParticipante.estado = item.estado
-            this.editarParticipante.TiempoRestanteParticipante = item.tiempoRestante
+            this.editarParticipante.TiempoRestanteParticipante = item.TiempoRestanteParticipante
             this.editarParticipante.escapeRoomId = item.escapeRoomId
             this.editarParticipante.estado = item.estado
         },

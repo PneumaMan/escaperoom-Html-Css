@@ -24,7 +24,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel"
                 v-show="TokenParticipante" style="display: block; background-color: #00000054;" aria-modal="true"
                 role="dialog">
@@ -76,7 +75,7 @@ export default {
                 retoId: "" 
                  /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
                 retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA" 
-               */
+                */
             },
             ControlReto: {
                 participanteId: 1,
@@ -84,12 +83,16 @@ export default {
                 respuestaId: ''
             },
             AutenParti: [],
-            escapar: false
+            escapar: false,
+            postReto:{
+                participanteId: "",
+                retoId: ""
+            }
         }
     },
     mounted() {
         this.ValidarLocalStorage()
-        //this.CargarReto()
+        this.traerReto()
     },
     methods: {
         ...mapMutations(['obternerIdParticipante']), 
@@ -115,14 +118,14 @@ export default {
         AutenticacionParticipante() {
             console.log(this.autenticacion)
             this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
-            this.autenticacion.retoId = this.$store.state.IdReto
+            this.autenticacion.retoId = this.$store.state.IdReto 
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data.data, 'informacion participante')
-                    this.Retos = res.data.data
+                    /* this.Retos = res.data.data
                     this.preguntaR = this.Retos.nextReto.preguntaReto
                     this.respuestas = this.Retos.nextReto.respuestas
-                    console.log(this.respuestas)
+                    console.log(this.respuestas) */
                     this.guardarIdParticipante(res.data.data.id)
                     this.TokenParticipante = false
                 }).catch(e => {
@@ -131,7 +134,6 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-
                     });
                 })
         },
@@ -174,8 +176,30 @@ export default {
                         /* text: e.response.data.Errors[0].ErrorMessage */
                     });
                 })
+        },
+        traerReto(){
+            this.postReto.participanteId = this.$store.state.participanteId
+            this.postReto.retoId = this.$store.state.IdReto 
+            this.axios.post('/GameControl/reto',this.postReto)
+                .then(res => {
+                    // Agrega al inicio de nuestro array notas
+                    console.log(res.data);
+                    this.Retos = res.data.data
+                    this.preguntaR = this.Retos.preguntaReto
+                    this.respuestas = this.Retos.respuestas
+                })
+                .catch(e => {
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+                        /* text: e.response.data.Errors[0].ErrorMessage */
+                    });
+                })
+
         }
 
+        
     },
 }
 </script>
