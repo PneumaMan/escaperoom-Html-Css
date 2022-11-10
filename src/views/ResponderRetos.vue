@@ -92,7 +92,7 @@ export default {
     },
     mounted() {
         this.ValidarLocalStorage()
-        this.traerReto()
+        //this.traerReto()
     },
     methods: {
         ...mapMutations(['obternerIdParticipante']), 
@@ -128,6 +128,8 @@ export default {
                     console.log(this.respuestas) */
                     this.guardarIdParticipante(res.data.data.id)
                     this.TokenParticipante = false
+
+                    this.traerReto()
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
