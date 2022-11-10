@@ -122,10 +122,10 @@ export default {
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data.data, 'informacion participante')
-                    /* this.Retos = res.data.data
+                    this.Retos = res.data.data
                     this.preguntaR = this.Retos.nextReto.preguntaReto
                     this.respuestas = this.Retos.nextReto.respuestas
-                    console.log(this.respuestas) */
+                    console.log(this.respuestas) 
                     this.guardarIdParticipante(res.data.data.id)
                     this.TokenParticipante = false
 
