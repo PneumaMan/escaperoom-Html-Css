@@ -4,7 +4,7 @@
             <router-link to="/admin" class="col-1"><i class="bi bi-arrow-left-circle" style="font-size:20px ;"></i>
             </router-link>
         </div>
-        <div class="row"> 
+        <div class="row">
             <h1 class="mx-auto my-3">Modulo de Administrativo de escapes room's</h1>
         </div>
         <div class="row">
@@ -99,7 +99,8 @@
                                 <td>{{ item.organizador }}</td>
                                 <td><button class="btn btn-outline-secondary mx-1" data-bs-toggle="modal"
                                         data-bs-target="#ModalParticipantesXescape"
-                                        @click.prevent="Cargarparticipantes(item.participantes)"><i class="bi bi-people-fill"></i></button></td>
+                                        @click.prevent="Cargarparticipantes(item.participantes)"><i
+                                            class="bi bi-people-fill"></i></button></td>
                                 <td>
                                     <button class="btn btn-outline-primary mx-1"
                                         @click.prevent="activarIdReto(item.id)"><i
@@ -110,6 +111,9 @@
                                         @click.prevent="IniciarEscape(item.id)"><i class="bi bi-power"></i></button>
                                     <button class="btn btn-outline-danger mx-1"
                                         @click.prevent="TerminarEscape(item.id)"><i class="bi bi-power"></i></button>
+                                    <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
+                                        data-bs-target="#modalQREscape" @click.prevent="CargarQREscape(item.urlQR)"><i
+                                            class="bi bi-qr-code-scan"></i></button>
                                 </td>
                                 <td>
                                     <button class="btn btn-outline-warning mx-1"
@@ -256,7 +260,8 @@
                                     </div>
                                     <div class="mb-3 form-floating">
                                         <select class="form-select" id="floatingSelect"
-                                            aria-label="Floating label select example" v-model="reto.tipoReto" @click.prevent="tomatipoReto(reto.tipoReto)">
+                                            aria-label="Floating label select example" v-model="reto.tipoReto"
+                                            @click.prevent="tomatipoReto(reto.tipoReto)">
                                             <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{
                                                     item.descripcion
                                             }}</option>
@@ -282,12 +287,14 @@
                                         <div class="form-check col-8 col-md-8 ml-2">
                                             <div class="" v-show="mostrarCampo">
                                                 <label for="">Respuesta reto retorno</label>
-                                                <input type="text" class="form-control" v-model="input.respuestaRetoRetorno">
+                                                <input type="text" class="form-control"
+                                                    v-model="input.respuestaRetoRetorno">
                                             </div>
                                             <div class="" v-show="!mostrarCampo">
                                                 <input class="form-check-input" type="checkbox" value="" id=""
                                                     v-model="input.correcta" />
-                                                <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                                <label class="form-check-label" for="">¿Es la respuesta
+                                                    correcta?</label>
                                             </div>
                                         </div>
                                     </div>
@@ -457,7 +464,8 @@
                                 </div>
                                 <div class="mb-3 form-floating">
                                     <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example" v-model="retoEditar.tipoReto" @click.prevent="tomatipoReto(retoEditar.tipoReto)">
+                                        aria-label="Floating label select example" v-model="retoEditar.tipoReto"
+                                        @click.prevent="tomatipoReto(retoEditar.tipoReto)">
                                         <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{
                                                 item.descripcion
                                         }}</option>
@@ -477,16 +485,17 @@
                                     </div>
 
                                     <div class="form-check col-8 col-md-8 ml-2">
-                                            <div class="" v-show="mostrarCampo">
-                                                <label for="">Respuesta reto retorno</label>
-                                                <input type="text" class="form-control" v-model="input.respuestaRetoRetorno">
-                                            </div>
-                                            <div class="" v-show="!mostrarCampo">
-                                                <input class="form-check-input" type="checkbox" value="" id=""
-                                                    v-model="input.correcta" />
-                                                <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
-                                            </div>
+                                        <div class="" v-show="mostrarCampo">
+                                            <label for="">Respuesta reto retorno</label>
+                                            <input type="text" class="form-control"
+                                                v-model="input.respuestaRetoRetorno">
                                         </div>
+                                        <div class="" v-show="!mostrarCampo">
+                                            <input class="form-check-input" type="checkbox" value="" id=""
+                                                v-model="input.correcta" />
+                                            <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
@@ -522,6 +531,23 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalQREscape" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">QR para iniciar sesion en el Escape room 
+                        </h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <qrcode-vue :value="urlCompleta" :size="size" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
@@ -578,7 +604,7 @@ export default {
                     {
                         respuestaReto: '',
                         correcta: false,
-                        respuestaRetoRetorno:'',
+                        respuestaRetoRetorno: '',
                         retoId: 0
                     }
                 ]
@@ -616,7 +642,7 @@ export default {
             ParticipantesXEscape: [],
             TipoRetos: [],
             EscapeRoomId: 0,
-            mostrarCampo:false
+            mostrarCampo: false
         }
     },
     mounted() {
@@ -721,7 +747,7 @@ export default {
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     this.Retos.unshift(res.data);
-                    this.mostrarCampo=false
+                    this.mostrarCampo = false
                     this.$swal({
                         position: 'top-end',
                         icon: 'success',
@@ -767,7 +793,7 @@ export default {
                         'El reto a sido actualizado.',
                         'success'
                     )
-                    this.mostrarCampo=false
+                    this.mostrarCampo = false
                 })
                 .catch(e => {
                     console.log(e.response);
@@ -778,7 +804,7 @@ export default {
                         text: e.response.data.errors,
                     });
                 })
-        }, 
+        },
         EliminarReto(id) {
             console.log(id)
             this.$swal({
@@ -905,12 +931,20 @@ export default {
             console.log(item)
             this.ParticipantesXEscape = item
         },
-        tomatipoReto(item){
+        tomatipoReto(item) {
             console.log(item)
-            if(item == 5){
+            if (item == 5) {
                 this.mostrarCampo = !this.mostrarCampo
             }
-            this.mostrarCampo=false
+            this.mostrarCampo = false
+        },
+        CargarQREscape(item) {
+            var URLactual = window.location.host;
+            console.log(URLactual)
+            this.UrlBase = URLactual
+            this.urlCompleta = this.UrlBase + '/' + item
+            console.log(this.urlCompleta)
+
         }
 
     },
