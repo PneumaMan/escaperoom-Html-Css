@@ -51,6 +51,7 @@ export default {
         },
         AutenticacionParticipante(){
             console.log(this.autenticacion)
+            this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
             if (this.$store.state.IdReto == "") {
                 this.autenticacion.retoId  = null
             }else{
