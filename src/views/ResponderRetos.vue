@@ -170,8 +170,8 @@ export default {
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
-                    console.log(res.data, "linea 173")
-                    //this.$store.state.nextReto = 've al siguiente reto'
+                    //console.log(res.data, "linea 173")
+                    this.$store.state.nextReto = 've al siguiente reto'
                     
                     this.$router.push({ path: '/scan-qr' })
                 }).catch(e => {
