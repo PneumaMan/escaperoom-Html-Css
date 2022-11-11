@@ -112,8 +112,8 @@ export default {
                 this.IdReto = idR[1]
                 this.$store.state.IdReto = idR[1]
                 console.log(idR)
+                this.$router.push({ path: '/responder-retos' })
             }
-            this.$router.push({ path: '/responder-retos' })
         },
         siguienteRet(){
             this.siguienteReto = this.$store.state.nextReto
