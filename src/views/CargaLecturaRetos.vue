@@ -28,6 +28,8 @@
                     <!--  <myQRScanner /> -->
                     <p>{{ errorQr }}</p>
                     <p>{{ IdEscapeRoom}}</p>
+                    <hr/>
+                    {{IdEscapeRoom}}
                     <p>{{ IdReto }}</p>
                     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
                 </div>
@@ -105,6 +107,7 @@ export default {
             for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
+                
                 var idE = this.datos[0].split("=");
                 console.log(idE[1], this.IdEscapeRoom)
                 this.IdEscapeRoom = idE[1]
