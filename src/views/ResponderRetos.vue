@@ -114,7 +114,8 @@ export default {
         ...mapActions(['guardarIdParticipante', 'leerIdParticipante', 'EliminarIdParticipante']),
         ValidarLocalStorage() {
             if (window.localStorage.participanteId == null) {
-                this.TokenParticipante = true
+                //this.TokenParticipante = true
+                this.$router.push({ path: '/login-participantes' })
             } else {
                 this.TokenParticipante = false
                 this.traerReto()
@@ -133,12 +134,13 @@ export default {
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
-            if (this.$store.state.IdReto == "") {
+            this.autenticacion.escapeRoomId = 'CfDJ8C-Eyalf5z5NqjI0ZaeKZUph7rfbDlguiX0LiC-7RJVhLU1wBtk8A1QUTnr1Nt8ZLT75wvF3i_w23oBK31YbgZdLFlakHGa-iJzqkaBekmF-N3mLD2-VuQqeSiPwxOxObA'
+         if (this.$store.state.IdReto == "") {
                 this.autenticacion.retoId  = null
             }else{
                 this.autenticacion.retoId = this.$store.state.IdReto
-            }
+            } 
+            //this.autenticacion.retoId  = null
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data, 'informacion participante')

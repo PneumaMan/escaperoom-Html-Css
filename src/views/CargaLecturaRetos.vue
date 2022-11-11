@@ -6,7 +6,7 @@
         <!-- <h3 class="mt-2">Escanea el codigo QR</h3> -->
         <div class="p-4" v-show="!verScanner">
             <div class="row">
-                <h3>{{siguienteReto}}</h3>
+                <h3>{{ siguienteReto }}</h3>
             </div>
             <div class="row">
                 <p class="text-secondary">presiona la camara y escanea el codigo QR </p>
@@ -27,8 +27,8 @@
                 <div class="card-body">
                     <!--  <myQRScanner /> -->
                     <p>datos: {{ vars }}</p>
-                    <hr/>
-                    <p>IdEscapeRoom:  {{IdEscapeRoom}}</p>
+                    <hr />
+                    <p>IdEscapeRoom: {{ IdEscapeRoom }}</p>
                     <p>IdReto: {{ IdReto }}</p>
                     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
                 </div>
@@ -46,10 +46,10 @@ export default {
             verScanner: false,
             errorQr: '',
             decodedString: '',
-            datos:'',
-            Valores:'',
-            IdEscapeRoom:'',
-            IdReto:'',
+            datos: '',
+            Valores: '',
+            IdEscapeRoom: '',
+            IdReto: '',
             siguienteReto: ''
         }
     },
@@ -100,21 +100,27 @@ export default {
             console.log(vars)//objeto con los id de escape room y reto
             this.datos = vars
 
-                var idE = this.datos[0].split("=");
-                console.log(idE[1], this.IdEscapeRoom)
-                this.IdEscapeRoom = idE[1]
-                this.$store.state.IdEscapeRoom = idE[1]
-                if (this.datos[1] != undefined) {
-                    var idR  = this.datos[1].split("=");
-                    this.IdReto = idR[1]
-                    this.$store.state.IdReto = idR[1]
-                    console.log(idR)
-                }
-                
+            var idE = this.datos[0].split("=");
+            console.log(idE[1], this.IdEscapeRoom)
+            this.IdEscapeRoom = idE[1]
+            this.$store.state.IdEscapeRoom = idE[1]
+            if (this.datos[1] != undefined) {
+                var idR = this.datos[1].split("=");
+                this.IdReto = idR[1]
+                this.$store.state.IdReto = idR[1]
+                console.log(idR)
+            }
+            
+            if (window.localStorage.participanteId == null) {
+                this.$router.push({ path: '/login-participantes' })
+            } else {
                 this.$router.push({ path: '/responder-retos' })
-        
+            }
+
+            
+
         },
-        siguienteRet(){
+        siguienteRet() {
             this.siguienteReto = this.$store.state.nextReto
         }
     },
@@ -144,14 +150,14 @@ export default {
 
 }
 
-.Lg-Escape{
-        width:450px ;
-        margin: auto;
-    }
+.Lg-Escape {
+    width: 450px;
+    margin: auto;
+}
 
 @media (width: 600px) and (width: 1200px) {
-    .Lg-Escape{
-        width:320px ;
+    .Lg-Escape {
+        width: 320px;
         margin: auto;
     }
 
@@ -179,10 +185,11 @@ export default {
 }
 
 @media (min-width: 401px) and (max-width: 600px) {
-    .Lg-Escape{
-        width:320px ;
+    .Lg-Escape {
+        width: 320px;
         margin: auto;
     }
+
     .blob {
         overflow: hidden;
         width: 16rem;
@@ -206,11 +213,13 @@ export default {
     }
 
 }
+
 @media screen and (max-width: 400px) {
-    .Lg-Escape{
-        width:300px ;
+    .Lg-Escape {
+        width: 300px;
         margin: auto;
     }
+
     .blob {
         overflow: hidden;
         width: 14rem;

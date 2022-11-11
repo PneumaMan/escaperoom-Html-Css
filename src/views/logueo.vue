@@ -39,9 +39,17 @@ export default {
     methods: {
         AutenticacionParticipante(){
             console.log(this.autenticacion)
+            if (this.$store.state.IdReto == "") {
+                this.autenticacion.retoId  = null
+            }else{
+                this.autenticacion.retoId = this.$store.state.IdReto
+            } 
             this.axios.post('/GameControl/participante/login', this.autenticacion)
             .then(res => {
-                console.log(res.data)
+                console.log(res.data, 'informacion participante')
+                this.guardarIdParticipante(res.data.data.id)
+                this.$store.state.nombreParticipante = res.data.data.fullName
+                this.$router.push({ path: '/scan-qr' })
             }).catch( e => {
                 console.log(e)
                 this.$swal({
