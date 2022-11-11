@@ -113,13 +113,13 @@ export default {
                 this.$store.state.IdReto = idR[1]
                 console.log(idR)
             }
-            setTimeout(function(){
+
                 if (window.localStorage.participanteId == null) {
                     this.$router.push({ path: '/login-participantes' })
                 } else {
                     this.$router.push({ path: '/responder-retos' })
                 }
-            }, 5000);
+
 
             
 
