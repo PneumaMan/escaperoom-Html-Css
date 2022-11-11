@@ -173,8 +173,9 @@ export default {
                     console.log(res.data, "linea 173")
                     this.GamecontrolReto = res.data.data
                     console.log(this.GamecontrolReto, 'linea 175')
-                    this.$store.state.nextReto = this.GamecontrolReto.nextRetoMessage
-                    (this.$store.state.nextReto , 'linea 177')
+                    console.log(res.data.data.nextRetoMessage, 'linea 176')
+                    this.$store.state.nextReto = this.GamecontrolReto[0].nextRetoMessage
+                    (this.$store.state.nextReto , 'linea 178')
                     this.$router.push({ path: '/scan-qr' })
                 }).catch(e => {
                     console.log(e)
