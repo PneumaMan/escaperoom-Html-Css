@@ -8,9 +8,6 @@
             <div class="row">
                 <div class="card  my-5 tarjeta-from col-8 col-md-6 mx-auto">
                     <div class="card-body">
-                        <div class="row">
-                            {{escaperoomis}}
-                        </div>
                         <div class=" col-md-6 mx-auto">
                             <label for="" class="form-label text-secondary"> Ingresa el numero de
                                     documento</label>
@@ -90,6 +87,7 @@ export default {
         position: absolute;
         z-index: -1;
         left: 26rem;
+        margin: auto !important;
     }
 @media (width: 1201px) and (width: 1350px) {
     .bt-consulta {
@@ -158,8 +156,6 @@ export default {
         background-color: #ebcc24;
         background-size: cover;
         background-position: center;
-        left: 55px !important;
-        top: 20px !important;
         z-index: -1;
     }
 
@@ -172,10 +168,25 @@ export default {
     }
 
 }
+@media (min-width: 401px) and (max-width: 600px) {
+    .blob {
+        overflow: hidden;
+        width: 16rem;
+        height: 16rem;
+        border-radius: 42% 56% 72% 28% / 42% 42% 56% 48%;
+        background-color: #ebcc24;
+        background-size: cover;
+        background-position: center;
+        left: 75px !important;
+        top: 20px !important;
+        z-index: -1;
+        margin: auto;
+    }
+}
 
 @media screen and (max-width: 400px) {
     .tarjeta-from {
-        width: 20rem;
+        width: 18rem;
         margin: auto;
         box-shadow: inset 0 0 2000px rgba(255, 255, 255, .5);
         background-color: rgba(255, 255, 255, .15);
