@@ -67,6 +67,8 @@ export default {
     },
     methods: {
         encuesta() {
+            this.RespuestasEncuestas.idParticipante = this.$store.state.participanteId
+            console.log(this.RespuestasEncuestas)
             this.axios.post('/GameControl/participante/encuesta', this.RespuestasEncuestas)
                 .then(res => {
                     console.log(res.data);

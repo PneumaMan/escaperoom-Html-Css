@@ -26,11 +26,10 @@
             <div class="card mx-auto my-5">
                 <div class="card-body">
                     <!--  <myQRScanner /> -->
-                    <p>{{ vars }}</p>
-                    <p>{{ IdEscapeRoom}}</p>
+                    <p>datos: {{ vars }}</p>
                     <hr/>
-                    {{IdEscapeRoom}}
-                    <p>{{ IdReto }}</p>
+                    <p>IdEscapeRoom:  {{IdEscapeRoom}}</p>
+                    <p>IdReto: {{ IdReto }}</p>
                     <qrcode-stream @init="onInit" @decode="onDecode"></qrcode-stream>
                 </div>
             </div>
