@@ -9,8 +9,8 @@
                 <div class="card  my-5 tarjeta-from col-8 col-md-6 mx-auto">
                     <div class="card-body">
                         <div class=" col-md-6 mx-auto">
-                            <label for="" class="form-label text-secondary"><Strong> Ingresa el numero de
-                                    documento</Strong></label>
+                            <label for="" class="form-label text-secondary"> Ingresa el numero de
+                                    documento</label>
                             <input type="text" class="form-control-plaintext text-center" style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
                            <button class="btn btn-warning my-3 bt-consulta"
                                 style="border-radius: 15px;width: 120px;" @click.prevent="AutenticacionParticipante()">Consultar</button>
@@ -25,6 +25,7 @@
     </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
     data() {
         return {
@@ -37,6 +38,7 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['guardarIdParticipante']),
         AutenticacionParticipante(){
             console.log(this.autenticacion)
             if (this.$store.state.IdReto == "") {
@@ -49,6 +51,7 @@ export default {
                 console.log(res.data, 'informacion participante')
                 this.guardarIdParticipante(res.data.data.id)
                 this.$store.state.nombreParticipante = res.data.data.fullName
+                this.$store.state.nextReto = res.data.data.nextReto.nombreReto
                 this.$router.push({ path: '/scan-qr' })
             }).catch( e => {
                 console.log(e)

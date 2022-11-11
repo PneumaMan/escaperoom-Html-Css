@@ -1,4 +1,5 @@
 <template>
+    <NavbarParticipantes />
     <div class="container">
         <div class="row">
             <img src="../assets/Logo-Escape-room-Rojo.png" alt="" class="Lg-Escape">
@@ -40,6 +41,7 @@
 import { QrcodeStream } from 'vue3-qrcode-reader'
 import myQRScanner from "@/components/myQRScanner.vue";
 import { mapMutations, mapActions, mapState } from "vuex";
+import NavbarParticipantes from '@/components/Navbar-Participante.vue'
 export default {
     data() {
         return {
@@ -55,7 +57,8 @@ export default {
     },
     components: {
         myQRScanner: myQRScanner,
-        QrcodeStream
+        QrcodeStream,
+        NavbarParticipantes
     },
     mounted() {
         this.siguienteRet()
@@ -110,12 +113,13 @@ export default {
                 this.$store.state.IdReto = idR[1]
                 console.log(idR)
             }
-            
-            if (window.localStorage.participanteId == null) {
-                this.$router.push({ path: '/login-participantes' })
-            } else {
-                this.$router.push({ path: '/responder-retos' })
-            }
+            setTimeout(function(){
+                if (window.localStorage.participanteId == null) {
+                    this.$router.push({ path: '/login-participantes' })
+                } else {
+                    this.$router.push({ path: '/responder-retos' })
+                }
+            }, 5000);
 
             
 
