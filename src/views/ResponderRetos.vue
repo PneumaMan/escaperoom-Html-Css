@@ -134,7 +134,11 @@ export default {
         AutenticacionParticipante() {
             console.log(this.autenticacion)
             this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
-            this.autenticacion.retoId = this.$store.state.IdReto
+            if (this.$store.state.IdReto == "") {
+                this.autenticacion.retoId  = null
+            }else{
+                this.autenticacion.retoId = this.$store.state.IdReto
+            }
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data, 'informacion participante')
@@ -159,9 +163,8 @@ export default {
         ResponderReto(id) {
             console.log(id)
             this.ControlReto.respuestaId = id
-            //this.ControlReto.retoId = this.autenticacion.retoId
-            this.ControlReto.retoId = this.$store.state.IdReto
             this.ControlReto.participanteId = this.$store.state.participanteId 
+            this.ControlReto.retoId = this.$store.state.IdReto
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
