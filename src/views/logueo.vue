@@ -8,6 +8,9 @@
             <div class="row">
                 <div class="card  my-5 tarjeta-from col-8 col-md-6 mx-auto">
                     <div class="card-body">
+                        <div class="row">
+                            {{escaperoomis}}
+                        </div>
                         <div class=" col-md-6 mx-auto">
                             <label for="" class="form-label text-secondary"> Ingresa el numero de
                                     documento</label>
@@ -30,6 +33,7 @@ export default {
     data() {
         return {
             inicioParticipante: true,
+            escaperoomis:'',
             autenticacion:{
                 identificacion: "",
                 escapeRoomId: "",
@@ -37,8 +41,14 @@ export default {
             }
         }
     },
+    mounted(){
+        this.traeridescaperoom()
+    },
     methods: {
         ...mapActions(['guardarIdParticipante']),
+        traeridescaperoom(){
+            this.escaperoomis = this.$store.state.IdEscapeRoom
+        },
         AutenticacionParticipante(){
             console.log(this.autenticacion)
             if (this.$store.state.IdReto == "") {
