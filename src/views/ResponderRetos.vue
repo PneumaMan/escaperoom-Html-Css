@@ -170,9 +170,11 @@ export default {
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
-                    console.log(res.data)
+                    console.log(res.data, "linea 173")
                     this.GamecontrolReto = res.data.data
+                    console.log(this.GamecontrolReto, 'linea 175')
                     this.$store.state.nextReto = this.GamecontrolReto.nextRetoMessage
+                    (this.$store.state.nextReto , 'linea 177')
                     this.$router.push({ path: '/scan-qr' })
                 }).catch(e => {
                     console.log(e)
@@ -180,7 +182,7 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        text: e.response.data.Errors[0].ErrorMessage
+                        //text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 })
