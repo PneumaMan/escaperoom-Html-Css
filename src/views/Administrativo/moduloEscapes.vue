@@ -256,15 +256,13 @@
                                     </div>
                                     <div class="mb-3 form-floating">
                                         <select class="form-select" id="floatingSelect"
-                                            aria-label="Floating label select example" v-model="reto.tipoReto">
+                                            aria-label="Floating label select example" v-model="reto.tipoReto" @click.prevent="tomatipoReto(reto.tipoReto)">
                                             <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{
                                                     item.descripcion
                                             }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de reto</label>
-
                                     </div>
-
                                     <hr />
                                     <h5 class="mx-auto">Respuestas</h5>
                                     <hr />
@@ -281,10 +279,16 @@
                                             <i class="bi bi-plus-circle-fill text-success" @click="add(k)"
                                                 v-show="k == reto.respuestas.length - 1"></i>
                                         </span>
-                                        <div class="form-check col-8 col-md-6 ml-2">
-                                            <input class="form-check-input" type="checkbox" value="" id=""
-                                                v-model="input.correcta" />
-                                            <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                        <div class="form-check col-8 col-md-8 ml-2">
+                                            <div class="" v-show="mostrarCampo">
+                                                <label for="">Respuesta reto retorno</label>
+                                                <input type="text" class="form-control" v-model="input.respuestaRetoRetorno">
+                                            </div>
+                                            <div class="" v-show="!mostrarCampo">
+                                                <input class="form-check-input" type="checkbox" value="" id=""
+                                                    v-model="input.correcta" />
+                                                <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -453,7 +457,7 @@
                                 </div>
                                 <div class="mb-3 form-floating">
                                     <select class="form-select" id="floatingSelect"
-                                        aria-label="Floating label select example" v-model="retoEditar.tipoReto">
+                                        aria-label="Floating label select example" v-model="retoEditar.tipoReto" @click.prevent="tomatipoReto(retoEditar.tipoReto)">
                                         <option :value="item.id" v-for="(item, index) in TipoRetos" :key="index">{{
                                                 item.descripcion
                                         }}</option>
@@ -472,11 +476,17 @@
                                         <input type="text" class="form-control " v-model="input.respuestaReto">
                                     </div>
 
-                                    <div class="form-check col-8 col-md-6 ml-2">
-                                        <input class="form-check-input" type="checkbox" value="" id=""
-                                            v-model="input.correcta" />
-                                        <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
-                                    </div>
+                                    <div class="form-check col-8 col-md-8 ml-2">
+                                            <div class="" v-show="mostrarCampo">
+                                                <label for="">Respuesta reto retorno</label>
+                                                <input type="text" class="form-control" v-model="input.respuestaRetoRetorno">
+                                            </div>
+                                            <div class="" v-show="!mostrarCampo">
+                                                <input class="form-check-input" type="checkbox" value="" id=""
+                                                    v-model="input.correcta" />
+                                                <label class="form-check-label" for="">¿Es la respuesta correcta?</label>
+                                            </div>
+                                        </div>
 
                                 </div>
                             </div>
@@ -568,6 +578,7 @@ export default {
                     {
                         respuestaReto: '',
                         correcta: false,
+                        respuestaRetoRetorno:'',
                         retoId: 0
                     }
                 ]
@@ -604,7 +615,8 @@ export default {
             TipoPreguntas: [],
             ParticipantesXEscape: [],
             TipoRetos: [],
-            EscapeRoomId: 0
+            EscapeRoomId: 0,
+            mostrarCampo:false
         }
     },
     mounted() {
@@ -709,6 +721,7 @@ export default {
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     this.Retos.unshift(res.data);
+                    this.mostrarCampo=false
                     this.$swal({
                         position: 'top-end',
                         icon: 'success',
@@ -754,6 +767,7 @@ export default {
                         'El reto a sido actualizado.',
                         'success'
                     )
+                    this.mostrarCampo=false
                 })
                 .catch(e => {
                     console.log(e.response);
@@ -764,7 +778,7 @@ export default {
                         text: e.response.data.errors,
                     });
                 })
-        },
+        }, 
         EliminarReto(id) {
             console.log(id)
             this.$swal({
@@ -890,6 +904,13 @@ export default {
         Cargarparticipantes(item) {
             console.log(item)
             this.ParticipantesXEscape = item
+        },
+        tomatipoReto(item){
+            console.log(item)
+            if(item == 5){
+                this.mostrarCampo = !this.mostrarCampo
+            }
+            this.mostrarCampo=false
         }
 
     },

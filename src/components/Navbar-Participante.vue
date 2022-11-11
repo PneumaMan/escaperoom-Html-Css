@@ -4,7 +4,7 @@
       <a class="navbar-brand"></a>
       <form class="d-flex">
         <div class="dropdown dropstart">
-          <button class="btn btn-ligth dropdown-toggle text-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-ligth dropdown-toggle text-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <label for="" style="font-size:25px ;">👨‍⚕️</label> {{nombreParticipante}}
           </button>
         </div>

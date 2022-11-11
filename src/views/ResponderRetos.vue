@@ -10,8 +10,7 @@
         </div>
         <div class="row">
             <div class="mx-auto">
-                <button class="btn btn-danger mx-1" @click.prevent="salidaVoluntaria()"><abbr
-                        title="Salida voluntaria">Salida voluntaria</abbr></button>
+                <button class="btn btn-warning mx-1" @click.prevent="salidaVoluntaria()">Salida voluntaria</button>
                 <button class="btn btn-success mx-1" v-show="escapar">Escapar</button>
             </div>
         </div>
@@ -60,7 +59,7 @@
             </div>
         </div>
         <div class="row">
-            <Encuesta v-show="FinParticipante"/>
+            <Encuesta v-show="FinParticipante" />
         </div>
     </div>
 </template>
@@ -86,9 +85,9 @@ export default {
             autenticacion: {
                 identificacion: "",
                 escapeRoomId: "",
-                retoId: ""  
-                /* escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUrJ5jGVD8DuheH3vvpPSkM4s4Y1lTiMjN5bcvZiCLNbzI6bVJF4ZbpjdV4jw2oc_YCuW32akBDMDOpfO8SFXEvoYuPNbuSX1FcA08GA3b6JJw",
-                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUqkqjRT2GyKMuVHc5RBxu4C8FFgGxETIwyVea3MjdxWtchKYkGYy5HcuynlKpz9YQ1zVPbC0x5u2_Um9ZHouYkgB-4-xoTE1K4EzLLqsMHWzA"
+                retoId: ""
+               /*  escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUpbwShWTCs8RqjuTlO_06vB3ASIFbP2EfIa5kW--bv5cz-5_b9LFO0R2I4mHmjeIfrDbJ2h16KVfKWicfJFu6lu1DwsvP5Ql49zgJ6U39Z0CQ",
+                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUoT4mhPH0Ua9L0XyNZrtj9I4GBSY0E8uN66E-RC1di_60NgQvgFM8G2M0jaCHe15pygjH7iR8I535HSmFYc48ZDl85GzfSdNEU1aQ07mhNSxw"
  */
             },
             ControlReto: {
@@ -102,9 +101,9 @@ export default {
                 participanteId: "",
                 retoId: ""
             },
-            idSalidaVol:'',
-            FinParticipante:false
-            
+            idSalidaVol: '',
+            FinParticipante: false
+
         }
     },
     mounted() {
@@ -112,7 +111,7 @@ export default {
     },
     methods: {
         ...mapMutations(['obternerIdParticipante']),
-        ...mapActions(['guardarIdParticipante', 'leerIdParticipante']),
+        ...mapActions(['guardarIdParticipante', 'leerIdParticipante', 'EliminarIdParticipante']),
         ValidarLocalStorage() {
             if (window.localStorage.participanteId == null) {
                 this.TokenParticipante = true
@@ -135,31 +134,34 @@ export default {
         AutenticacionParticipante() {
             console.log(this.autenticacion)
             this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
-            this.autenticacion.retoId = this.$store.state.IdReto 
+            this.autenticacion.retoId = this.$store.state.IdReto
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
-                    console.log(res.data.data, 'informacion participante')
+                    console.log(res.data, 'informacion participante')
                     this.Retos = res.data.data
                     this.preguntaR = this.Retos.nextReto.preguntaReto
                     this.respuestas = this.Retos.nextReto.respuestas
-                    console.log(this.Retos.nextReto)
+                    console.log(this.Retos.nextReto) 
                     this.guardarIdParticipante(res.data.data.id)
                     this.$store.state.nombreParticipante = res.data.data.fullName
                     this.TokenParticipante = false
+                    
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
+                        text: e.response.data.Errors[0].ErrorMessage
                     });
                 })
         },
         ResponderReto(id) {
             console.log(id)
             this.ControlReto.respuestaId = id
+            //this.ControlReto.retoId = this.autenticacion.retoId
             this.ControlReto.retoId = this.$store.state.IdReto
-            this.ControlReto.participanteId = this.$store.state.participanteId
+            this.ControlReto.participanteId = this.$store.state.participanteId 
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
@@ -173,31 +175,44 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        /* text: e.response.data.Errors[0].ErrorMessage */
+                        text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 })
         },
         salidaVoluntaria() {
             const participanteId = this.$store.state.participanteId
-            console.log({participanteId})          
-            this.axios.post('/GameControl/escape-room/salidavoluntaria',  {participanteId})
-                .then(res => {
-                    // Agrega al inicio de nuestro array notas
-                    console.log(res.data);
-                    const array = []
-                    array.push(res.data)
-                    this.$router.push({ path: '/salida-voluntaria' })
-                })
-                .catch(e => {
-                    console.log(e)
-                    this.$swal({
-                        position: 'toast-top-end',
-                        icon: 'error',
-                        title: e.response.data.Message,
-                        
-                    });
-                })
+            console.log({ participanteId })
+            this.$swal({
+                title: '¿Esta Seguro?',
+                text: "Esta accion no se puede revertir",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, salir!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.axios.post('/GameControl/escape-room/salidavoluntaria', { participanteId })
+                        .then(res => {
+                            // Agrega al inicio de nuestro array notas
+                            console.log(res.data);
+                            const array = []
+                            array.push(res.data)
+                            this.EliminarIdParticipante()
+                            this.$router.push({ path: '/salida-voluntaria' })
+                        })
+                        .catch(e => {
+                            console.log(e)
+                            this.$swal({
+                                position: 'toast-top-end',
+                                icon: 'error',
+                                title: e.response.data.Message,
+
+                            });
+                        })
+                }
+            })
         },
         traerReto() {
             this.postReto.participanteId = this.$store.state.participanteId
@@ -220,21 +235,20 @@ export default {
                 })
 
         },
-        
-
-
     },
 }
 </script>
 <style scoped>
 body {
-    background-color: #f6a700;
+    background: rgb(185, 20, 20);
+    background: linear-gradient(90deg, rgba(185, 20, 20, 1) 11%, rgba(96, 15, 150, 1) 86%);
     margin: 0;
     padding: 0;
 }
 
 .fondo {
-    background-color: #f6a800b0;
+    background: rgb(185, 20, 20);
+    background: linear-gradient(90deg, rgba(185, 20, 20, 1) 11%, rgba(96, 15, 150, 1) 86%);
     margin: 0;
     padding: 0;
 }

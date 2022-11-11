@@ -47,6 +47,9 @@ const store = createStore({
     },
     obternerIdParticipante(state, payload){
       state.participanteId = payload
+    },
+    DeleteIdParticipante(state){
+      state.participanteId = ''
     }
   },
   actions: {
@@ -57,6 +60,11 @@ const store = createStore({
     guardarIdParticipante({commit}, payload){
       localStorage.setItem('participanteId', payload);
       commit('obternerIdParticipante', payload)
+    },
+    EliminarIdParticipante({commit}){
+      localStorage.removeItem('participanteId');
+      commit('DeleteIdParticipante'); 
+
     },
     cerrarSesion({commit}){
       /* Logout  backend */
