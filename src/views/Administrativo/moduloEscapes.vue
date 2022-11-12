@@ -1015,7 +1015,7 @@ export default {
             //console.log(URLactual)
             this.UrlBase = URLactual
             this.urlCompleta = this.UrlBase + '/login-participantes?' + item
-            //console.log(this.urlCompleta)
+            console.log(item)
 
         }
 

@@ -117,6 +117,7 @@ export default {
                 //this.TokenParticipante = true
                 this.$router.push({ path: '/login-participantes' })
             } else {
+                this.$store.state.participanteId = window.localStorage.participanteId
                 this.TokenParticipante = false
                 this.$store.state.nextReto = 've al siguiente reto'
                 const mensaje =  've al siguiente reto'
@@ -124,7 +125,7 @@ export default {
                 console.log(mensaje , this.$store.state.nextReto )
                 this.traerReto()
             }
-            this.datos = this.$store.state.datosID
+            /* this.datos = this.$store.state.datosID
             for (let index = 0; index < this.datos.length; index++) {
                 const element = this.datos[index];
                 console.log(element)
@@ -134,17 +135,16 @@ export default {
                 var idR = this.datos[1].split("=");
                 this.IdReto = idR[1]
                 console.log(idR)
-            }
+            } */
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
-            this.autenticacion.escapeRoomId = 'CfDJ8C-Eyalf5z5NqjI0ZaeKZUph7rfbDlguiX0LiC-7RJVhLU1wBtk8A1QUTnr1Nt8ZLT75wvF3i_w23oBK31YbgZdLFlakHGa-iJzqkaBekmF-N3mLD2-VuQqeSiPwxOxObA'
+            this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
          if (this.$store.state.IdReto == "") {
                 this.autenticacion.retoId  = null
             }else{
                 this.autenticacion.retoId = this.$store.state.IdReto
             } 
-            //this.autenticacion.retoId  = null
             this.axios.post('/GameControl/participante/login', this.autenticacion)
                 .then(res => {
                     console.log(res.data, 'informacion participante')

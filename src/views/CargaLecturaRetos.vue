@@ -92,6 +92,15 @@ export default {
                 // hide loading indicator
             }
         },
+        ValidarLocalStorage() {
+            if (window.localStorage.participanteId == null) {
+                //this.TokenParticipante = true
+                this.$router.push({ path: '/login-participantes' })
+            } else {
+                this.$store.state.participanteId = window.localStorage.participanteId
+                console.log(this.$store.state.participanteId)
+            }
+        },
         onDecode(decodedString) {
             this.decodedString = decodedString
             console.log(this.decodedString)
