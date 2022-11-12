@@ -39,12 +39,19 @@ export default {
         }
     },
     mounted(){
-        this.traeridescaperoom()
+        this.ExtraerIdUrl()
     },
     methods: {
         ...mapActions(['guardarIdParticipante']),
-        traeridescaperoom(){
-            this.escaperoomis = this.$store.state.IdEscapeRoom
+        ExtraerIdUrl(){
+            var urlString = window.location.search;
+            var urlParams = new URLSearchParams(urlString);
+            var escapeParam = urlParams.get('EscapeRoom');
+            var retoParam = urlParams.get('Reto');
+            this.$store.state.IdEscapeRoom = escapeParam
+            this.$store.state.IdReto = retoParam
+            console.log(escapeParam, 'paremetro del escape')
+            console.log(retoParam, 'parametro del reto')
         },
         AutenticacionParticipante(){
             console.log(this.autenticacion)

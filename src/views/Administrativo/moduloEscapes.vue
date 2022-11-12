@@ -7,34 +7,160 @@
         <div class="row">
             <h1 class="mx-auto my-3">Modulo de Administrativo de escapes room's</h1>
         </div>
-        <div class="row">
-            <!-- Button trigger modal -->
-            <button type="button" class="col-8 col-md-2 my-5 btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-                Crear Escape
-            </button>
+        <!-- INICIO Escape room  -->
+        <div class="">
+            <div class="row">
+                <!-- Button trigger modal -->
+                <button type="button" class="col-8 col-md-2 my-5 btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Crear Escape
+                </button>
 
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                <!-- Modal crear Escape Room -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Crear escape room </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form">
+                                    <div class="row">
+                                        <div class="mb-3 col-11 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Nombre del
+                                                escape room
+                                            </label>
+                                            <input type="text" class="form-control" v-model="room.nombreEscapeRoom">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Nombre del
+                                                organizador
+                                            </label>
+                                            <input type="text" class="form-control" v-model="room.organizador">
+                                        </div>
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Celular
+                                                organizador
+                                            </label>
+                                            <input type="text" class="form-control" v-model="room.celularOrganizador">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Fecha inicio del
+                                                juego
+                                            </label>
+                                            <input type="datetime-local" class="form-control"
+                                                v-model="room.fechaInicioJuego">
+                                        </div>
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Fecha final del
+                                                juego
+                                            </label>
+                                            <input type="datetime-local" class="form-control"
+                                                v-model="room.fechaFinJuego">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite
+                                                escape room</label>
+                                            <input type="time" class="form-control" v-model="room.tiempoLimiteEscape">
+                                        </div>
+                                        <div class="mb-3 col-md-5 mx-auto">
+                                            <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite
+                                                por participante</label>
+                                            <input type="time" class="form-control"
+                                                v-model="room.tiempoLimiteParticipantes">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                    @click.prevent="agregarEscape()">Guardar</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card w-75 mx-auto">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Organizador</th>
+                                    <th scope="col">Participantes</th>
+                                    <th scope="col">Retos</th>
+                                    <th scope="col">Escape room</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                <tr v-for="(item, index) in escapes" :key="index">
+                                    <th scope="row">1</th>
+                                    <td>{{ item.nombreEscapeRoom }}</td>
+                                    <td>{{ item.organizador }}</td>
+                                    <td><button class="btn btn-outline-secondary mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#ModalParticipantesXescape"
+                                            @click.prevent="Cargarparticipantes(item.participantes)"><i
+                                                class="bi bi-people-fill"></i></button></td>
+                                    <td>
+                                        <button class="btn btn-outline-primary mx-1"
+                                            @click.prevent="activarReto(item)"><i
+                                                class="bi bi-journal-medical"></i></button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-success mx-1"
+                                            @click.prevent="IniciarEscape(item.id)"><i class="bi bi-power"></i></button>
+                                        <button class="btn btn-outline-danger mx-1"
+                                            @click.prevent="TerminarEscape(item.id)"><i
+                                                class="bi bi-power"></i></button>
+                                        <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#modalQREscape"
+                                            @click.prevent="CargarQREscape(item.urlQR)"><i
+                                                class="bi bi-qr-code-scan"></i></button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-warning mx-1"
+                                            @click.prevent="ActivarEditarEscape(item)" data-bs-toggle="modal"
+                                            data-bs-target="#ModalEditarEscape"><i
+                                                class="bi bi-pencil-square"></i></button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Editar Escape room  -->
+            <div class="modal fade" id="ModalEditarEscape" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Crear escape room </h1>
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar escape room </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="form">
                                 <div class="row">
-                                    <div class="mb-3 col-md-5 mx-auto">
+                                    <div class="mb-3 col-11 mx-auto">
                                         <label for="exampleFormControlTextarea1" class="form-label">Nombre del escape
+                                            room
                                         </label>
-                                        <input type="text" class="form-control" v-model="room.nombreEscapeRoom">
-                                    </div>
-                                    <div class="mb-3 col-md-5 mx-auto">
-                                        <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite
-                                        </label>
-                                        <input type="time" class="form-control" v-model="room.TiempoLimiteEscape">
+                                        <input type="text" class="form-control " v-model="roomEditar.nombreEscapeRoom">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -42,12 +168,12 @@
                                         <label for="exampleFormControlTextarea1" class="form-label">Nombre del
                                             organizador
                                         </label>
-                                        <input type="text" class="form-control" v-model="room.organizador">
+                                        <input type="text" class="form-control" v-model="roomEditar.organizador">
                                     </div>
                                     <div class="mb-3 col-md-5 mx-auto">
                                         <label for="exampleFormControlTextarea1" class="form-label">Celular organizador
                                         </label>
-                                        <input type="text" class="form-control" v-model="room.celularOrganizador">
+                                        <input type="text" class="form-control" v-model="roomEditar.celularOrganizador">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -56,13 +182,27 @@
                                             juego
                                         </label>
                                         <input type="datetime-local" class="form-control"
-                                            v-model="room.fechaInicioJuego">
+                                            v-model="roomEditar.fechaInicioJuego">
                                     </div>
                                     <div class="mb-3 col-md-5 mx-auto">
                                         <label for="exampleFormControlTextarea1" class="form-label">Fecha final del
                                             juego
                                         </label>
-                                        <input type="datetime-local" class="form-control" v-model="room.fechaFinJuego">
+                                        <input type="datetime-local" class="form-control"
+                                            v-model="roomEditar.fechaFinJuego">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3 col-md-5 mx-auto">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite escape
+                                            room</label>
+                                        <input type="time" class="form-control" v-model="roomEditar.tiempoLimiteEscape">
+                                    </div>
+                                    <div class="mb-3 col-md-5 mx-auto">
+                                        <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite por
+                                            participante</label>
+                                        <input type="time" class="form-control"
+                                            v-model="roomEditar.tiempoLimiteParticipantes">
                                     </div>
                                 </div>
                             </div>
@@ -70,126 +210,14 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                             <button type="button" class="btn btn-primary"
-                                @click.prevent="agregarEscape()">Guardar</button>
+                                @click.prevent="EditarEscape()">Editar</button>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="card w-75 mx-auto">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nombre</th>
-                                <th scope="col">Organizador</th>
-                                <th scope="col">Participantes</th>
-                                <th scope="col">Retos</th>
-                                <th scope="col">Escape room</th>
-                                <th scope="col">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                            <tr v-for="(item, index) in escapes" :key="index">
-                                <th scope="row">1</th>
-                                <td>{{ item.nombreEscapeRoom }}</td>
-                                <td>{{ item.organizador }}</td>
-                                <td><button class="btn btn-outline-secondary mx-1" data-bs-toggle="modal"
-                                        data-bs-target="#ModalParticipantesXescape"
-                                        @click.prevent="Cargarparticipantes(item.participantes)"><i
-                                            class="bi bi-people-fill"></i></button></td>
-                                <td>
-                                    <button class="btn btn-outline-primary mx-1"
-                                        @click.prevent="activarIdReto(item.id)"><i
-                                            class="bi bi-journal-medical"></i></button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-outline-success mx-1"
-                                        @click.prevent="IniciarEscape(item.id)"><i class="bi bi-power"></i></button>
-                                    <button class="btn btn-outline-danger mx-1"
-                                        @click.prevent="TerminarEscape(item.id)"><i class="bi bi-power"></i></button>
-                                    <button class="btn btn-outline-info mx-1" data-bs-toggle="modal"
-                                        data-bs-target="#modalQREscape" @click.prevent="CargarQREscape(item.urlQR)"><i
-                                            class="bi bi-qr-code-scan"></i></button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-outline-warning mx-1"
-                                        @click.prevent="ActivarEditarEscape(item)" data-bs-toggle="modal"
-                                        data-bs-target="#ModalEditarEscape"><i class="bi bi-pencil-square"></i></button>
-
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Editar Escape room  -->
-        <div class="modal fade" id="ModalEditarEscape" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar escape room </h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form">
-                            <div class="row">
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Nombre del escape
-                                    </label>
-                                    <input type="text" class="form-control" v-model="roomEditar.nombreEscapeRoom">
-                                </div>
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Tiempo limite
-                                    </label>
-                                    <input type="time" class="form-control" v-model="roomEditar.TiempoLimiteEscape">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Nombre del
-                                        organizador
-                                    </label>
-                                    <input type="text" class="form-control" v-model="roomEditar.organizador">
-                                </div>
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Celular organizador
-                                    </label>
-                                    <input type="text" class="form-control" v-model="roomEditar.celularOrganizador">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Fecha inicio del
-                                        juego
-                                    </label>
-                                    <input type="datetime-local" class="form-control"
-                                        v-model="roomEditar.fechaInicioJuego">
-                                </div>
-                                <div class="mb-3 col-md-5 mx-auto">
-                                    <label for="exampleFormControlTextarea1" class="form-label">Fecha final del
-                                        juego
-                                    </label>
-                                    <input type="datetime-local" class="form-control"
-                                        v-model="roomEditar.fechaFinJuego">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" @click.prevent="EditarEscape()">Editar</button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- FIN Editar Escape room  -->
+        <!-- FIN  Escape room  -->
 
         <!-- Retos -->
         <div class="row" v-show="showRetos">
@@ -222,9 +250,6 @@
                                             </label>
                                             <input type="time" class="form-control" v-model="reto.bonificacionReto">
                                         </div>
-                                        <datalist id="listahorasdeseadas">
-                                            <option value="24:00:10">00:00:10</option>
-                                        </datalist>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-8 col-md-6">
@@ -267,6 +292,14 @@
                                             }}</option>
                                         </select>
                                         <label for="floatingSelect" class="form-label">Tipo de reto</label>
+                                    </div>
+                                    <div class="mb-3  col-8">
+                                        <label for="floatingSelect" class="form-label mx-3">¿El reto es
+                                            obligatorio?</label>
+                                        <label class="switch">
+                                            <input type="checkbox" v-model="reto.obligatorio">
+                                            <span class="slider round"></span>
+                                        </label>
                                     </div>
                                     <hr />
                                     <h5 class="mx-auto">Respuestas</h5>
@@ -392,7 +425,8 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <qrcode-vue :value="urlCompleta" :size="size" />
+                                                    <qrcode-vue :value="urlCompleta" :size="size" :foreground="colorQR"
+                                                        :background="bgQR" />
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -472,7 +506,13 @@
                                     </select>
                                     <label for="floatingSelect" class="form-label">Tipo de reto</label>
                                 </div>
-
+                                <div class="mb-3  col-8">
+                                    <label for="floatingSelect" class="form-label mx-3">¿El reto es obligatorio?</label>
+                                    <label class="switch">
+                                        <input type="checkbox" v-model="retoEditar.obligatorio">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
                                 <hr />
                                 <h5 class="mx-auto">Respuestas</h5>
                                 <hr />
@@ -510,7 +550,7 @@
             </div>
         </div>
 
-        <!-- Modal Carga particioantes -->
+        <!-- Modal Carga participantes -->
         <div class="modal fade" id="ModalParticipantesXescape" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -535,16 +575,22 @@
                 </div>
             </div>
         </div>
+        <!-- Modal para los qr del escape room -->
         <div class="modal fade" id="modalQREscape" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">QR para iniciar sesion en el Escape room 
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">QR's del Escape room
                         </h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <p>QR para iniciar sesión en el escape room</p>
                         <qrcode-vue :value="urlCompleta" :size="size" />
+                        <hr class="my-3" />
+                        <p>QR para feedback</p>
+                        <hr class="my-3" />
+                        <p>QR para salida del escape room (escapar)</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -572,30 +618,31 @@ export default {
             Retos: [],
             room: {
                 nombreEscapeRoom: "",
-                estado: true,
                 fechaInicioJuego: "",
                 fechaFinJuego: "",
                 organizador: "",
                 celularOrganizador: "",
-                TiempoLimiteEscape: ""
+                tiempoLimiteEscape: "00:00:01",
+                tiempoLimiteParticipantes: '00:00:01'
             },
             roomEditar: {
                 id: 0,
                 nombreEscapeRoom: "",
-                estado: true,
                 fechaInicioJuego: "",
                 fechaFinJuego: "",
                 organizador: "",
                 celularOrganizador: "",
-                TiempoLimiteEscape: ""
+                tiempoLimiteEscape: "00:00:01",
+                tiempoLimiteParticipantes: '00:00:01'
             },
             showRetos: false,
             reto: {
                 nombreReto: "",
                 preguntaReto: "",
-                tipoPregunta: 1,
-                numeroReto: 1,
-                tipoReto: 1,
+                tipoPregunta: 0,
+                numeroReto: 0,
+                tipoReto: 0,
+                obligatorio: true,
                 bonificacionReto: "00:00:10",
                 escapeRoomId: 0,
                 color: "",
@@ -613,9 +660,10 @@ export default {
                 id: 0,
                 nombreReto: "",
                 preguntaReto: "",
-                tipoPregunta: 1,
-                numeroReto: 1,
-                tipoReto: 1,
+                tipoPregunta: 0,
+                numeroReto: 0,
+                tipoReto: 0,
+                obligatorio: true,
                 bonificacionReto: "00:00:10",
                 escapeRoomId: 0,
                 color: "",
@@ -624,6 +672,7 @@ export default {
                     {
                         respuestaReto: '',
                         correcta: false,
+                        respuestaRetoRetorno: '',
                         retoId: 0
                     }
                 ]
@@ -631,8 +680,8 @@ export default {
             id_Reto: 0,
             UrlBase: '',
             urlCompleta: '',
-            colorQR: '',
-            bgQR: '',
+            colorQR: '#000000',
+            bgQR: '#ffffff',
             titulo: "",
             size: 350,
             Margin: 2,
@@ -647,18 +696,18 @@ export default {
     },
     mounted() {
         this.listarEscapes();
-        this.listarRetos();
+        //this.listarRetos();
         this.listarPreguntas();
         this.listarTipoRetos()
     },
     methods: {
         agregarEscape() {
-            console.log(this.room)
+            //console.log(this.room)
             this.axios.post('/EscapeRoom', this.room, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     this.escapes.unshift(res.data);
-                    console.log(res.data)
+                    //console.log(res.data)
                     this.$swal({
                         position: 'top-end',
                         icon: 'success',
@@ -668,8 +717,16 @@ export default {
                     })
                 })
                 .catch(e => {
-                    console.log(e);
+                    //console.log(e);
                 })
+            this.room.nombreEscapeRoom = "",
+                this.room.fechaInicioJuego = "",
+                this.room.fechaFinJuego = "",
+                this.room.organizador = "",
+                this.room.celularOrganizador = "",
+                this.room.tiempoLimiteEscape = "00:00:01",
+                this.room.tiempoLimiteParticipantes = '00:00:01'
+
         },
         listarRetos() {
             this.axios.get('/Retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
@@ -678,7 +735,7 @@ export default {
                     this.Retos = response.data.data;
                 })
                 .catch((e) => {
-                    console.log('error' + e);
+                    //console.log('error' + e);
                 })
         },
         listarEscapes() {
@@ -688,30 +745,31 @@ export default {
                     this.escapes = response.data.data;
                 })
                 .catch((e) => {
-                    console.log('error' + e);
+                    //console.log('error' + e);
                 })
         },
-        activarIdReto(item) {
+        activarReto(item) {
             this.showRetos = true
-            //console.log(item)
-            this.id_Reto = item
+            console.log(item)
+            this.Retos = item.retos
+            this.id_Reto = item.id
             this.reto.escapeRoomId = this.id_Reto
         },
         ActivarEditarEscape(item) {
             this.roomEditar.id = item.id
             this.roomEditar.nombreEscapeRoom = item.nombreEscapeRoom
-            this.roomEditar.estado = item.estado
             this.roomEditar.fechaInicioJuego = item.fechaInicioJuego
             this.roomEditar.fechaFinJuego = item.fechaFinJuego
             this.roomEditar.organizador = item.organizador
             this.roomEditar.celularOrganizador = item.celularOrganizador
-            this.roomEditar.TiempoLimiteEscap = item.TiempoLimiteEscap
+            this.roomEditar.tiempoLimiteEscape = item.tiempoLimite
+            this.roomEditar.tiempoLimiteParticipantes = item.tiempoLimiteParticipantes
         },
         EditarEscape() {
-            console.log(this.roomEditar)
+            //console.log(this.roomEditar)
             this.axios.put(`/EscapeRoom/${this.roomEditar.id}`, this.roomEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     this.listarEscapes()
 
                     this.$swal({
@@ -723,7 +781,7 @@ export default {
                     })
                 })
                 .catch(e => {
-                    console.log(e);
+                    //console.log(e);
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
@@ -742,7 +800,7 @@ export default {
             this.reto.respuestas.splice(index, 1);
         },
         agregarReto() {
-            console.log(this.reto)
+            //console.log(this.reto)
             this.axios.post('/Retos', this.reto, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
@@ -757,7 +815,7 @@ export default {
                     })
                 })
                 .catch(e => {
-                    console.log(e);
+                    //console.log(e);
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
@@ -766,26 +824,40 @@ export default {
                         ,
                     });
                 })
-
-        },
+                this.reto.nombreReto = "",
+                this.reto.preguntaReto = "",
+                this.reto.tipoPregunta = 0,
+                this.reto.numeroReto = 0,
+                this.reto.tipoReto = 0,
+                this.reto.obligatorio = true,
+                this.reto.bonificacionReto = "00:00:10",
+                this.reto.color = "",
+                this.reto.bgColor = "",
+                this.reto.respuestas.respuestaReto = '',
+                this.reto.respuestas.correcta = false,
+                this.reto.respuestas.respuestaRetoRetorno = '',
+                this.reto.respuestas.retoId = 0
+                    },
         ActivarEdicionReto(item) {
-            console.log(item)
+            //console.log(item)
             this.retoEditar.id = item.id
             this.retoEditar.preguntaReto = item.preguntaReto
             this.retoEditar.nombreReto = item.nombreReto
             this.retoEditar.tipoPregunta = item.tipoPregunta
             this.retoEditar.numeroReto = item.numeroReto
             this.retoEditar.tipoReto = item.tipoReto
-            //this.retoEditar.bonificacionReto = item.bonificacionReto
+            this.retoEditar.obligatorio = item.obligatorio
+            this.retoEditar.bonificacionReto = item.bonificacion
             this.retoEditar.escapeRoomId = item.escapeRoomId
             this.retoEditar.color = item.color
             this.retoEditar.bgColor = item.bgColor
             this.retoEditar.respuestas = item.respuestas
             this.retoEditar.respuestas.correcta = item.respuestas.correcta
             this.retoEditar.respuestas.retoId = item.respuestas.retoId
+            this.retoEditar.respuestas.respuestaRetoRetorno = item.respuestas.respuestaRetoRetorno
         },
         editarReto() {
-            console.log(this.retoEditar)
+            //console.log(this.retoEditar)
             this.axios.put(`/Retos/${this.retoEditar.id}`, this.retoEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     this.$swal(
@@ -796,7 +868,7 @@ export default {
                     this.mostrarCampo = false
                 })
                 .catch(e => {
-                    console.log(e.response);
+                    //console.log(e.response);
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
@@ -806,7 +878,7 @@ export default {
                 })
         },
         EliminarReto(id) {
-            console.log(id)
+            //console.log(id)
             this.$swal({
                 title: '¿Esta Seguro?',
                 text: "Esta accion no se puede revertir",
@@ -828,7 +900,7 @@ export default {
                             )
                         })
                         .catch(e => {
-                            console.log(e.response.data.errors);
+                            //console.log(e.response.data.errors);
                             this.$swal({
                                 position: 'toast-top-end',
                                 icon: 'error',
@@ -842,30 +914,30 @@ export default {
 
         },
         CargarQR(item) {
-            console.log(item)
+            //console.log(item)
             var URLactual = window.location.host;
-            console.log(URLactual)
+            //console.log(URLactual)
             this.titulo = item.nombreReto
             this.UrlBase = URLactual
             const url = item.urlQR
             this.urlCompleta = this.UrlBase + '/' + url
-            console.log(this.urlCompleta)
-            console.log(item.color, item.bgColor)
+            //console.log(this.urlCompleta)
+            //console.log(item.color, item.bgColor)
             this.colorQR = item.color
             this.bgQR = item.bgColor
         },
         CargarRespuestas(item) {
-            console.log(item.respuestas)
+            //console.log(item.respuestas)
             this.cargaOpcRespRetos = item.respuestas
         },
         IniciarEscape(escapeRoomId) {
             this.EscapeRoomId = escapeRoomId
-            console.log(escapeRoomId)
+            //console.log(escapeRoomId)
             const url = "/GameControl/escape-room/iniciar";
 
             this.axios.post(url, { escapeRoomId }, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     this.$swal(
                         '🎉🥳!',
                         'El escape room ha iniciado.',
@@ -873,7 +945,7 @@ export default {
                     )
                 })
                 .catch(e => {
-                    console.log(e);
+                    //console.log(e);
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
@@ -884,11 +956,11 @@ export default {
         },
         TerminarEscape(escapeRoomId) {
             this.EscapeRoomId = escapeRoomId
-            console.log(escapeRoomId)
+            //console.log(escapeRoomId)
             const url = "/GameControl/escape-room/finalizar";
             this.axios.post(url, { escapeRoomId }, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
-                    console.log(res.data)
+                    //console.log(res.data)
                     //this.IniciarTerminarER.push(res.data);
                     this.$swal(
                         '🎉🥳!',
@@ -897,8 +969,8 @@ export default {
                     )
                 })
                 .catch(e => {
-                    console.log(e.response.data.Errors);
-                    console.log(e.response.data.Message);
+                    //console.log(e.response.data.Errors);
+                    //console.log(e.response.data.Message);
                     this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
@@ -910,29 +982,29 @@ export default {
         listarPreguntas() {
             this.axios.get('/Parameters/tipos-preguntas', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.TipoPreguntas = response.data.data;
                 })
                 .catch((e) => {
-                    console.log('error' + e);
+                    //console.log('error' + e);
                 })
         },
         listarTipoRetos() {
             this.axios.get('/Parameters/tipos-retos', { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then((response) => {
-                    console.log(response.data)
+                    //console.log(response.data)
                     this.TipoRetos = response.data.data;
                 })
                 .catch((e) => {
-                    console.log('error' + e);
+                    //console.log('error' + e);
                 })
         },
         Cargarparticipantes(item) {
-            console.log(item)
+            //console.log(item)
             this.ParticipantesXEscape = item
         },
         tomatipoReto(item) {
-            console.log(item)
+            //console.log(item)
             if (item == 5) {
                 this.mostrarCampo = !this.mostrarCampo
             }
@@ -940,10 +1012,10 @@ export default {
         },
         CargarQREscape(item) {
             var URLactual = window.location.host;
-            console.log(URLactual)
+            //console.log(URLactual)
             this.UrlBase = URLactual
-            this.urlCompleta = this.UrlBase + '/' + item
-            console.log(this.urlCompleta)
+            this.urlCompleta = this.UrlBase + '/login-participantes?' + item
+            //console.log(this.urlCompleta)
 
         }
 
@@ -953,4 +1025,67 @@ export default {
 </script>
 <style>
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 28px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #338a04;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #338a04;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
 </style>

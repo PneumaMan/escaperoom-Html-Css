@@ -10,10 +10,10 @@
                 data-bs-target="#exampleModal">
                 Nuevo participante
             </button>
-            <button type="button" class="btn btn-primary col-8 col-md-3 my-5 mx-2" data-bs-toggle="modal"
+            <!-- <button type="button" class="btn btn-primary col-8 col-md-3 my-5 mx-2" data-bs-toggle="modal"
                 data-bs-target="#QRModal">
                 Codigo Qr - inicio sesión
-            </button>
+            </button> -->
 
             <!-- Modal QR-->
             <div class="modal fade" id="QRModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -75,13 +75,6 @@
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control-plaintext" id=""
                                             v-model="newParticipante.identificacion">
-                                    </div>
-                                </div>
-                                <div class="mb-3 row">
-                                    <label for="" class="col-sm-3 col-form-label mr-3">Tiempo restante:</label>
-                                    <div class="col-sm-8">
-                                        <input type="time" class="form-control-plaintext" id=""
-                                            v-model="newParticipante.TiempoRestanteParticipante">
                                     </div>
                                 </div>
                                 <div class="mb-3 row">
@@ -227,7 +220,6 @@ export default {
                 apellidos: "",
                 telefono: 0,
                 estado: 1,
-                TiempoRestanteParticipante: "00:00:10",
                 escapeRoomId: 0
             },
             editarParticipante: {
@@ -237,7 +229,6 @@ export default {
                 apellidos: "",
                 telefono: 0,
                 estado: 1,
-                TiempoRestanteParticipante: "",
                 escapeRoomId: 0,
                 estado: 0
             },
