@@ -42,7 +42,7 @@ export default {
         this.ExtraerIdUrl()
     },
     methods: {
-        ...mapActions(['guardarIdParticipante']),
+        ...mapActions(['guardarIdParticipante', 'guardarNombreParticipante']),
         ExtraerIdUrl(){
             var urlString = window.location.search;
             var urlParams = new URLSearchParams(urlString);
@@ -65,6 +65,7 @@ export default {
             .then(res => {
                 console.log(res.data, 'informacion participante')
                 this.guardarIdParticipante(res.data.data.id)
+                this.guardarNombreParticipante(res.data.data.fullName)
                 this.$store.state.nombreParticipante = res.data.data.fullName
                 this.$store.state.nextReto = res.data.data.nextReto.nombreReto
                 this.$router.push({ path: '/scan-qr' })

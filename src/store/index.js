@@ -48,10 +48,13 @@ const store = createStore({
     obternerIdParticipante(state, payload){
       state.participanteId = payload
     },
+    obternerNombreParticipante(state, payload){
+      state.nombreParticipante = payload
+    },
     DeleteIdParticipante(state){
       state.participanteId = ''
     }
-  },
+  }, 
   actions: {
     guardarUsuario({commit}, payload){
       localStorage.setItem('token', payload);
@@ -60,6 +63,10 @@ const store = createStore({
     guardarIdParticipante({commit}, payload){
       localStorage.setItem('participanteId', payload);
       commit('obternerIdParticipante', payload)
+    },
+    guardarNombreParticipante({commit}, payload){
+      localStorage.setItem('nombreParticipante', payload);
+      commit('obternerNombreParticipante', payload)
     },
     EliminarIdParticipante({commit}){
       localStorage.removeItem('participanteId');

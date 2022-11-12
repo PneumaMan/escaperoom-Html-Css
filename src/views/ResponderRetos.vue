@@ -118,6 +118,7 @@ export default {
                 this.$router.push({ path: '/login-participantes' })
             } else {
                 this.$store.state.participanteId = window.localStorage.participanteId
+                this.$store.state.nombreParticipante = window.localStorage.nombreParticipante
                 this.TokenParticipante = false
                 this.$store.state.nextReto = 've al siguiente reto'
                 const mensaje =  've al siguiente reto'

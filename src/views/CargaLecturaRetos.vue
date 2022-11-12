@@ -98,6 +98,7 @@ export default {
                 this.$router.push({ path: '/login-participantes' })
             } else {
                 this.$store.state.participanteId = window.localStorage.participanteId
+                this.$store.state.nombreParticipante = window.localStorage.nombreParticipante
                 console.log(this.$store.state.participanteId)
             }
         },
