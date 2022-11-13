@@ -173,11 +173,11 @@ export default {
                         this.$store.state.nextReto = res.data.data.respuestaRetoRetorno
                     }
 
-                    if (res.data.isSuccess = true) {
+                    if (res.data.data != null && res.data.data.bonificacion != null) {
                         this.$swal({
                             position: 'top-end',
                             icon: 'success',
-                            title: res.data.message,
+                            title: ' Se ha aplicado una bonificacion de: ' + res.data.data.bonificacion,
                             showConfirmButton: false,
                             timer: 1500
                         });
