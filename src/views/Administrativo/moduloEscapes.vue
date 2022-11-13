@@ -318,7 +318,7 @@
                                                 v-show="k == reto.respuestas.length - 1"></i>
                                         </span>
                                         <div class="form-check col-8 col-md-8 ml-2">
-                                            <div class="" v-show="mostrarCampo">
+                                            <div class="">
                                                 <label for="">Respuesta reto retorno</label>
                                                 <input type="text" class="form-control"
                                                     v-model="input.respuestaRetoRetorno">
@@ -525,7 +525,7 @@
                                     </div>
 
                                     <div class="form-check col-8 col-md-8 ml-2">
-                                        <div class="" v-show="mostrarCampo">
+                                        <div class="">
                                             <label for="">Respuesta reto retorno</label>
                                             <input type="text" class="form-control"
                                                 v-model="input.respuestaRetoRetorno">
@@ -854,11 +854,10 @@ export default {
             this.retoEditar.respuestas = item.respuestas
             this.retoEditar.respuestas.correcta = item.respuestas.correcta
             this.retoEditar.respuestas.retoId = item.respuestas.retoId
-            this.retoEditar.respuestas.respuestaRetoRetorno = item.respuestas.respuestaRetoRetorno
         },
         editarReto() {
-            //console.log(this.retoEditar)
-            this.axios.put(`/Retos/${this.retoEditar.id}`, this.retoEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+            console.log(this.retoEditar)
+            /* this.axios.put(`/Retos/${this.retoEditar.id}`, this.retoEditar, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
                 .then(res => {
                     this.$swal(
                         'Actualizado!',
@@ -875,7 +874,7 @@ export default {
                         title: 'Ocurrio un error',
                         text: e.response.data.errors,
                     });
-                })
+                }) */
         },
         EliminarReto(id) {
             //console.log(id)
@@ -921,7 +920,7 @@ export default {
             this.UrlBase = URLactual
             const url = item.urlQR
             this.urlCompleta = this.UrlBase + '/' + url
-            //console.log(this.urlCompleta)
+            console.log(this.urlCompleta)
             //console.log(item.color, item.bgColor)
             this.colorQR = item.color
             this.bgQR = item.bgColor
@@ -1004,9 +1003,10 @@ export default {
             this.ParticipantesXEscape = item
         },
         tomatipoReto(item) {
-            //console.log(item)
+            console.log(item)
             if (item == 5) {
                 this.mostrarCampo = !this.mostrarCampo
+                console.log( this.mostrarCampo)
             }
             this.mostrarCampo = false
         },

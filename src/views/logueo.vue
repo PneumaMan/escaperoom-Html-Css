@@ -67,7 +67,9 @@ export default {
                 this.guardarIdParticipante(res.data.data.id)
                 this.guardarNombreParticipante(res.data.data.fullName)
                 this.$store.state.nombreParticipante = res.data.data.fullName
-                this.$store.state.nextReto = res.data.data.nextReto.nombreReto
+                if ( this.autenticacion.retoId  = null) {
+                    this.$store.state.nextReto = res.data.data.nextReto.nombreReto
+                }
                 this.$router.push({ path: '/scan-qr' })
             }).catch( e => {
                 console.log(e)

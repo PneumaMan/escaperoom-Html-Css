@@ -126,17 +126,6 @@ export default {
                 console.log(mensaje , this.$store.state.nextReto )
                 this.traerReto()
             }
-            /* this.datos = this.$store.state.datosID
-            for (let index = 0; index < this.datos.length; index++) {
-                const element = this.datos[index];
-                console.log(element)
-                var idE = this.datos[0].split("=");
-                this.IdEscapeRoom = idE
-                console.log(idE[1], this.IdEscapeRoom)
-                var idR = this.datos[1].split("=");
-                this.IdReto = idR[1]
-                console.log(idR)
-            } */
         },
         AutenticacionParticipante() {
             console.log(this.autenticacion)
@@ -177,6 +166,12 @@ export default {
                 .then(res => {
                     console.log(res.data, "linea 173")
                     console.log(res.data.message , 'mensaje desde back')
+
+                    if(res.data.data.respuestaRetoRetorno != null){
+                        this.$store.state.nextReto = res.data.data.respuestaRetoRetorno
+                        console.log(res.data.data.respuestaRetoRetorno)
+                    }
+
                     if (res.data.isSuccess = true) {
                         this.$swal({
                             position: 'top-end',

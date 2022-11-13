@@ -17,7 +17,7 @@ const store = createStore({
     datosID:'',
     participanteId:'',
     nombreParticipante:'',
-    nextReto:'Inicia sesión ',
+    nextReto:'Ve al siguiente reto',
     IdEscapeRoom:'',
     IdReto:'',
   },
