@@ -165,10 +165,11 @@ export default {
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
                     console.log(res.data, "linea 173")
+                    console.log(res.data.data, "linea 174")
                     console.log(res.data.message , 'mensaje desde back')
                     this.$router.push({ path: '/scan-qr' })
 
-                    if(res.data.data.respuestaRetoRetorno != null){
+                    if(res.data.data != null){
                         this.$store.state.nextReto = res.data.data.respuestaRetoRetorno
                     }
 
