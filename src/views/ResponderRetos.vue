@@ -166,10 +166,10 @@ export default {
                 .then(res => {
                     console.log(res.data, "linea 173")
                     console.log(res.data.message , 'mensaje desde back')
+                    this.$router.push({ path: '/scan-qr' })
 
                     if(res.data.data.respuestaRetoRetorno != null){
                         this.$store.state.nextReto = res.data.data.respuestaRetoRetorno
-                        console.log(res.data.data.respuestaRetoRetorno)
                     }
 
                     if (res.data.isSuccess = true) {
@@ -182,7 +182,7 @@ export default {
                         });
                     }      
                                    
-                    this.$router.push({ path: '/scan-qr' })
+                    
                 }).catch(e => {
                     console.log(e)
                     this.$swal({
