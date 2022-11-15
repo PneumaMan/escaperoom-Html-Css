@@ -104,8 +104,8 @@ export default {
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
-                    console.log(res.data, "linea 173")
-                    //console.log(res.data.data, "linea 174")
+                    console.log(res, "linea 103")
+                    console.log(res.data, "linea 104")
 
                     if(res.data.isSuccess == true && respuestaRetoRetorno != null){
                         console.log( res.data.data.respuestaRetoRetornoMessage)
