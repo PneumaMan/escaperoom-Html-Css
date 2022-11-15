@@ -105,11 +105,10 @@ export default {
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
                     console.log(res.data, "linea 173")
-                    console.log(res.data.data, "linea 174")
-                    console.log(res.data.message , 'mensaje desde back')
-                    this.$router.push({ path: '/scan-qr' })
+                    //console.log(res.data.data, "linea 174")
 
                     if(res.data.isSuccess == true && respuestaRetoRetorno != null){
+                        console.log( res.data.data.respuestaRetoRetornoMessage)
                         this.$store.state.nextReto = res.data.data.respuestaRetoRetornoMessage
                     }
 
@@ -134,7 +133,7 @@ export default {
                             timer: 1500
                         });
                     }      
-                                   
+                    this.$router.push({ path: '/scan-qr' })
                     
                 }).catch(e => {
                     console.log(e)
