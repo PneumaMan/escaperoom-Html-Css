@@ -28,35 +28,6 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade show" id="exampleModalLive" tabindex="-1" aria-labelledby="exampleModalLiveLabel"
-                v-show="TokenParticipante" style="display: block; background-color: #00000054;" aria-modal="true"
-                role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLiveLabel">Inicio sesión participante</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                                @click.prevent="TokenParticipante = false"></button>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class=" col-md-6 mx-auto">
-                                <label for="" class="form-label text-secondary"> Ingresa el numero de
-                                    documento</label>
-                                <input type="text" class="form-control-plaintext text-center"
-                                    style="border-bottom: 1px solid #ebcc24;" v-model="autenticacion.identificacion">
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                @click.prevent="TokenParticipante = false">Cerrar</button>
-                            <button class="btn btn-warning my-3 bt-consulta" style="border-radius: 15px;width: 120px;"
-                                @click.prevent="AutenticacionParticipante()">Iniciar sesión</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="row">
             <Encuesta v-show="FinParticipante" />
@@ -86,9 +57,6 @@ export default {
                 identificacion: "",
                 escapeRoomId: "",
                 retoId: ""
-               /*  escapeRoomId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUpbwShWTCs8RqjuTlO_06vB3ASIFbP2EfIa5kW--bv5cz-5_b9LFO0R2I4mHmjeIfrDbJ2h16KVfKWicfJFu6lu1DwsvP5Ql49zgJ6U39Z0CQ",
-                retoId: "CfDJ8C-Eyalf5z5NqjI0ZaeKZUoT4mhPH0Ua9L0XyNZrtj9I4GBSY0E8uN66E-RC1di_60NgQvgFM8G2M0jaCHe15pygjH7iR8I535HSmFYc48ZDl85GzfSdNEU1aQ07mhNSxw"
- */
             },
             ControlReto: {
                 participanteId: 1,
@@ -127,35 +95,7 @@ export default {
                 this.traerReto()
             }
         },
-        AutenticacionParticipante() {
-            console.log(this.autenticacion)
-            this.autenticacion.escapeRoomId = this.$store.state.IdEscapeRoom
-         if (this.$store.state.IdReto == "") {
-                this.autenticacion.retoId  = null
-            }else{
-                this.autenticacion.retoId = this.$store.state.IdReto
-            } 
-            this.axios.post('/GameControl/participante/login', this.autenticacion)
-                .then(res => {
-                    console.log(res.data, 'informacion participante')
-                    this.Retos = res.data.data
-                    this.preguntaR = this.Retos.nextReto.preguntaReto
-                    this.respuestas = this.Retos.nextReto.respuestas
-                    console.log(this.Retos.nextReto) 
-                    this.guardarIdParticipante(res.data.data.id)
-                    this.$store.state.nombreParticipante = res.data.data.fullName
-                    this.TokenParticipante = false
-                    
-                }).catch(e => {
-                    console.log(e)
-                    this.$swal({
-                        position: 'toast-top-end',
-                        icon: 'error',
-                        title: e.response.data.Message,
-                        text: e.response.data.Errors[0].ErrorMessage
-                    });
-                })
-        },
+
         ResponderReto(id) {
             console.log(id)
             this.ControlReto.respuestaId = id
@@ -169,8 +109,20 @@ export default {
                     console.log(res.data.message , 'mensaje desde back')
                     this.$router.push({ path: '/scan-qr' })
 
-                    if(res.data.data != null){
-                        this.$store.state.nextReto = res.data.data.respuestaRetoRetorno
+                    if(res.data.isSuccess == true && respuestaRetoRetorno != null){
+                        this.$store.state.nextReto = res.data.data.respuestaRetoRetornoMessage
+                    }
+
+                    if (res.data.isSuccess == true && res.data.data.finalizoEscape == true){
+                        this.$store.state.nextReto = res.data.message
+                        this.$swal({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: ' Felicitaciones ' ,
+                            text: res.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
                     }
 
                     if (res.data.data != null && res.data.data.bonificacion != null) {
