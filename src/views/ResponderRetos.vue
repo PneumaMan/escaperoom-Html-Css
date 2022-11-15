@@ -107,7 +107,7 @@ export default {
                     console.log(res, "linea 103")
                     console.log(res.data, "linea 104")
 
-                    if(res.data.isSuccess == true && respuestaRetoRetorno != null){
+                    if(res.data.isSuccess == true && res.data.data.respuestaRetoRetorno != null){
                         console.log( res.data.data.respuestaRetoRetornoMessage)
                         this.$store.state.nextReto = res.data.data.respuestaRetoRetornoMessage
                     }
