@@ -26,137 +26,83 @@
             </div>
         </div>
         <div class="" v-show="txtEnd">
-            <div class="row">
+            <div class="row mb-5">
                 <h3 class="mt-4">LA CLAVE PARA SALIR OBTENDRÁS, AL ESTE TEXTO BIEN COMPLETAR</h3>
             </div>
-            <div class="text">
-                <div class="row">
-                    En el continuum cardiovascular en Colombia, tiene como factores de riesgo protagónicos las 
-                    <div class="box_respuesta ml-2">
-                        <draggable class="list-group" :list="campo1">
-                            <div class="list-group-item" v-for="llave in campo1" :key="llave" group="task">
-                                {{ llave }}
-                            </div>
-                        </draggable>
-                    </div> (DISLIPIDEMIAS: RESPUESTA CORRECTA) con un riesgo poblacional
-                    atribuible de 49%, seguido por el
-                    tabaquismo con un 35%, la 
-                    <div class="box_respuesta ml-2">
-                        <draggable class="list-group" :list="campo2">
-                            <div class="list-group-item" v-for="llave in campo2" :key="llave" group="task">
-                                {{ llave }}
-                            </div>
-                        </draggable>
-                    </div> (DIABETES E HIPERTENSIÓN) con un
-                    26.8% juntas. Sin dejar de
+            <div class="row">
+            <div class="text  col-md-7 mt-3">
+                <p>
+                    En el continuum cardiovascular en Colombia, tiene como factores de riesgo protagónicos las <span id="0" > 1</span>
+                    (DISLIPIDEMIAS: RESPUESTA CORRECTA) con un riesgo poblacional atribuible de 49%, seguido por el
+                    tabaquismo con un 35%, la <span id="1"> 2</span> (DIABETES E HIPERTENSIÓN) con un 26.8% juntas. Sin dejar de
                     reconocer que el factor hereditario juega un rol importante, mientras mas factores se sumen, y
-                    mientras
-                    más mal controlados estén el 
-                    <div class="box_respuesta ml-2">
-                        <draggable class="list-group" :list="campo3">
-                            <div class="list-group-item" v-for="llave in campo3" :key="llave" group="task">
-                                {{ llave }}
-                            </div>
-                        </draggable>
-                    </div> (RIESGO CARDIOVASCULAR)
-                    incrementa.
-                </div>
-                <div class="row">
-                    Una vez inicia la enfermedad cardiovascular, la evolución hacía la
-                    <div class="box_respuesta ml-2">
-                        <draggable class="list-group" :list="campo4">
-                            <div class="list-group-item" v-for="llave in campo4" :key="llave" group="task">
-                                {{ llave }}
-                            </div>
-                        </draggable>
-                    </div> (FALLA CARDIACA) es
+                    mientras más mal controlados estén el<span id="2">3</span> (RIESGO CARDIOVASCULAR) incrementa.
+                </p>
+                <p>
+                    Una vez inicia la enfermedad cardiovascular, la evolución hacía la<span id="3">4</span> (FALLA CARDIACA) es
                     inevitable en gran cantidad de personas. Las arritmias hacen parte de las complicaciones y la
                     fibrilación auricular aparece. La anticuoagulación es la mejor estrategia para prevenir un ACV, y
-                    dentro
-                    de las opciones para elegir cual DOAC, solo uno cuenta con
-                    <div class="box_respuesta ml-2">
-                        <draggable class="list-group" :list="campo5">
-                            <div class="list-group-item" v-for="llave in campo5" :key="llave" group="task">
-                                {{ llave }}
-                            </div>
+                    dentro de las opciones para elegir cual DOAC, solo uno cuenta con <span id="4">5</span>(REVERSOR).
+                </p>
+
+
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h4>Ordena las llaves </h4>
+                    <hr />
+                    <!-- <div class="list-group-item item-llaves" v-for="item in llaves" :key="item.id" draggable="true">
+                        <button style="border: none; background-color: transparent;" @click.prevent="AgregarPalabra(item)"> {{ item.llave }}</button>
+                    </div> -->
+                    <div class=" ">
+                        <draggable class="dragArea list-group " :list="list" @change="log" >
+                        <div
+                            class="list-group-item item-llaves bg-gray-300 m-1 p-3 rounded-md text-center"
+                            v-for="element in list"
+                            :key="element.llave"
+                        >
+                        {{ element.id }}. {{ element }}
+                        </div>
                         </draggable>
                     </div>
-                    (REVERSOR).
                 </div>
             </div>
-            <div class="drop-zone">
-                <div @drop="onDrop($event, 1)" @dragenter.prevent @dragover.prevent>
-                    <h4>Llaves obtenidas </h4>
-                    <hr />
-                        <div class="list-group-item item-llaves" v-for="item in llaves" :key="item.id" draggable="true"
-                        @dragstart="startDrag($event, item )" >
-                            {{ item.llave }}
-                        </div>
-                    
-                </div>
+        </div>
+
+            <div class="row">
+                <button class="btn btn-danger col-md-4 mx-auto" @click.prevent="CargarArrayFinal()">Comprobar</button>
             </div>
-            <div class="drop-zone my-5">
-                <div @drop="onDrop($event, 2)" @dragenter.prevent  @dragover.prevent>
-                    <h4>Llaves obtenidas </h4>
-                    <hr />
-                        <div class="list-group-item item-llaves" v-for="item in campo1" :key="item.id" draggable="true"
-                        @dragstart="startDrag($event, item )" >
-                            {{ item.llave }}
-                        </div>
-                    
-                </div>
-            </div>
+            
         </div>
     </div>
 </template>
 <script>
-import draggable from 'vuedraggable'
+import { VueDraggableNext } from 'vue-draggable-next'
 export default {
+    components: {
+      draggable: VueDraggableNext,
+    },
     data() {
         return {
-            drag: false,
-            llaves: [
-                {
-                    id:1,
-                    llave: 'prueba 1'
-                },
-                {
-                    id:2,
-                    llave: 'prueba 2'
-                },
-                {
-                    id:3,
-                    llave: 'prueba 3'
-                },
-                {
-                    id:4,
-                    llave: 'prueba 4'
-                },
-                {
-                    id:5,
-                    llave: 'prueba 5'
-                },
-            ],
+            enabled: true,
+            dragging: false,
+            list: [],
             respuestasParticipante: [],
-            txtEnd: true,
+            txtEnd: false,
             RespuestasError: false,
-            campo1: [
-                {
-                    id:1,
-                    llave: ''
-                }
-            ],
-            campo2: [],
-            campo3: [],
-            campo4: [],
-            campo5: [],
-
+            camposDisponibles: [],
+            respuestasTexto:[]
         }
     },
     mounted() {
-        //this.ValidarLocalStorage()
+        this.ValidarLocalStorage()
+        this.validacionFinal()
     },
     methods: {
+        log(event) {
+        console.log(event)
+        console.log(this.list)
+      },
         ValidarLocalStorage() {
             if (window.localStorage.participanteId == null) {
                 //this.TokenParticipante = true
@@ -177,12 +123,13 @@ export default {
                     const escaparParticipante = res.data.data.escaparParticipante
 
                     if (isSuccess == true && escaparParticipante == true) {
-                        this.llaves = res.data.data.llaves
+                        this.list = res.data.data.llaves
                         this.txtEnd = true
 
                     }
                     if (isSuccess == true && escaparParticipante == false) {
                         const array = res.data.data.respuestasParticipante
+                        console.log(array)
                         for (let index = 0; index < array.length; index++) {
                             this.respuestasParticipante = array[index].reto;
 
@@ -196,17 +143,13 @@ export default {
                     console.log(e)
                 })
         },
-        startDrag(event, item ){
-            console.log(item)
-            event.dataTransfer.dropEffect = 'move'
-            event.dataTransfer.effectAllowed = 'move'
-            event.dataTransfer.setData('itemID', item.id)
-        },
-        onDrop(event, list){
-            const itemID = event.dataTransfer.getData(item.id)
-            const item = items.value.find((item) => item.id == itemID)
-            item.list = list 
-
+        CargarArrayFinal(){
+            console.log(this.list)
+            for (let index = 0; index < this.list.length; index++) {
+                const element =this.list[index];
+                this.respuestasTexto.push(element)
+                console.log( this.respuestasTexto)
+            }            
         }
 
     },
@@ -219,25 +162,29 @@ export default {
     margin-top: 10px;
 }
 
-.box_respuesta {
-    width: 50px;
-    height: 20px;
-    background-color: aqua;
-    border-bottom: 1px solig black !important;
+.list-group-item {
+    display: inline;
+    padding-left: 3px;
+    padding-right: 3px;
+    width: auto;
 }
 
-.list-group-item{
-    display:inline;
-     padding-left:3px;
-     padding-right:3px;
-     width: 100px;
-}
-
-.item-llaves{
+.item-llaves {
     background-color: cornflowerblue;
     margin: 5px;
     padding: 5px;
-    border-radius:10px ;
+    border-radius: 10px;
     color: aliceblue;
+}
+
+span{
+    display: inline-block;
+    background-color: #ccc;
+    width: 100px;
+    height: 20px;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 20px;
 }
 </style>

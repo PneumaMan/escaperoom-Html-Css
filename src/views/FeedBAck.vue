@@ -2,7 +2,9 @@
     <div class="p-4 f-e">
         <hr/>
         <div class="row my-5">
-            <h1>ESPACIO PARA EL FEEDBACK </h1>
+            <div class="card mx-auto">
+                <embed src="../assets/escaperooms.pdf#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf" width="100%" height="600px" class="mt-5"/>
+            </div>
         </div>
         <hr/>
         <div class="row">

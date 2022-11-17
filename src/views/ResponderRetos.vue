@@ -110,11 +110,12 @@ export default {
 
                     if (res.data.isSuccess == true && res.data.data.finalizoEscape == true){
                         this.$store.state.nextReto = res.data.message
+                        this.$store.state.finish = true 
                         this.$swal({
                             position: 'top-end',
                             icon: 'success',
                             title: ' Felicitaciones ' ,
-                            text: 'terminaste',
+                            text: res.data.message,
                             showConfirmButton: false,
                             timer: 1500
                         });

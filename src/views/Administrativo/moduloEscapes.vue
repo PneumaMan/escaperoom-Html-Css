@@ -700,7 +700,7 @@ export default {
     },
     mounted() {
         this.listarEscapes();
-        //this.listarRetos();
+        this.FeedBackQREscape();
         this.listarPreguntas();
         this.listarTipoRetos()
     },
@@ -1025,13 +1025,14 @@ export default {
         },
         EscaparQREscape() {
             var URLactual = window.location.host;
+            console.log(URLactual)
             this.urlEscapar = URLactual + '/participante/texto-final' 
             console.log( this.urlEscapar)
 
         },
         FeedBackQREscape() {
             var URLactual = window.location.host;
-            this.urlFeedback = URLactual + '/participante/feedbackl' 
+            this.urlFeedback = URLactual + '/participante/feedback' 
             console.log( this.urlFeedback)
 
         },

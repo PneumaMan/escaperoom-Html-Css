@@ -124,12 +124,16 @@ export default {
                 this.$store.state.IdReto = idR[1]
                 console.log(idR)
             }
-
-                if (window.localStorage.participanteId == null) {
-                    this.$router.push({ path: '/login-participantes' })
-                } else {
-                    this.$router.push({ path: '/responder-retos' })
-                }
+            /* Valida que el participante se halla autenticado y se guardara el registro el local storage */
+            if (window.localStorage.participanteId == null) {
+                this.$router.push({ path: '/login-participantes' })
+            }
+            /* Valida si no ha terminado de contestar todos lo restos */
+            if (this.$store.state.finish == true ) {
+                this.$router.push({ path: '/participante/texto-final' })
+            } else {
+                this.$router.push({ path: '/responder-retos' })
+            }
 
 
             

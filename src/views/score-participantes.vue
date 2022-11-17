@@ -34,6 +34,7 @@
 }
 
 .premio {
-    background-color: #e5ce4dca;
+    background: rgb(185, 20, 20);
+    background: linear-gradient(90deg, rgba(185, 20, 20, 1) 11%, rgba(96, 15, 150, 1) 86%);
 }
 </style>
