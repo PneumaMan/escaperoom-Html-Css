@@ -165,9 +165,9 @@ export default {
         },
         EscaparEscape(list){
             this.escapar.participanteId= this.$store.state.participanteId
-            this.escapar.llaves = this.$store.state.arrayLLaves
+            this.escapar.llaves = list
             console.log(this.escapar , "Escapar")
-            console.log(list)
+            console.log(list, 'lista')
 
             /* this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {
