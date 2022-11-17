@@ -152,10 +152,10 @@ export default {
             for (let index = 0; index < this.list.length; index++) {
                 const element =this.list[index];
                 this.respuestasTexto.push(element)
-                console.log( this.respuestasTexto)
+                //console.log( this.respuestasTexto)
             }
             this.$store.state.arrayLLaves = this.respuestasTexto 
-            console.log(this.$store.state.arrayLLaves)  
+            console.log(this.$store.state.arrayLLaves, 'array vuex')  
         },
         CorregirRespusta(item){
             this.$store.state.finish = false
