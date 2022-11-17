@@ -169,14 +169,29 @@ export default {
             console.log(this.escapar , "Escapar")
             console.log(list, 'lista')
 
-            /* this.axios.post('/GameControl/escape-room/escapar', this.escapar)
+            this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {
-                    // Agrega al inicio de nuestro array notas
+                    
                     console.log(res.data);
+                    this.$swal({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: ' Felicitaciones ' ,
+                            text: res.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                    })
                 })
                 .catch(e => {
                     console.log(e)
-                }) */
+                    this.$swal({
+                        position: 'toast-top-end',
+                        icon: 'error',
+                        title: e.response.data.Message,
+                        text: e.response.data.errors[0].ErrorMessage
+
+                    });
+                }) 
 
         }
     },
