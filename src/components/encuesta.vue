@@ -29,14 +29,7 @@
                             <label for="" class="form-label">Volvería a un evento de la SCC.</label>
                             <input type="number" min="1" max="10"  class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta5">
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">¿Que le parecio el lugar en el que realizo en escape room?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta6">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">¿La informacion que le proporcionaron al iniciar el escape si fue la apropiada?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta7">
-                        </div>
+                        
                     </form>
                     <div class="row mx-auto">
                         <button class="btn btn-outline-danger col-4 mx-auto" @click.prevent="encuesta()">Guardar</button>
@@ -68,12 +61,15 @@ export default {
     },
     methods: {
         encuesta() {
-            this.RespuestasEncuestas.idParticipante = this.$store.state.participanteId
+            //this.RespuestasEncuestas.idParticipante = this.$store.state.participanteId
+            this.RespuestasEncuestas.idParticipante = 'J6Qit9CTd0ySv1oHSB6kGg¬¬'
             console.log(this.RespuestasEncuestas)
             this.axios.post('/GameControl/participante/encuesta', this.RespuestasEncuestas)
                 .then(res => {
                     console.log(res.data);
                     this.RespuestasE.push(res.data)
+                    this.$router.push({ path: '/participante/score-participantes' })
+                    
                 })
                 .catch(e => {
                     console.log(e)

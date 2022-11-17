@@ -1032,7 +1032,7 @@ export default {
         },
         FeedBackQREscape() {
             var URLactual = window.location.host;
-            this.urlFeedback = URLactual + '/participante/feedback' 
+            this.urlFeedback = 'https://gray-smoke-09e195710.2.azurestaticapps.net' + '/participante/feedback' 
             console.log(this.urlFeedback)
 
         },
