@@ -154,7 +154,8 @@ export default {
                 this.respuestasTexto.push(element)
                 console.log( this.respuestasTexto)
             }
-            this.$store.state.arrayLLaves = this.respuestasTexto   
+            this.$store.state.arrayLLaves = this.respuestasTexto 
+            console.log(this.$store.state.arrayLLaves)  
         },
         CorregirRespusta(item){
             this.$store.state.finish = false
@@ -167,14 +168,14 @@ export default {
             this.escapar.llaves = this.$store.state.arrayLLaves
             console.log(this.escapar , "Escapar")
 
-            this.axios.post('/GameControl/escape-room/escapar', this.escapar)
+            /* this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     console.log(res.data);
                 })
                 .catch(e => {
                     console.log(e)
-                })
+                }) */
 
         }
     },
