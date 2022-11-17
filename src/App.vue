@@ -43,17 +43,16 @@ export default {
   methods: {
     ...mapActions(["cerrarSesion"]),
   },
-  created () {
+  /* created () {
     this.$socket.start({
-      log: true // Logging is optional but very helpful during development
-    })
+      log: true 
+    })  
   },
   sockets: {
     ReceiveMessage (message) {
-      // this has to be here even though it's not being used?
-      // otherwise other events don't actually fire
+      console.log(message)
     }
-  }
+  } */
   
 
   

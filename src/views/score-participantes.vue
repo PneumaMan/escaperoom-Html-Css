@@ -21,35 +21,36 @@
 </template>
 
 <script>
+import { useSignalR } from '@dreamonkey/vue-signalr';
+import { inject } from 'vue';
+
 export default {
-    data() {
-        return {
-            score: []
-        }
-    },
-    created: function () {
-        let self = this
-        EventBus.$on('TransferTimesEscape', function (contactId) {
-            self.contactId = contactId
-            self.getTime()
-        })
-        this.$socket.on('TransferTimesEscape', (message) => {
-                self.getTime()
-        });
-    },
-    methods: {
-        getTime() {
-            this.axios.get('/escapetimer')
-                .then((response) => {
-                    // console.log(response.data)
-                    this.score = response.data;
-                })
-                .catch((e) => {
-                    console.log('error' + e);
-                })
-        }
-    },
-}
+  setup() {
+    const signalr = useSignalR();
+
+    signalr.on('TransferTimesEscape', ({ message }) => {
+        const arrayTime = []
+        arrayTime = res.data
+    });
+  },
+  mounted() {
+    //this.setup();
+    this.listar()
+
+  },
+  methods:{
+    listar(){
+      this.axios.get('/escapetimer')
+      .then((response) => {
+         console.log(response)
+
+      })
+      .catch((e)=>{
+        console.log('error' + e);
+      })
+    }
+  }
+};
 </script>
 <style scoped>
 .copas-premio {
