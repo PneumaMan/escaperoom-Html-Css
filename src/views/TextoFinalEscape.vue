@@ -8,7 +8,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col"></th>
+                            <th scope="col">❌</th>
                             <th scope="col">Reto</th>
                             <th scope="col">Pregunta</th>
                             <th scope="col">Respuesta</th>
@@ -17,9 +17,9 @@
                     <tbody>
                         <tr v-for="(item, index) in respuestasParticipante" :key="index">
                             <th>❌</th>
-                            <td>{{ item.nombreReto }}</td>
-                            <td>{{ item.preguntaReto }}</td>
-                            <td>{{ item }}</td>
+                            <td>{{ item.reto.nombreReto}}</td>
+                            <td>{{ item.reto.preguntaReto }}</td>
+                           <td><button class="btn btn-outline-warning" @click.prevent="CorregirRespusta(item.reto.nombreReto)">Corregir</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -70,7 +70,7 @@
         </div>
 
             <div class="row">
-                <button class="btn btn-danger col-md-4 mx-auto" @click.prevent="CargarArrayFinal()">Comprobar</button>
+                <button class="btn btn-danger col-md-4 mx-auto" @click.prevent="EscaparEscape()">Comprobar</button>
             </div>
             
         </div>
@@ -91,12 +91,17 @@ export default {
             txtEnd: false,
             RespuestasError: false,
             camposDisponibles: [],
-            respuestasTexto:[]
+            respuestasTexto:[],
+            escapar:{
+                participanteId: "",
+                llaves: []
+                }
         }
     },
     mounted() {
         this.ValidarLocalStorage()
         this.validacionFinal()
+        this.CargarArrayFinal()
     },
     methods: {
         log(event) {
@@ -115,21 +120,19 @@ export default {
         },
         validacionFinal() {
             const participanteId = this.$store.state.participanteId
+            //const participanteId = 'J6Qit9CTd0ySv1oHSB6kGg¬¬'
             console.log({ participanteId })
             this.axios.post('/GameControl/escape-room/escapar/validacion', { participanteId })
                 .then(res => {
                     // Agrega al inicio de nuestro array notas
                     console.log(res.data);
-                    const escaparParticipante = res.data.data.escaparParticipante
-
 
                     if (res.data.data.escaparParticipante == false) {
                         this.RespuestasError = true
                         const array = res.data.data.respuestasParticipante
-                        console.log(array)
-                        for (let index = 0; index < array.length; index++) {
-                            this.respuestasParticipante = array[index].reto;
-                        }
+                        this.respuestasParticipante =res.data.data.respuestasParticipante
+                        console.log(this.respuestasParticipante)
+
                         //this.respuestasParticipante = res.data.data.respuestasParticipante
                         
 
@@ -151,8 +154,28 @@ export default {
                 this.respuestasTexto.push(element)
                 console.log( this.respuestasTexto)
             }            
-        }
+        },
+        CorregirRespusta(item){
+            this.$store.state.finish = false
+            this.$store.state.nextReto = 'Corrige el ' + item
+            console.log(this.$store.state.nextReto)
+            this.$router.push({ path: '/scan-qr' })
+        },
+        EscaparEscape(){
+            this.escapar.participanteId= this.$store.state.participanteId
+            this.escapar.llaves = this.respuestasTexto
+            console.log(this.escapar)
 
+            this.axios.post('/GameControl/escape-room/escapar', this.escapar)
+                .then(res => {
+                    // Agrega al inicio de nuestro array notas
+                    console.log(res.data);
+                })
+                .catch(e => {
+                    console.log(e)
+                })
+
+        }
     },
 }
 </script>
