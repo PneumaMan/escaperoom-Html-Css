@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="mx-auto">
-                <button class="btn btn-warning mx-1" @click.prevent="salidaVoluntaria()">Salida voluntaria</button>
+                <button class="btn btn-warning mx-1" @click.prevent="salidaVoluntaria()">Renuncio</button>
                 <button class="btn btn-success mx-1" v-show="escapar">Escapar</button>
             </div>
         </div>
@@ -29,19 +29,15 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <Encuesta v-show="FinParticipante" />
-        </div>
     </div>
 </template>
 <script>
 import { mapMutations, mapActions, mapState } from "vuex";
 import NavbarParticipantes from '@/components/Navbar-Participante.vue'
-import Encuesta from '@/components/encuesta.vue'
+
 export default {
     components: {
         NavbarParticipantes,
-        Encuesta
     },
     data() {
         return {

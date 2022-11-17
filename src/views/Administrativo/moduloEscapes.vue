@@ -589,8 +589,10 @@
                         <qrcode-vue :value="urlCompleta" :size="size" />
                         <hr class="my-3" />
                         <p>QR para feedback</p>
+                        <qrcode-vue :value="urlFeedback" :size="size" />
                         <hr class="my-3" />
                         <p>QR para salida del escape room (escapar)</p>
+                        <qrcode-vue :value="urlEscapar" :size="size" />
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -691,7 +693,9 @@ export default {
             ParticipantesXEscape: [],
             TipoRetos: [],
             EscapeRoomId: 0,
-            mostrarCampo: false
+            mostrarCampo: false,
+            urlEscapar:'',
+            urlFeedback:'',
         }
     },
     mounted() {
@@ -1016,8 +1020,21 @@ export default {
             this.UrlBase = URLactual
             this.urlCompleta = this.UrlBase + '/login-participantes?' + item
             console.log(item)
+            this.EscaparQREscape()
 
-        }
+        },
+        EscaparQREscape() {
+            var URLactual = window.location.host;
+            this.urlEscapar = URLactual + '/participante/texto-final' 
+            console.log( this.urlEscapar)
+
+        },
+        FeedBackQREscape() {
+            var URLactual = window.location.host;
+            this.urlFeedback = URLactual + '/participante/feedbackl' 
+            console.log( this.urlFeedback)
+
+        },
 
     },
 

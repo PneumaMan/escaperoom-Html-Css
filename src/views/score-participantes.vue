@@ -1,0 +1,39 @@
+<template>
+    <div class="p-4 premio">
+        <div class="row">
+            <div class="card col-md-6 col-8 mx-auto t-premio">
+                <div class="card-body">
+                    <div class="row">
+                        <img src="../assets/copas.png" alt="" class="copas-premio">
+                    </div>
+                    <div class="row">
+                        <h3 class="text-success">Felicitaciones !</h3>
+                    </div>
+                    <div class="row">
+                        <p> has terminado todo el Escape room cardiovascular</p>
+                        <p>tu tiempo fue de:</p>
+                        <strong class="text-danger h3">00:30:00</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<style scoped>
+.copas-premio {
+    width: 450px;
+    margin: auto;
+}
+
+.t-premio {
+    border-radius: 10px;
+    padding: 10px;
+    /*box-shadow: 15px 10px #8888888a; */
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.5);  
+}
+
+.premio {
+    background-color: #e5ce4dca;
+}
+</style>

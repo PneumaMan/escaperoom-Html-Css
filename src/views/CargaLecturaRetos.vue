@@ -62,6 +62,7 @@ export default {
     },
     mounted() {
         this.siguienteRet()
+        this.ValidarLocalStorage()
     },
     methods: {
         ...mapState(['nextReto']),

@@ -126,6 +126,33 @@ const routes = [
      
   },
   {
+    path: '/participante/texto-final',
+    name: 'TextoFinalEscape',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/TextoFinalEscape.vue'),
+     
+  },
+  {
+    path: '/participante/score-participantes',
+    name: 'score-participantes',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/score-participantes.vue'),
+     
+  },
+  {
+    path: '/participante/feedback',
+    name: 'FeedBAck',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/FeedBAck.vue'),
+     
+  },
+  {
     path:'/dashboard',
     name:'Dashboard',
     component:Dashboard,
