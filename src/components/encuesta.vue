@@ -7,26 +7,27 @@
             <div class="card t-encu">
                 <div class="card-body">
                     <form action="">
+                        <p> Por favor califique de 1 a 10, siendo 1 en desacuerdo y 10 totalmente de acuerdo</p>
                         <div class="mb-3">
-                            <label for="" class="form-label">En una escala del 0 al 10, ¿Qué probabilidades hay de que recomiende este evento a tus familiares, colegas o amigos?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta1">
+                            <label for="" class="form-label">En general el evento cumplió con los objetivos. </label>
+                            <input type="number" min="1" max="10"  class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta1">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">¿Realizaria otro escape room como este en el futuro?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta2">
+                            <label for="" class="form-label">La calidad de las conferencias estaba en un buen nivel académico</label>
+                            <input type="number"  min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta2">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">¿Desea dejarnos sus comentarios para saber cómo podemos mejorar ?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta3">
+                            <label for="" class="form-label">El escaperoom me dejó enseñanzas académicas </label>
+                            <input type="number"  min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta3">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">¿Que le parecio el evento?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta4"
+                            <label for="" class="form-label">Volvería a ingresar al escaperoom médico </label>
+                            <input type="number" min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta4"
                                 >
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">¿tiene algina observacion sobre los retos?</label>
-                            <input type="text" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta5">
+                            <label for="" class="form-label">Volvería a un evento de la SCC.</label>
+                            <input type="number" min="1" max="10"  class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta5">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">¿Que le parecio el lugar en el que realizo en escape room?</label>

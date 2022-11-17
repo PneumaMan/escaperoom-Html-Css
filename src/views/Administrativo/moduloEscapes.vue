@@ -1033,7 +1033,7 @@ export default {
         FeedBackQREscape() {
             var URLactual = window.location.host;
             this.urlFeedback = URLactual + '/participante/feedback' 
-            console.log( this.urlFeedback)
+            console.log(this.urlFeedback)
 
         },
 
