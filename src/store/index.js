@@ -8,34 +8,35 @@ const store = createStore({
   state: {
     token: '',
     user: '',
-    email:'',
-    id:'',
-    rol:'',
-    UsuarioAdmin:[],
+    email: '',
+    id: '',
+    rol: '',
+    UsuarioAdmin: [],
     auth: false,
-    baseURL:'https://escape-room-app.azurewebsites.net/',
-    datosID:'',
-    participanteId:'',
-    nombreParticipante:'',
-    nextReto:'Ve al siguiente reto',
-    IdEscapeRoom:'',
-    IdReto:'',
+    baseURL: 'https://escape-room-app.azurewebsites.net/',
+    datosID: '',
+    participanteId: '',
+    nombreParticipante: '',
+    nextReto: 'Ve al siguiente reto',
+    IdEscapeRoom: '',
+    IdReto: '',
     finish: false,
-    arrayLLaves: []
+    arrayLLaves: [],
+    TimeRangesscore: []
   },
-  
+
   mutations: {
-    obtenerIdQR(state,payload){
+    obtenerIdQR(state, payload) {
       state.datosID = payload
-      console.log( state.datosID)
+      console.log(state.datosID)
 
     },
-    obtenerUsuario(state, payload){
+    obtenerUsuario(state, payload) {
       state.token = payload;
-      if(payload === ''){
+      if (payload === '') {
         state.user = ''
         state.auth = false;
-      }else{
+      } else {
         state.user = decode(payload);
         state.email = state.user.email
         state.auth = true;
@@ -47,71 +48,72 @@ const store = createStore({
       state.user = '';
       console.log(state.auth)
     },
-    obternerIdParticipante(state, payload){
+    obternerIdParticipante(state, payload) {
       state.participanteId = payload
     },
-    obternerNombreParticipante(state, payload){
+    obternerNombreParticipante(state, payload) {
       state.nombreParticipante = payload
     },
-    DeleteIdParticipante(state){
+    DeleteIdParticipante(state) {
       state.participanteId = ''
-    }
-  }, 
+    },
+  },
   actions: {
-    guardarUsuario({commit}, payload){
+    guardarUsuario({ commit }, payload) {
       localStorage.setItem('token', payload);
       commit('obtenerUsuario', payload)
     },
-    guardarIdParticipante({commit}, payload){
+    guardarIdParticipante({ commit }, payload) {
       localStorage.setItem('participanteId', payload);
       commit('obternerIdParticipante', payload)
     },
-    guardarNombreParticipante({commit}, payload){
+    guardarNombreParticipante({ commit }, payload) {
       localStorage.setItem('nombreParticipante', payload);
       commit('obternerNombreParticipante', payload)
     },
-    EliminarIdParticipante({commit}){
+    EliminarIdParticipante({ commit }) {
       localStorage.removeItem('participanteId');
-      commit('DeleteIdParticipante'); 
+      commit('DeleteIdParticipante');
 
     },
-    cerrarSesion({commit}){
+    cerrarSesion({ commit }) {
       /* Logout  backend */
       const url = "/Logout";
-      axios.post(url,{email:store.state.email}, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` }})
-      .then(res => {
-        console.log(res.data)
-        this.UsuarioAdmin.push(res.data)
-        commit('obtenerUsuario', '');
-        commit('doLogout'); 
-        localStorage.removeItem('token');
-        router.push({path:'/'});
-    }).catch( e => {
-        console.log(e.response.data.Errors[0].ErrorMessage)
-    })
+      axios.post(url, { email: store.state.email }, { 'headers': { 'Authorization': `Bearer ${localStorage.getItem('token')}` } })
+        .then(res => {
+          console.log(res.data)
+          this.UsuarioAdmin.push(res.data)
+          commit('obtenerUsuario', '');
+          commit('doLogout');
+          localStorage.removeItem('token');
+          router.push({ path: '/' });
+        }).catch(e => {
+          console.log(e.response.data.Errors[0].ErrorMessage)
+        })
 
-      
+
     },
-    leerToken({commit}){
+    leerToken({ commit }) {
       const token = localStorage.getItem('token');
-      if(token){
+      if (token) {
         commit('obtenerUsuario', token);
-      }else{
+      } else {
         commit('obtenerUsuario', '');
       }
 
     },
-    leerIdParticipante({commit}){
+    leerIdParticipante({ commit }) {
       const idPa = localStorage.getItem('participanteId');
-      if(idPa){
+      if (idPa) {
         commit('obternerIdParticipante', idPa);
-      }else{
+      } else {
         commit('obternerIdParticipante', '');
       }
     },
-    guardarDatosQr({commit}, payload){
+    guardarDatosQr({ commit }, payload) {
       commit('obtenerIdQR', payload)
-    }
+    },
+    
   },
   getters: {
     logueado: state => !!state.token

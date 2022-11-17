@@ -61,7 +61,7 @@
                             v-for="element in list"
                             :key="element.llave"
                         >
-                        {{ element.id }}. {{ element }}
+                        {{ element }}
                         </div>
                         </draggable>
                     </div>
@@ -171,12 +171,10 @@ export default {
 
             this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {
-                    
                     console.log(res.data);
                     this.$swal({
                             position: 'top-end',
                             icon: 'success',
-                            title: ' Felicitaciones ' ,
                             text: res.data.message,
                             showConfirmButton: false,
                             timer: 1500
@@ -188,7 +186,7 @@ export default {
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
-                        text: e.response.data.errors[0].ErrorMessage
+                        //text: e.response.data.Errors[0].ErrorMessage
 
                     });
                 }) 

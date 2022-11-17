@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios'
 import VueAxios from 'vue-axios';
 
+import VueSignalR from '@latelier/vue-signalr'
+
 /* Liberia para alertas */
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -27,6 +29,7 @@ app.component("qr-code", VueQRCodeComponent);;
 app.use(VueAxios, axios)
 const url = 'https://escape-room-app.azurewebsites.net/api' 
 axios.defaults.baseURL = url
+app.use(VueSignalR, 'http://ipazure/times-escape')
 
 app.use(store)
 

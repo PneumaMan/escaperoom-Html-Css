@@ -19,6 +19,38 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {
+            score: []
+        }
+    },
+    created: function () {
+        let self = this
+        EventBus.$on('TransferTimesEscape', function (contactId) {
+            self.contactId = contactId
+            self.getTime()
+        })
+        this.$socket.on('TransferTimesEscape', (message) => {
+                self.getTime()
+        });
+    },
+    methods: {
+        getTime() {
+            this.axios.get('/escapetimer')
+                .then((response) => {
+                    // console.log(response.data)
+                    this.score = response.data;
+                })
+                .catch((e) => {
+                    console.log('error' + e);
+                })
+        }
+    },
+}
+</script>
 <style scoped>
 .copas-premio {
     width: 450px;
@@ -30,7 +62,7 @@
     padding: 10px;
     /*box-shadow: 15px 10px #8888888a; */
     backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.5);  
+    background-color: rgba(255, 255, 255, 0.5);
 }
 
 .premio {
