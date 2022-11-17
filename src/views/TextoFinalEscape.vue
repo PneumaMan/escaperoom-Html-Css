@@ -122,20 +122,21 @@ export default {
                     console.log(res.data);
                     const escaparParticipante = res.data.data.escaparParticipante
 
-                    if (isSuccess == true && escaparParticipante == true) {
-                        this.list = res.data.data.llaves
-                        this.txtEnd = true
 
-                    }
-                    if (isSuccess == true && escaparParticipante == false) {
+                    if (res.data.data.escaparParticipante == false) {
+                        this.RespuestasError = true
                         const array = res.data.data.respuestasParticipante
                         console.log(array)
                         for (let index = 0; index < array.length; index++) {
                             this.respuestasParticipante = array[index].reto;
-
                         }
                         //this.respuestasParticipante = res.data.data.respuestasParticipante
-                        this.RespuestasError = true
+                        
+
+                    }
+                    if (res.data.data.escaparParticipante == true) {
+                        this.list = res.data.data.llaves
+                        this.txtEnd = true
 
                     }
                 })
