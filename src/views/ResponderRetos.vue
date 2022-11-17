@@ -114,7 +114,7 @@ export default {
                             position: 'top-end',
                             icon: 'success',
                             title: ' Felicitaciones ' ,
-                            text: res.data.message,
+                            text: 'terminaste',
                             showConfirmButton: false,
                             timer: 1500
                         });
