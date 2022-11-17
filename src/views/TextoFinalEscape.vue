@@ -70,7 +70,7 @@
         </div>
 
             <div class="row">
-                <button class="btn btn-danger col-md-4 mx-auto" @click.prevent="EscaparEscape()">Comprobar</button>
+                <button class="btn btn-danger col-md-4 mx-auto" @click.prevent="EscaparEscape(list)">Comprobar</button>
             </div>
             
         </div>
@@ -163,10 +163,11 @@ export default {
             console.log(this.$store.state.nextReto)
             this.$router.push({ path: '/scan-qr' })
         },
-        EscaparEscape(){
+        EscaparEscape(list){
             this.escapar.participanteId= this.$store.state.participanteId
             this.escapar.llaves = this.$store.state.arrayLLaves
             console.log(this.escapar , "Escapar")
+            console.log(list)
 
             /* this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {
