@@ -109,7 +109,7 @@ export default {
                     }
 
                     if (res.data.isSuccess == true && res.data.data.finalizoEscape == true){
-                        this.$store.state.nextReto = res.data.message
+                        this.$store.state.nextReto =res.data.message + 'y/o corrige los retos'
                         this.$store.state.finish = true 
                         this.$swal({
                             position: 'top-end',

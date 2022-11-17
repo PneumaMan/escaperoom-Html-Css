@@ -153,7 +153,8 @@ export default {
                 const element =this.list[index];
                 this.respuestasTexto.push(element)
                 console.log( this.respuestasTexto)
-            }            
+            }
+            this.$store.state.arrayLLaves = this.respuestasTexto   
         },
         CorregirRespusta(item){
             this.$store.state.finish = false
@@ -163,8 +164,8 @@ export default {
         },
         EscaparEscape(){
             this.escapar.participanteId= this.$store.state.participanteId
-            this.escapar.llaves = this.respuestasTexto
-            console.log(this.escapar)
+            this.escapar.llaves = this.$store.state.arrayLLaves
+            console.log(this.escapar , "Escapar")
 
             this.axios.post('/GameControl/escape-room/escapar', this.escapar)
                 .then(res => {

@@ -20,7 +20,8 @@ const store = createStore({
     nextReto:'Ve al siguiente reto',
     IdEscapeRoom:'',
     IdReto:'',
-    finish: false
+    finish: false,
+    arrayLLaves: []
   },
   
   mutations: {
