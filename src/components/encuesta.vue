@@ -73,12 +73,13 @@ export default {
                 })
                 .catch(e => {
                     console.log(e)
-                    this.$swal({
+                    this.$router.push({ path: '/participante/score-participantes' })
+                    /* this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
 
-                    });
+                    }); */
                 })
         }
     },
