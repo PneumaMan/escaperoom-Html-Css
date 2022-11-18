@@ -8,7 +8,7 @@
         <h1>Tablero power bi</h1>
 
         <div class="row my-5 mx-auto">
-            <iframe src="https://giphy.com/embed/fUYp0iOzQfC540KCs4" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <iframe title="EscapeRoomMonitor - Página 1" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiM2FlMWM5YjUtZTA2Mi00ZDhhLWE3YWMtMzI1ZjI2MGIxNjc4IiwidCI6ImM3ZGQ3YzhiLTk5YmYtNDdlOS1iNTlhLTgwNzE3MmQ5MTg0YSJ9" frameborder="0" allowFullScreen="true"></iframe>
         </div>
         </div>
     </div>
