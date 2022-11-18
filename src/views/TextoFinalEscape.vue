@@ -133,7 +133,6 @@ export default {
                         this.respuestasParticipante =res.data.data.respuestasParticipante
                         console.log(this.respuestasParticipante)
 
-                        //this.respuestasParticipante = res.data.data.respuestasParticipante
                         
 
                     }

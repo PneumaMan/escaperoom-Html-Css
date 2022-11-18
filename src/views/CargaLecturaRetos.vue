@@ -62,7 +62,6 @@ export default {
     mounted() {
         this.siguienteRet()
         this.ValidarLocalStorage()
-        this.validarEndScann()
         this.listar()
     },
     setup() {
@@ -121,25 +120,6 @@ export default {
                 this.$store.state.nombreParticipante = window.localStorage.nombreParticipante
                 console.log(this.$store.state.participanteId)
             }
-        },
-        validarEndScann() {
-            if (this.$store.state.finish == true) {
-                this.$swal({
-                    title: 'Ha contestado todos retos obligatorios',
-                    text: "¿Desea escanear otro reto?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.$store.state.finish = false
-                        this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
-                    }
-                })
-            }
-
         },
         onDecode(decodedString) {
             this.decodedString = decodedString
