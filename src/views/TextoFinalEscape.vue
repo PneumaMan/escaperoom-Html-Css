@@ -179,6 +179,7 @@ export default {
                             showConfirmButton: false,
                             timer: 1500
                     })
+                    this.$router.push({ path: '/lectura-feedback' })
                 })
                 .catch(e => {
                     console.log(e)

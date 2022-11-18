@@ -43,18 +43,6 @@ export default {
 
     const msn = ref('')
 
-   /*  signalr.on('TransferTimesEscape', ( message ) => {
-        //console.log(message)
-        let escape = message.find({ 
-            where: {
-                escapeRoomIdEncrypt:  this.$store.state.IdEscapeRoom
-            }
-        });
-    console.log('hola' , escape)
-    }); */
-
-    /* signalr.invoke('SendScoreParticipante', 'g4jqZjQII\\jUyezUwa2J1A¬¬', 'Y\V4hwj\o3sHPWQPYqMOJA¬¬' ); */
-
      signalr.on('TransferTimesEscapeParticipante', (message ) => {
         console.log(message)
      })
@@ -63,26 +51,8 @@ export default {
         console.log(message)
         msn.value = message
         console.log(msn.value) 
-        //this.escapesScore = msn.value
-/*         this.$state.store.score = msn.value */
-
-        //this.$state.store.score = message.participante.timeScore
         
      });
-   // let index = msn.value.findIndex(item => item.escapeRoomIdEncrypt ==  this.escapeId);
-    //console.log(index)
-     
-    /* let escape = msn.value.find({ 
-            where: {
-                escapeRoomIdEncrypt:  this.$store.state.IdEscapeRoom
-            }
-        });
-
-        this.$store.state.score = escape.participantes.find({
-                where: {
-                    participanteIdEncrypt:  this.$store.state.participanteId
-               }
-            }); */
     return {msn}
 
   },

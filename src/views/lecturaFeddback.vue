@@ -7,7 +7,7 @@
         <!-- <h3 class="mt-2">Escanea el codigo QR</h3> -->
         <div class="p-4" v-show="!verScanner">
             <div class="row">
-                <h3>{{ siguienteReto }}</h3>
+                <h3>Feedback</h3>
             </div>
             <div class="row">
                 <p class="text-secondary">presiona la camara y escanea el codigo QR </p>
@@ -56,9 +56,7 @@ export default {
         NavbarParticipantes
     },
     mounted() {
-        this.siguienteRet()
         this.ValidarLocalStorage()
-        this.validarEndScann()
     },
     methods: {
         ...mapState(['nextReto']),
@@ -99,64 +97,16 @@ export default {
                 console.log(this.$store.state.participanteId)
             }
         },
-        validarEndScann(){
-            if (this.$store.state.finish == true ) {
-                this.$swal({
-                    title: 'Ha contestado todos retos obligatorios',
-                    text: "¿Desea escanear otro reto?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.$store.state.finish = false 
-                            this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
-                        }
-                    })
-            }
-
-        },
         onDecode(decodedString) {
             this.decodedString = decodedString
             console.log(this.decodedString)
-
-            var query = this.decodedString;
-            var datos = query.split("/")
-            console.log(datos[1])
-            var vars = datos[1].split("&");
-            console.log(vars)//objeto con los id de escape room y reto
-            this.datos = vars
-
-            var idE = this.datos[0].split("=");
-            console.log(idE[1], this.IdEscapeRoom)
-            this.IdEscapeRoom = idE[1]
-            this.$store.state.IdEscapeRoom = idE[1]
-            if (this.datos[1] != undefined) {
-                var idR = this.datos[1].split("=");
-                this.IdReto = idR[1]
-                this.$store.state.IdReto = idR[1]
-                console.log(idR)
-            }
-            /* Valida que el participante se halla autenticado y se guardara el registro el local storage */
-            if (window.localStorage.participanteId == null) {
-                this.$router.push({ path: '/login-participantes' })
-            }
-            /* Valida si no ha terminado de contestar todos lo restos */
-            if (this.$store.state.finish == true ) {
-                this.$router.push({ path: '/participante/texto-final' })
-            } else {
-                this.$router.push({ path: '/responder-retos' })
-            }
+            
+                this.$router.push({ path: '/participante/feedback' })
 
 
             
 
         },
-        siguienteRet() {
-            this.siguienteReto = this.$store.state.nextReto
-        }
     },
 }
 </script>
