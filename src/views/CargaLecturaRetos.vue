@@ -165,16 +165,15 @@ export default {
             if (this.$store.state.finish == true) {
                 this.$swal({
                     title: 'Ha contestado todos retos obligatorios',
-                    text: "¿Desea escanear otro reto?",
+                    text: "Dirigete a la salida",
                     icon: 'warning',
-                    showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si!'
+                    confirmButtonText: 'Ok'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.$store.state.finish = false
-                        this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
+                        this.$store.state.finish = true
+                        this.$store.state.nextReto = 'Escanea el QR de salida'
                     }
                 })
             }
