@@ -63,6 +63,7 @@ export default {
         this.siguienteRet()
         this.ValidarLocalStorage()
         this.listar()
+        this.validarEndScann()
     },
     setup() {
         const signalr = useSignalR();
@@ -159,6 +160,25 @@ export default {
         },
         siguienteRet() {
             this.siguienteReto = this.$store.state.nextReto
+        },
+        validarEndScann() {
+            if (this.$store.state.finish == true) {
+                this.$swal({
+                    title: 'Ha contestado todos retos obligatorios',
+                    text: "¿Desea escanear otro reto?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$store.state.finish = false
+                        this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
+                    }
+                })
+            }
+
         },
         listar() {
             this.axios.get('/escapetimer')
