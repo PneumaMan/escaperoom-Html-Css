@@ -22,7 +22,8 @@ const store = createStore({
     IdReto: '',
     finish: false,
     arrayLLaves: [],
-    TimeRangesscore: []
+    TimeRangesscore: [],
+    score:''
   },
 
   mutations: {
