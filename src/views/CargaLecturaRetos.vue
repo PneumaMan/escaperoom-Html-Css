@@ -1,5 +1,5 @@
 <template>
-    <NavbarParticipantes />
+    <NavbarParticipantes :msg="msn" />
     <div class="container">
         <div class="row">
             <img src="../assets/Logo-Escape-room-Rojo.png" alt="" class="Lg-Escape">
@@ -37,6 +37,10 @@ import { QrcodeStream } from 'vue3-qrcode-reader'
 import myQRScanner from "@/components/myQRScanner.vue";
 import { mapMutations, mapActions, mapState } from "vuex";
 import NavbarParticipantes from '@/components/Navbar-Participante.vue'
+
+import { useSignalR } from '@dreamonkey/vue-signalr';
+import { inject } from 'vue';
+import { ref } from 'vue';
 export default {
     data() {
         return {
@@ -59,6 +63,25 @@ export default {
         this.siguienteRet()
         this.ValidarLocalStorage()
         this.validarEndScann()
+        this.listar()
+    },
+    setup() {
+        const signalr = useSignalR();
+
+        const msn = ref('')
+
+        signalr.on('TransferTimesEscapeParticipante', (message) => {
+            console.log(message)
+        })
+
+        signalr.on('TransferTimesEscape', (message) => {
+            console.log(message)
+            msn.value = message
+            console.log(msn.value)
+
+        });
+        return { msn }
+
     },
     methods: {
         ...mapState(['nextReto']),
@@ -99,8 +122,8 @@ export default {
                 console.log(this.$store.state.participanteId)
             }
         },
-        validarEndScann(){
-            if (this.$store.state.finish == true ) {
+        validarEndScann() {
+            if (this.$store.state.finish == true) {
                 this.$swal({
                     title: 'Ha contestado todos retos obligatorios',
                     text: "¿Desea escanear otro reto?",
@@ -109,12 +132,12 @@ export default {
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Si!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            this.$store.state.finish = false 
-                            this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
-                        }
-                    })
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.$store.state.finish = false
+                        this.$store.state.nextReto = 'Dirijase al QR y responda el reto'
+                    }
+                })
             }
 
         },
@@ -144,19 +167,30 @@ export default {
                 this.$router.push({ path: '/login-participantes' })
             }
             /* Valida si no ha terminado de contestar todos lo restos */
-            if (this.$store.state.finish == true ) {
+            if (this.$store.state.finish == true) {
                 this.$router.push({ path: '/participante/texto-final' })
             } else {
                 this.$router.push({ path: '/responder-retos' })
             }
 
 
-            
+
 
         },
         siguienteRet() {
             this.siguienteReto = this.$store.state.nextReto
-        }
+        },
+        listar() {
+            this.axios.get('/escapetimer')
+                .then((response) => {
+                    console.log(response)
+
+                })
+                .catch((e) => {
+                    console.log('error' + e);
+                })
+
+        },
     },
 }
 </script>

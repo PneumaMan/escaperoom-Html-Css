@@ -9,11 +9,11 @@
                 <iframe src="https://docdro.id/ipkGQwQ" height="100%" width="100%"></iframe>
             </div>
         </div>
-        <!-- <div class="row">
+         <div class="row">
             <a href="../assets/escaperooms.pdf" type="button" class="btn btn-outline-warning mx-auto my-5 download col-md-6" download>
                 <h3 class="my-auto "><strong> Si no puedes visualizar el feed back presiona aca </strong></h3>
                 </a>
-          </div> -->
+          </div>
         <hr/>
         <div class="row">
             <Encuesta />
