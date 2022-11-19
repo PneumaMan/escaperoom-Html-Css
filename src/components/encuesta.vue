@@ -10,29 +10,35 @@
                         <p> Por favor califique de 1 a 10, siendo 1 en desacuerdo y 10 totalmente de acuerdo</p>
                         <div class="mb-3">
                             <label for="" class="form-label">En general el evento cumplió con los objetivos. </label>
-                            <input type="number" min="1" max="10"  class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta1">
+                            <input type="number" min="1" max="10" class="form-control in-trans" id=""
+                                v-model="RespuestasEncuestas.respuesta1">
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">La calidad de las conferencias estaba en un buen nivel académico</label>
-                            <input type="number"  min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta2">
+                            <label for="" class="form-label">La calidad de las conferencias estaba en un buen nivel
+                                académico</label>
+                            <input type="number" min="1" max="10" class="form-control in-trans" id=""
+                                v-model="RespuestasEncuestas.respuesta2">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">El escaperoom me dejó enseñanzas académicas </label>
-                            <input type="number"  min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta3">
+                            <input type="number" min="1" max="10" class="form-control in-trans" id=""
+                                v-model="RespuestasEncuestas.respuesta3">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Volvería a ingresar al escaperoom médico </label>
-                            <input type="number" min="1" max="10" class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta4"
-                                >
+                            <input type="number" min="1" max="10" class="form-control in-trans" id=""
+                                v-model="RespuestasEncuestas.respuesta4">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Volvería a un evento de la SCC.</label>
-                            <input type="number" min="1" max="10"  class="form-control in-trans" id="" v-model="RespuestasEncuestas.respuesta5">
+                            <input type="number" min="1" max="10" class="form-control in-trans" id=""
+                                v-model="RespuestasEncuestas.respuesta5">
                         </div>
-                        
+
                     </form>
                     <div class="row mx-auto">
-                        <button class="btn btn-outline-danger col-4 mx-auto" @click.prevent="encuesta()">Guardar</button>
+                        <button class="btn btn-outline-danger col-4 mx-auto"
+                            @click.prevent="encuesta()">Guardar</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +62,7 @@ export default {
                 respuesta9: "",
                 respuesta10: ""
             },
-            RespuestasE:[]
+            RespuestasE: []
         }
     },
     methods: {
@@ -68,33 +74,47 @@ export default {
                 .then(res => {
                     console.log(res.data);
                     this.RespuestasE.push(res.data)
-                    this.$router.push({ path: '/participante/score-participantes' })
                     
+                    this.$swal({
+                        title: 'Cafeteria tiene un Reto extra' ,
+                        text: "¿quieres responderlo?",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            this.$router.push({ path: '/scann-qr-extra' })
+                        }else{
+                            tthis.$router.push({ path: '/participante/score-participantes' })
+                        }
+                    })
                 })
                 .catch(e => {
                     console.log(e)
-                    this.$router.push({ path: '/participante/score-participantes' })
-                    /* this.$swal({
+                    this.$swal({
                         position: 'toast-top-end',
                         icon: 'error',
                         title: e.response.data.Message,
 
-                    }); */
+                    });
                 })
         }
     },
 }
 </script>
 <style scoped>
-.t-encu{
+.t-encu {
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius:8px;
+    border-radius: 8px;
     border: solid 1px rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px);
 }
-.in-trans{
+
+.in-trans {
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius:8px;
+    border-radius: 8px;
     border: solid 1px rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(8px);
 }
