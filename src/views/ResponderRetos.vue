@@ -94,6 +94,7 @@ export default {
         },
 
         ResponderReto(id) {
+            this.deshabilitado = true 
             console.log(id)
             this.ControlReto.respuestaId = id
             this.ControlReto.participanteId = this.$store.state.participanteId 
@@ -101,7 +102,6 @@ export default {
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
-                    this.deshabilitado = true 
                     console.log(res.data, "linea 104")
 
                     if(res.data.isSuccess == true && res.data.data.respuestaRetoRetorno != null){
