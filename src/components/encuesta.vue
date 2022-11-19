@@ -65,10 +65,23 @@ export default {
             RespuestasE: []
         }
     },
+    mounted() {
+        this.validarLocalStorage();
+    },
     methods: {
+        validarLocalStorage() {
+            if (window.localStorage.participanteId == null) {
+                //this.TokenParticipante = true
+                this.$router.push({ path: '/login-participantes' })
+            } else {
+                this.$store.state.participanteId = window.localStorage.participanteId
+                this.$store.state.nombreParticipante = window.localStorage.nombreParticipante
+                console.log(this.$store.state.participanteId)
+            }
+        },
         encuesta() {
-            //this.RespuestasEncuestas.idParticipante = this.$store.state.participanteId
-            this.RespuestasEncuestas.idParticipante = 'J6Qit9CTd0ySv1oHSB6kGg¬¬'
+            this.RespuestasEncuestas.idParticipante = this.$store.state.participanteId
+            //this.RespuestasEncuestas.idParticipante = 'J6Qit9CTd0ySv1oHSB6kGg¬¬'
             console.log(this.RespuestasEncuestas)
             this.axios.post('/GameControl/participante/encuesta', this.RespuestasEncuestas)
                 .then(res => {
