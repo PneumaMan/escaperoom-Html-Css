@@ -74,8 +74,9 @@ export default {
                 .then(res => {
                     console.log(res.data);
                     this.RespuestasE.push(res.data)
+                    this.$router.push({ path: '/participante/score-participantes' })
                     
-                    this.$swal({
+                    /* this.$swal({
                         title: 'Cafeteria tiene un Reto extra' ,
                         text: "¿quieres responderlo?",
                         icon: 'warning',
@@ -89,7 +90,7 @@ export default {
                         }else{
                             this.$router.push({ path: '/participante/score-participantes' })
                         }
-                    })
+                    }) */
                 })
                 .catch(e => {
                     console.log(e)
