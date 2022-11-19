@@ -87,7 +87,7 @@ export default {
                         if (result.isConfirmed) {
                             this.$router.push({ path: '/scann-qr-extra' })
                         }else{
-                            tthis.$router.push({ path: '/participante/score-participantes' })
+                            this.$router.push({ path: '/participante/score-participantes' })
                         }
                     })
                 })
