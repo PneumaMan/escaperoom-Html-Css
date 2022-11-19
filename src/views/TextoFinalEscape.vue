@@ -8,7 +8,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col">❌</th>
+                            <th scope="col">❌/✔️</th>
                             <th scope="col">Reto</th>
                             <th scope="col">Pregunta</th>
                             <th scope="col">Respuesta</th>
@@ -16,7 +16,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in respuestasParticipante" :key="index">
-                            <th>❌</th>
+                            <th :class="{ 'bg-success': item.respuesta.correcta , 'bg-danger': !item.respuesta.correcta} ">{{item.respuesta.correcta}}</th>
                             <td>{{ item.reto.nombreReto}}</td>
                             <td>{{ item.reto.preguntaReto }}</td>
                            <td><button class="btn btn-outline-warning" @click.prevent="CorregirRespusta(item.reto.nombreReto)">Corregir</button></td>
@@ -33,16 +33,16 @@
             <div class="text  col-md-7 mt-3">
                 <p>
                     En el continuum cardiovascular en Colombia, tiene como factores de riesgo protagónicos las <span id="0" > 1</span>
-                    (DISLIPIDEMIAS: RESPUESTA CORRECTA) con un riesgo poblacional atribuible de 49%, seguido por el
-                    tabaquismo con un 35%, la <span id="1"> 2</span> (DIABETES E HIPERTENSIÓN) con un 26.8% juntas. Sin dejar de
+                    con un riesgo poblacional atribuible de 49%, seguido por el
+                    tabaquismo con un 35%, la <span id="1"> 2</span> con un 26.8% juntas. Sin dejar de
                     reconocer que el factor hereditario juega un rol importante, mientras mas factores se sumen, y
-                    mientras más mal controlados estén el<span id="2">3</span> (RIESGO CARDIOVASCULAR) incrementa.
+                    mientras más mal controlados estén el<span id="2">3</span> incrementa.
                 </p>
                 <p>
-                    Una vez inicia la enfermedad cardiovascular, la evolución hacía la<span id="3">4</span> (FALLA CARDIACA) es
+                    Una vez inicia la enfermedad cardiovascular, la evolución hacía la<span id="3">4</span>  es
                     inevitable en gran cantidad de personas. Las arritmias hacen parte de las complicaciones y la
                     fibrilación auricular aparece. La anticuoagulación es la mejor estrategia para prevenir un ACV, y
-                    dentro de las opciones para elegir cual DOAC, solo uno cuenta con <span id="4">5</span>(REVERSOR).
+                    dentro de las opciones para elegir cual DOAC, solo uno cuenta con <span id="4">5</span>.
                 </p>
 
 
@@ -196,6 +196,14 @@ export default {
 }
 </script>
 <style scoped>
+
+.correcta::after{
+    content: "✔️";
+}
+
+.incorrecta::after{
+    content: "❌";
+}
 .Lg-Escape-txt-out {
     width: 450px;
     margin: auto;

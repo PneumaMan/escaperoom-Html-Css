@@ -64,7 +64,7 @@ export default {
         this.ValidarLocalStorage()
         this.listar()
         this.validarEndScann()
-    },
+    },  
     setup() {
         const signalr = useSignalR();
 
@@ -153,10 +153,6 @@ export default {
             } else {
                 this.$router.push({ path: '/responder-retos' })
             }
-
-
-
-
         },
         siguienteRet() {
             this.siguienteReto = this.$store.state.nextReto
