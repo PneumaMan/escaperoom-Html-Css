@@ -23,7 +23,7 @@
                     <div class="card-body p-4">
                         <div class="row" v-for="(r, index) in respuestas" :key="index">
                             <button class="btn btn-danger bt-respuestas my-2" :value="r.id"
-                                @click.prevent="ResponderReto(r.id)">{{ r.respuestaReto }}</button>
+                                @click.prevent="ResponderReto(r.id)" :disabled="deshabilitado">{{ r.respuestaReto }}</button>
                         </div>
                     </div>
                 </div>
@@ -66,7 +66,8 @@ export default {
                 retoId: ""
             },
             idSalidaVol: '',
-            FinParticipante: false
+            FinParticipante: false,
+            deshabilitado : false 
 
         }
     },
@@ -100,7 +101,7 @@ export default {
             console.log(this.ControlReto)
             this.axios.post('/GameControl/participante/respuesta', this.ControlReto)
                 .then(res => {
-                    console.log(res, "linea 103")
+                    this.deshabilitado = true 
                     console.log(res.data, "linea 104")
 
                     if(res.data.isSuccess == true && res.data.data.respuestaRetoRetorno != null){
@@ -182,11 +183,12 @@ export default {
             this.postReto.retoId = this.$store.state.IdReto
             this.axios.post('/GameControl/reto', this.postReto)
                 .then(res => {
-                    // Agrega al inicio de nuestro array notas
+
                     console.log(res.data);
                     this.Retos = res.data.data
                     this.preguntaR = this.Retos.preguntaReto
                     this.respuestas = this.Retos.respuestas
+                    this.deshabilitado = false 
                 })
                 .catch(e => {
                     this.$swal({
