@@ -82,7 +82,7 @@ export default {
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, delete it!'
+                        confirmButtonText: 'Responderlo'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             this.$router.push({ path: '/scann-qr-extra' })
